@@ -10,12 +10,16 @@
   <component name="CopilotPersistence">
     <persistenceIdMap>
       <entry key="_C:/Users/rapha/Documents/GitHub/brickfolio" value="3A5Z5SvsDyguymoWDX9UEwrsYh4" />
+      <entry key="_C:/Users/rapha/Documents/GitHub/var-analytics" value="3AGbZJgLzlACNvW9pKJAoQcIH6S" />
     </persistenceIdMap>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="3A5Z5SvsDyguymoWDX9UEwrsYh4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -24,6 +28,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -45,6 +50,7 @@
       <option name="presentableId" value="Default" />
       <updated>1771884212356</updated>
       <workItem from="1771884212535" duration="7000" />
+      <workItem from="1772221910157" duration="11000" />
     </task>
     <servers />
   </component>
