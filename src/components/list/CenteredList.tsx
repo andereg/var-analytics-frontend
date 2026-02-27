@@ -1,4 +1,5 @@
-import React, {useMemo} from "react";
+import React, { useMemo, useState } from "react";
+import SelectSeason from "../select/SelectSeason";
 import {
     Card,
     CardBody,
@@ -30,6 +31,8 @@ type Decision =
     | "Wrong Red Card"
     | "Wrong Second Yellow Card";
 
+type Season = "all" | "24/25" | "25/26";
+
 type RowItem = {
     id: string;
     versus: { name: string; logoUrl: string }[];
@@ -39,6 +42,21 @@ type RowItem = {
     description: string;
     sourceUrl: string;
 };
+
+const seasons: RowItem[] = [
+    {
+        id: "1",
+        season: "24/25"
+    },
+    {
+        id: "2",
+        season: "24/25"
+    },
+    {
+        id: "3",
+        season: "25/26"
+    }
+];
 
 const REAL_MADRID = {
     name: "Real Madrid",
@@ -220,6 +238,9 @@ export default function DecisionsTable() {
                                 <div>
                                     <h2 className="text-xl font-semibold">real madrid – controversial decisions</h2>
                                     <p className="text-sm text-gray-600">nur laliga und ucl spiele</p>
+                                </div>
+                                <div className="ml-auto">
+                                    <SelectSeason/>
                                 </div>
                             </div>
                         </div>
