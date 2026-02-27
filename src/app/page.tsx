@@ -11,7 +11,7 @@ import {
 } from "@heroui/navbar";
 import {Link} from "@heroui/link";
 import UsersTable from "@/components/table/usertable";
-
+import CenteredList from "@/components/list/CenteredList";
 
 export const AcmeLogo = () => {
     return (
@@ -78,11 +78,13 @@ export default function Home() {
           </NavbarContent>
       </Navbar>
 
-    <UsersTable
+          <CenteredList />
+    {/*<UsersTable
         onView={(user) => console.log("view", user)}
         onEdit={(user) => console.log("edit", user)}
         onDelete={(user) => console.log("delete", user)}
-    />
+    />*/}
+
           </div>
      )
 }
