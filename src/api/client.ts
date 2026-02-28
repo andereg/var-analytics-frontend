@@ -8,9 +8,9 @@ export type ApiError = {
 
 export const api = axios.create({
     //baseURL: import.meta.env.VITE_API_URL, // vite
-    baseURL: "localhost:7063",
+    baseURL: "https://localhost:7063",
     // for CRA: process.env.REACT_APP_API_URL
-    withCredentials: true, // if using httpOnly cookies
+    withCredentials: false, // if using httpOnly cookies
     headers: {
         "Content-Type": "application/json",
     },
@@ -21,11 +21,11 @@ export const api = axios.create({
  * Automatically attach auth token (if using bearer token)
  */
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token"); // adjust if needed
+    /*const token = localStorage.getItem("token"); // adjust if needed
 
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-    }
+    }*/
 
     return config;
 });
