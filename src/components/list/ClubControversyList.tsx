@@ -8,22 +8,45 @@ import {
     Chip,
     Link,
     Spinner,
+    Select,
+    SelectItem
 } from "@heroui/react";
-import { Link2 } from "lucide-react";
+import { Link2, Shell } from "lucide-react";
 
 // adjust these paths
 import {getClubById} from "@/api/clubs";
-import type {Club} from "@/api/types";
+import {getCompetitions} from "@/api/competitions";
+import {getSeasons} from "@/api/seasons";
+
+import type {Club, Competition, Season, Season} from "@/api/types";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
     return iso?.split("T")?.[0] ?? iso;
 }
 
+export const animals = [
+    {key: "cat", label: "Cat"},
+    {key: "dog", label: "Dog"},
+    {key: "elephant", label: "Elephant"},
+    {key: "lion", label: "Lion"},
+    {key: "tiger", label: "Tiger"},
+    {key: "giraffe", label: "Giraffe"},
+    {key: "dolphin", label: "Dolphin"},
+    {key: "penguin", label: "Penguin"},
+    {key: "zebra", label: "Zebra"},
+    {key: "shark", label: "Shark"},
+    {key: "whale", label: "Whale"},
+    {key: "otter", label: "Otter"},
+    {key: "crocodile", label: "Crocodile"},
+];
+
 export default function ClubControversiesList() {
     const CLUB_ID = 36;
 
     const [club, setClub] = useState<Club | null>(null);
+    const [seasons, setSeason] = useState<Season[] | null>(null);
+    const [competitions, setCompetition] = useState<Competition[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -39,6 +62,19 @@ export default function ClubControversiesList() {
                 if (!mounted) return;
 
                 setClub(data);
+
+                const [clubData, seasons, competitions] = await Promise.all([
+                    getClubById(CLUB_ID),
+                    getSeasons(),
+                    getCompetitions(),
+                ]);
+
+                if (!mounted) return;
+
+                setClub(clubData);
+                setSeason(seasons);
+                setCompetition(competitions);
+
             } catch (e: any) {
                 if (!mounted) return;
                 setErrorMsg(e?.message ?? "failed to load club");
@@ -54,8 +90,8 @@ export default function ClubControversiesList() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
-                <Spinner label="loading..."/>
+            <div className="min-h-screen bg-white p-6 flex items-center justify-center">
+                <Spinner />
             </div>
         );
     }
@@ -80,7 +116,10 @@ export default function ClubControversiesList() {
                     <CardBody className="p-6">
                         {/* header */}
                         <div className="flex items-center gap-3">
-                            <Avatar src={club.logo} name={club.name} className="h-10 w-10"/>
+                            <img
+                                src={club.logo}
+                                className="w-16 h-16"
+                            />
                             <div>
                                 <h2 className="text-xl font-semibold">{club.name}</h2>
                                 <p className="text-sm text-gray-600">{club.description}</p>
@@ -96,7 +135,25 @@ export default function ClubControversiesList() {
                                 {club.abbreviation}
                             </Chip>
                         </div>
+                        <div className="flex items-center gap-3">
 
+                        </div>
+                        <div className="ml-auto flex gap-3 mt-6">
+                            <Select variant="bordered" className="max-w-3xs" label="Season"
+                                    style={{minWidth: "140px"}}>
+                                {seasons.map((season) => (
+                                    <SelectItem key={season.id}>{season.seasonName}</SelectItem>
+                                ))}
+                            </Select>
+
+                            <Select variant="bordered" className="max-w-3xs" label="Competition"
+                                    style={{minWidth: "220px"}}>
+
+                                {competitions.map((competition) => (
+                                    <SelectItem key={competition.id}>{competition.name}</SelectItem>
+                                ))}
+                            </Select>
+                        </div>
                     </CardBody>
                 </Card>
             </div>
@@ -104,10 +161,11 @@ export default function ClubControversiesList() {
             <div className="mx-auto w-full max-w-3xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
-                        <div className="mt-6">
+                        <div>
                             <div className="mb-2 text-lg font-medium">
                                 {club.forControversies?.length ?? 0} benefited decisions
                             </div>
+                            <br/>
 
                             <Listbox aria-label="club controversies" variant="bordered">
                                 {(club.forControversies ?? []).map((c) => (
