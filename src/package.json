@@ -1,5 +1,5 @@
 {
-  "name": "brickfolio",
+  "name": "var_analytics",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "@heroui/styles": "^3.0.0-beta.7",
     "@heroui/system": "^2.4.27",
     "@heroui/theme": "^2.4.26",
+    "axios": "^1.13.6",
     "framer-motion": "^12.34.3",
     "next": "16.1.6",
     "react": "19.2.3",
