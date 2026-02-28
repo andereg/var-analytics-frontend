@@ -9,7 +9,7 @@ import {
     Link,
     Spinner,
 } from "@heroui/react";
-import { ExternalLink } from "lucide-react";
+import { Link2 } from "lucide-react";
 
 // adjust these paths
 import {getClubById} from "@/api/clubs";
@@ -105,8 +105,8 @@ export default function ClubControversiesList() {
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
                         <div className="mt-6">
-                            <div className="mb-2 text-sm text-gray-600">
-                                Benefited decisions ({club.forControversies?.length ?? 0})
+                            <div className="mb-2 text-lg font-medium">
+                                {club.forControversies?.length ?? 0} benefited decisions
                             </div>
 
                             <Listbox aria-label="club controversies" variant="bordered">
@@ -117,13 +117,13 @@ export default function ClubControversiesList() {
                                             <div className="flex items-center">
                                                 <img
                                                     src={c.beneficiary?.logo}
-                                                    alt="first"
-                                                    className="w-10 h-10 rounded-full border-0 border-white z-10"
+                                                    alt="second"
+                                                    className="w-10 h-10 rounded-full border-0"
                                                 />
                                                 <img
                                                     src={c.victim?.logo}
-                                                    alt="second"
-                                                    className="-ml-4 w-10 h-10 rounded-full border-0 border-white"
+                                                    alt="first"
+                                                    className="-ml-5 w-10 h-10 rounded-full border-0 z-10"
                                                 />
                                             </div>
 
@@ -147,16 +147,29 @@ export default function ClubControversiesList() {
                                                 </p>
 
                                                 <div className="mt-2 flex items-center gap-2">
-                                                    <Avatar
-                                                        src={c.competition?.logo}
-                                                        name={c.competition?.name}
-                                                        className="h-6 w-6"
-                                                    />
-                                                    <span className="text-xs text-gray-600">
-                                                    {c.competition?.name}
-                                                    </span>
+                                                    <div className="flex gap-4">
+                                                        <Chip
+                                                            avatar={<Avatar
+                                                                src={c.competition?.logo}
+                                                                name={c.competition?.name}
+                                                            />}
+                                                            variant="bordered"
+                                                        >
+                                                            <span className="text-xs text-gray-600 ml-1">
+                                                            {c.competition?.name}
+                                                            </span>
+                                                        </Chip>
+                                                    </div>
+
+
                                                     <Link href={c.referenceLink} isExternal>
-                                                        <ExternalLink className="h-4 w-4 text-gray-500 hover:text-gray-900 transition-colors" />
+                                                        <Chip className="pl-2" color="primary"
+                                                              startContent={<Link2 size={18}/>}
+                                                              variant="faded">
+                                                            <span className="text-xs text-gray-600">
+                                                            ArchivoVar
+                                                            </span>
+                                                        </Chip>
                                                     </Link>
                                                 </div>
                                             </div>
