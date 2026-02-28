@@ -9,6 +9,7 @@ import {
     Link,
     Spinner,
 } from "@heroui/react";
+import { ExternalLink } from "lucide-react";
 
 // adjust these paths
 import {getClubById} from "@/api/clubs";
@@ -73,7 +74,8 @@ export default function ClubControversiesList() {
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
-            <div className="mx-auto w-full max-w-3xl">
+            {/* club analytics card  */}
+            <div className="mx-auto w-full max-w-3xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
                         {/* header */}
@@ -95,7 +97,13 @@ export default function ClubControversiesList() {
                             </Chip>
                         </div>
 
-                        {/* list */}
+                    </CardBody>
+                </Card>
+            </div>
+            {/* list for */}
+            <div className="mx-auto w-full max-w-3xl mb-4">
+                <Card className="rounded-2xl shadow-xl">
+                    <CardBody className="p-6">
                         <div className="mt-6">
                             <div className="mb-2 text-sm text-gray-600">
                                 Benefited decisions ({club.forControversies?.length ?? 0})
@@ -106,25 +114,29 @@ export default function ClubControversiesList() {
                                     <ListboxItem key={c.id} textValue={c.description}>
                                         <div className="flex items-start gap-3">
                                             {/* opponent (victim) */}
-                                            <Avatar
-                                                src={c.victim?.logo}
-                                                name={c.victim?.name}
-                                                className="h-9 w-9"
-                                            />
+                                            <div className="flex items-center">
+                                                <img
+                                                    src={c.beneficiary?.logo}
+                                                    alt="first"
+                                                    className="w-10 h-10 rounded-full border-0 border-white z-10"
+                                                />
+                                                <img
+                                                    src={c.victim?.logo}
+                                                    alt="second"
+                                                    className="-ml-4 w-10 h-10 rounded-full border-0 border-white"
+                                                />
+                                            </div>
 
                                             <div className="min-w-0 flex-1">
                                                 <div className="flex flex-wrap items-center gap-2">
-    <span className="text-sm font-semibold">
-       {c.beneficiary?.name} vs {c.victim?.name}
-    </span>
+                                                    <span className="text-sm font-semibold">
+                                                       {c.beneficiary?.name} vs {c.victim?.name}
+                                                    </span>
 
-                                                    <Chip className="ml-auto" size="sm" variant="bordered" color="secondary">
+                                                    <Chip className="ml-auto" size="sm" variant="bordered"
+                                                          color="secondary">
                                                         {c.controversyType?.code}
                                                     </Chip>
-
-                                                    {/*<Chip size="sm" variant="bordered">*/}
-                                                    {/*    {c.season?.seasonName}*/}
-                                                    {/*</Chip>*/}
                                                     <Chip size="sm" variant="bordered">
                                                         {formatDate(c.date)}
                                                     </Chip>
@@ -143,73 +155,8 @@ export default function ClubControversiesList() {
                                                     <span className="text-xs text-gray-600">
                                                     {c.competition?.name}
                                                     </span>
-                                                    <span className="mx-2 text-xs text-gray-300">•</span>
-                                                    <Link href={c.referenceLink} isExternal size="sm">
-                                                        source
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ListboxItem>
-                                ))}
-                            </Listbox>
-                        </div>
-
-                        {/* list */}
-                        <div className="mt-6">
-                            <div className="mb-2 text-sm text-gray-600">
-                                Adverse decisions ({club.againstControversies?.length ?? 0})
-                            </div>
-
-                            <Listbox aria-label="club controversies" variant="bordered">
-                                {(club.againstControversies ?? []).map((c) => (
-                                    <ListboxItem key={c.id} textValue={c.description}>
-                                        <div className="flex items-start gap-3">
-                                            {/* opponent (victim) */}
-                                            <Avatar
-                                                src={c.beneficiary?.logo}
-                                                name={c.beneficiary?.name}
-                                                className="h-9 w-9"
-                                            />
-
-                                            <div className="min-w-0 flex-1">
-                                                <div className="flex flex-wrap items-center gap-2">
-    <span className="text-sm font-semibold">
-        {c.victim?.name} vs {c.beneficiary?.name}
-    </span>
-
-                                                    <Chip size="sm" variant="bordered"
-                                                          className="bg-gray-100 text-gray-800">
-                                                        {c.controversyType?.code}
-                                                    </Chip>
-
-                                                    <Chip size="sm" variant="bordered">
-                                                        {c.season?.seasonName}
-                                                    </Chip>
-
-                                                    <span className="text-xs text-gray-500">
-        {formatDate(c.date)}
-    </span>
-                                                </div>
-
-                                                <p className="mt-1 line-clamp-2 text-sm text-gray-700">
-                                                    {c.description}
-                                                </p>
-
-                                                <div className="mt-2 flex items-center gap-2">
-                                                    <Avatar
-                                                        src={c.competition?.logo}
-                                                        name={c.competition?.name}
-                                                        className="h-6 w-6"
-                                                    />
-                                                    <span className="text-xs text-gray-600">
-        {c.competition?.name}
-        </span>
-
-                                                    <span className="mx-2 text-xs text-gray-300">•</span>
-
-                                                    <Link href={c.referenceLink} isExternal size="sm">
-                                                        source
+                                                    <Link href={c.referenceLink} isExternal>
+                                                        <ExternalLink className="h-4 w-4 text-gray-500 hover:text-gray-900 transition-colors" />
                                                     </Link>
                                                 </div>
                                             </div>
@@ -221,6 +168,9 @@ export default function ClubControversiesList() {
                     </CardBody>
                 </Card>
             </div>
+            {/* list against */}
+
         </div>
-    );
+    )
+        ;
 }
