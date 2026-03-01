@@ -21,6 +21,7 @@ import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
 import type {Club, Competition, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
+import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -96,7 +97,8 @@ export default function ClubControversiesList() {
     if (!club) return null;
 
     return (
-        <div className="min-h-screen bg-gray-100 p-6">
+        <div className="min-h-screen bg-gray-100 p-6" >
+            <div className="">
             {/* club card  */}
             <div className="mx-auto w-full max-w-4xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
@@ -120,7 +122,7 @@ export default function ClubControversiesList() {
                                     </Chip>
                                 </div>
 
-                                <p className="text-sm text-gray-500 mt-2">{club.description}</p>
+                                <p className="text-sm text-gray-300 mt-2">{club.description}</p>
                             </div>
 
 
@@ -144,7 +146,7 @@ export default function ClubControversiesList() {
             </div>
 
             {/* club analytics  */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
                 <Card className="rounded-2xl shadow-sm">
                     <CardBody>
                         <h3 className="text-lg font-semibold text-gray-500 ml-2">Fairness Index</h3>
@@ -183,7 +185,11 @@ export default function ClubControversiesList() {
                         </div>
                     </CardBody>
                 </Card>
-
+                {/*<Card className="rounded-2xl shadow-sm md:col-span-3 md:row-span-1">*/}
+                {/*    <CardBody>*/}
+                {/*        {club && <DecisionsTimeline club={club} />}*/}
+                {/*    </CardBody>*/}
+                {/*</Card>*/}
 
             </div>
             {/* list for */}
@@ -267,9 +273,10 @@ export default function ClubControversiesList() {
                         </div>
                     </CardBody>
                 </Card>
+
             </div>
             {/* list against */}
-
+            </div>
         </div>
     )
         ;

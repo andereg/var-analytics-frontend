@@ -13,10 +13,12 @@ function dindexToColor(dindex: number) {
 }
 
 function dindexLabel(dindex: number) {
-    if (dindex >= 0.5) return "mostly benefited";
+    if (dindex >= 0.6) return "strongly benefited";
+    if (dindex >= 0.4) return "mostly benefited";
     if (dindex >= 0.2) return "slightly benefited";
+    if (dindex <= -0.6) return "strongly disadvantaged";
+    if (dindex <= -0.4) return "mostly disadvantaged";
     if (dindex <= -0.2) return "slightly disadvantaged";
-    if (dindex <= -0.5) return "mostly disadvantaged";
     return "balanced";
 }
 
@@ -47,7 +49,7 @@ export function DIndexKpi({ club }: { club: any }) {
                 {/* colored chip */}
                 <Chip
                     variant="flat"
-                    className="self-start"
+                    className="self-start text-xs mt-1"
                     style={{backgroundColor: `${color}20`, color}}
                 >
                     {label}

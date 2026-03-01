@@ -73,7 +73,8 @@ export function DecisionTypeBreakdown({ club }: { club: any }) {
     <div className="space-y-4 ml-1 mt-2 mb-2 mr-1">
       {Object.entries(data).map(([decision, counts]) => (
           <div className="grid grid-cols-4 gap-4">
-            <span className="text-xs text-gray-600">{decision}</span>
+            <span className="text-xs text-gray-600">{decision}
+            </span>
             <div className="flex ml-auto text-xs items-center">
               <span className="text-gray-600 flex">for: <span className="text-[#3F51B5]">{counts.for}</span></span>
               <span className="ml-1 text-gray-600 flex">against: <span className="text-[#FF2E7E]">{counts.against}</span></span>
