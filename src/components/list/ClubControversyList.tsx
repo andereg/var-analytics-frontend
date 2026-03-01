@@ -9,37 +9,22 @@ import {
     Link,
     Spinner,
     Select,
-    SelectItem
+    SelectItem,
+    Divider
 } from "@heroui/react";
-import { Link2, Shell } from "lucide-react";
+import {ClubPieChart} from "@/components/charts/ClubPieChart";
+import { Link2 } from "lucide-react";
 
-// adjust these paths
 import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-
-import type {Club, Competition, Season, Season} from "@/api/types";
+import type {Club, Competition, Season} from "@/api/types";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
     return iso?.split("T")?.[0] ?? iso;
 }
 
-export const animals = [
-    {key: "cat", label: "Cat"},
-    {key: "dog", label: "Dog"},
-    {key: "elephant", label: "Elephant"},
-    {key: "lion", label: "Lion"},
-    {key: "tiger", label: "Tiger"},
-    {key: "giraffe", label: "Giraffe"},
-    {key: "dolphin", label: "Dolphin"},
-    {key: "penguin", label: "Penguin"},
-    {key: "zebra", label: "Zebra"},
-    {key: "shark", label: "Shark"},
-    {key: "whale", label: "Whale"},
-    {key: "otter", label: "Otter"},
-    {key: "crocodile", label: "Crocodile"},
-];
 
 export default function ClubControversiesList() {
     const CLUB_ID = 36;
@@ -111,14 +96,14 @@ export default function ClubControversiesList() {
     return (
         <div className="min-h-screen bg-gray-100 p-6">
             {/* club analytics card  */}
-            <div className="mx-auto w-full max-w-3xl mb-4">
+            <div className="mx-auto w-full max-w-4xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
                         {/* header */}
                         <div className="flex items-center gap-3">
                             <img
                                 src={club.logo}
-                                className="w-16 h-16"
+                                className="w-16 h-16 object-contain"
                             />
                             <div>
                                 <h2 className="text-xl font-semibold">{club.name}</h2>
@@ -127,21 +112,38 @@ export default function ClubControversiesList() {
 
                             <Chip
                                 classNames={{
-                                    base: "ml-auto bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-500/30",
-                                    content: "drop-shadow-xs shadow-black text-white",
+                                    base: "ml-auto bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-400/15",
+                                    content: "drop-shadow-xs shadow-white text-white",
                                 }}
                                 variant="shadow"
                             >
                                 {club.abbreviation}
                             </Chip>
                         </div>
-                        <div className="flex items-center gap-3">
 
+                        <div className="flex items-center gap-3">
+                            <div>
+                                <ClubPieChart club={club} />
+                                <Chip
+                                    radius="sm"
+                                    variant="bordered"
+                                    className="border-[#3F51B5] text-gray-600 "
+                                >
+                                    {club.forControversies?.length ?? 0} benefited
+                                </Chip>
+                                <Chip
+                                    radius="sm"
+                                    variant="bordered"
+                                    className="border-[#FF2E7E] text-gray-600 ml-2"
+                                >
+                                    {club.againstControversies?.length ?? 0} unfavorable
+                                </Chip>
+                            </div>
                         </div>
                         <div className="ml-auto flex gap-3 mt-6">
                             <Select variant="bordered" className="max-w-3xs" label="Season"
                                     style={{minWidth: "140px"}}>
-                                {seasons.map((season) => (
+                            {seasons.map((season) => (
                                     <SelectItem key={season.id}>{season.seasonName}</SelectItem>
                                 ))}
                             </Select>
@@ -158,14 +160,14 @@ export default function ClubControversiesList() {
                 </Card>
             </div>
             {/* list for */}
-            <div className="mx-auto w-full max-w-3xl mb-4">
+            <div className="mx-auto w-full max-w-4xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
                         <div>
                             <div className="mb-2 text-lg font-medium">
                                 {club.forControversies?.length ?? 0} benefited decisions
                             </div>
-                            <br/>
+                            <Divider className="my-1" />
 
                             <Listbox aria-label="club controversies" variant="bordered">
                                 {(club.forControversies ?? []).map((c) => (
@@ -176,12 +178,12 @@ export default function ClubControversiesList() {
                                                 <img
                                                     src={c.beneficiary?.logo}
                                                     alt="second"
-                                                    className="w-10 h-10 rounded-full border-0"
+                                                    className="w-10 h-10 border-0 object-contain"
                                                 />
                                                 <img
                                                     src={c.victim?.logo}
                                                     alt="first"
-                                                    className="-ml-5 w-10 h-10 rounded-full border-0 z-10"
+                                                    className="-ml-5 w-10 h-10 border-0 z-10 object-contain"
                                                 />
                                             </div>
 

@@ -13,7 +13,7 @@ import {
     Link,
     Avatar,
 } from "@heroui/react";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
+import { ClubPieChart } from "@/components/charts/ClubPieChart";
 
 const PIE_COLORS = ["#ef4444", "#22c55e"]; // red, green
 
