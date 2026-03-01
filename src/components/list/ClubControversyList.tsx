@@ -13,6 +13,7 @@ import {
     Divider
 } from "@heroui/react";
 import {ClubPieChart} from "@/components/charts/ClubPieChart";
+import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
 import { Link2 } from "lucide-react";
 
 import {getClubById} from "@/api/clubs";
@@ -141,13 +142,14 @@ export default function ClubControversiesList() {
                 </Card>
             </div>
 
-            {/* club analytics card  */}
-            <div className="mx-auto w-full max-w-4xl mb-4">
-                <Card className="rounded-2xl shadow-xl">
-                    <CardBody className="p-6">
-                        <div className="flex items-center gap-3">
-                            <div>
-                                <ClubPieChart club={club}/>
+            {/* club analytics  */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
+
+                <Card className="rounded-2xl shadow-sm">
+                    <CardBody>
+                        <h3 className="text-lg font-semibold">Ratio</h3>
+                            <ClubPieChart club={club}/>
+                            <div className="flex items-center gap-3 justify-center mb-2">
                                 <Chip
                                     radius="sm"
                                     variant="bordered"
@@ -158,14 +160,22 @@ export default function ClubControversiesList() {
                                 <Chip
                                     radius="sm"
                                     variant="bordered"
-                                    className="border-[#FF2E7E] text-gray-600 ml-2"
+                                    className="border-[#FF2E7E] text-gray-600"
                                 >
                                     {club.againstControversies?.length ?? 0} unfavorable
                                 </Chip>
                             </div>
-                        </div>
                     </CardBody>
                 </Card>
+
+                <Card className="rounded-2xl shadow-sm md:col-span-2">
+                    <CardBody>
+                        <DecisionTypeBreakdown club={club}/>
+                    </CardBody>
+                </Card>
+
+
+
             </div>
             {/* list for */}
             <div className="mx-auto w-full max-w-4xl mb-4">

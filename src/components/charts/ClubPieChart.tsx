@@ -22,8 +22,8 @@ export function ClubPieChart({ club }: { club: any }) {
     const total = forCount + againstCount;
 
     return (
-        <div className="w-48 h-48">
-            <ResponsiveContainer width="100%" height="100%" >
+        <div className="w-48 h-48 mx-auto">
+            <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
                         data={data}
@@ -35,7 +35,7 @@ export function ClubPieChart({ club }: { club: any }) {
                         label={false}
                     >
                         {data.map((_, index) => (
-                            <Cell key={index} fill={PIE_COLORS[index]} />
+                            <Cell key={index} fill={PIE_COLORS[index]}/>
                         ))}
                     </Pie>
 
@@ -53,4 +53,4 @@ export function ClubPieChart({ club }: { club: any }) {
             </ResponsiveContainer>
         </div>
     );
-}
+    }
