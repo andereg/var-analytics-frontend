@@ -4,7 +4,11 @@ import "./globals.css";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/navbar";
 import {Link} from "@heroui/link";
 import {Button} from "@heroui/button";
+import { Inter } from "next/font/google";
 
+const inter = Inter({
+    subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,13 +27,13 @@ export const metadata: Metadata = {
 
 export const Logo = () => {
     return (
-        <svg fill="none" height="28" viewBox="0 0 16 16" width="28" className="mb-1 mr-2">
+        <svg fill="none" height="28" viewBox="0 0 16 16" width="28" className="mb-1">
 
-            <path d="M15 1H1V3H15V1Z" fill="currentColor"/>
-            <path d="M1 5H3V15H1V5Z" fill="currentColor"/>
-            <path d="M5 13H15V15H5V13Z" fill="currentColor"/>
-            <path d="M15 9H5V11H15V9Z" fill="currentColor"/>
-            <path d="M5 5H15V7H5V5Z" fill="currentColor"/>
+            <path d="M15 1H1V3H15V1Z" fill="white"/>
+            <path d="M1 5H3V15H1V5Z" fill="white"/>
+            <path d="M5 13H15V15H5V13Z" fill="white"/>
+            <path d="M15 9H5V11H15V9Z" fill="white"/>
+            <path d="M5 5H15V7H5V5Z" fill="white"/>
 
         </svg>
     );
@@ -43,13 +47,16 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased light min-h-screen overflow-x-hidden`}
+            //className={`${geistSans.variable} ${geistMono.variable} antialiased light min-h-screen overflow-x-hidden`}
+            className={`${inter.className} antialiased light min-h-screen overflow-x-hidden`}
         >
         <Navbar className="py-3 bg-gradient-to-r from-blue-900 to-indigo-900 text-white backdrop-blur-xl
   border-b border-white/10 ">
             <NavbarBrand>
-                <Logo/>
-                <p className="font-bold text-inherit">VAR Analytics</p>
+                <Link href="/">
+                    <Logo/>
+                </Link>
+                {/*<p className=" text-inherit">VAR Analytics</p>*/}
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
