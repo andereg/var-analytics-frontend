@@ -56,7 +56,7 @@ export function DecisionTypeBreakdown({ club }: { club: any }) {
     const againstWidth = total > 0 ? (againstValue / total) * 100 : 0;
 
     return (
-        <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden flex">
+        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden flex">
           <div
               style={{ width: `${forWidth}%` }}
               className="bg-[#3F51B5]"
@@ -70,18 +70,15 @@ export function DecisionTypeBreakdown({ club }: { club: any }) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 ml-1 mt-2 mb-2 mr-1">
       {Object.entries(data).map(([decision, counts]) => (
           <div className="grid grid-cols-4 gap-4">
-            <Chip size="sm" variant="bordered"
-                  color="secondary">
-              {decision}
-            </Chip>
-            <div className="flex ml-auto text-xs">
-              <span className="text-gray-600">for: <span className="text-[#3F51B5]">{counts.for}</span></span>
-              <span className="ml-1 text-gray-600">against: <span className="text-[#FF2E7E]">{counts.against}</span></span>
+            <span className="text-xs text-gray-600">{decision}</span>
+            <div className="flex ml-auto text-xs items-center">
+              <span className="text-gray-600 flex">for: <span className="text-[#3F51B5]">{counts.for}</span></span>
+              <span className="ml-1 text-gray-600 flex">against: <span className="text-[#FF2E7E]">{counts.against}</span></span>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 flex items-center">
               <StackedBar
                   forValue={counts.for}
                   againstValue={counts.against}

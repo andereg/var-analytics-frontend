@@ -20,6 +20,7 @@ import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
 import type {Club, Competition, Season} from "@/api/types";
+import {DIndexKpi} from "@/components/charts/DIndex";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -143,37 +144,45 @@ export default function ClubControversiesList() {
             </div>
 
             {/* club analytics  */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
-
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
                 <Card className="rounded-2xl shadow-sm">
                     <CardBody>
-                        <h3 className="text-lg font-semibold">Ratio</h3>
-                            <ClubPieChart club={club}/>
-                            <div className="flex items-center gap-3 justify-center mb-2">
-                                <Chip
-                                    radius="sm"
-                                    variant="bordered"
-                                    className="border-[#3F51B5] text-gray-600 "
-                                >
-                                    {club.forControversies?.length ?? 0} benefited
-                                </Chip>
-                                <Chip
-                                    radius="sm"
-                                    variant="bordered"
-                                    className="border-[#FF2E7E] text-gray-600"
-                                >
-                                    {club.againstControversies?.length ?? 0} unfavorable
-                                </Chip>
-                            </div>
+                        <h3 className="text-lg font-semibold text-gray-500 ml-2">Fairness Index</h3>
+                        <DIndexKpi club={club}/>
                     </CardBody>
                 </Card>
-
-                <Card className="rounded-2xl shadow-sm md:col-span-2">
+                <Card className="rounded-2xl shadow-sm md:col-span-2 md:row-span-2">
                     <CardBody>
+                        <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
                         <DecisionTypeBreakdown club={club}/>
                     </CardBody>
                 </Card>
-
+                <Card className="rounded-2xl shadow-sm">
+                    <CardBody>
+                        <div className="relative">
+                            <h3 className="absolute left-2 text-lg font-semibold text-gray-500">
+                                Ratio
+                            </h3>
+                        </div>
+                        <ClubPieChart club={club}/>
+                        <div className="flex items-center gap-3 mb-2">
+                            <Chip
+                                radius="sm"
+                                variant="bordered"
+                                className="border-[#3F51B5] text-gray-600 "
+                            >
+                                {club.forControversies?.length ?? 0} for
+                            </Chip>
+                            <Chip
+                                radius="sm"
+                                variant="bordered"
+                                className="border-[#FF2E7E] text-gray-600"
+                            >
+                                {club.againstControversies?.length ?? 0} against
+                            </Chip>
+                        </div>
+                    </CardBody>
+                </Card>
 
 
             </div>
