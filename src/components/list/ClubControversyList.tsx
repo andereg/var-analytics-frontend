@@ -95,7 +95,7 @@ export default function ClubControversiesList() {
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
-            {/* club analytics card  */}
+            {/* club card  */}
             <div className="mx-auto w-full max-w-4xl mb-4">
                 <Card className="rounded-2xl shadow-xl">
                     <CardBody className="p-6">
@@ -106,24 +106,48 @@ export default function ClubControversiesList() {
                                 className="w-16 h-16 object-contain"
                             />
                             <div>
-                                <h2 className="text-xl font-semibold">{club.name}</h2>
-                                <p className="text-sm text-gray-600">{club.description}</p>
+                                <div className="flex items-center">
+                                    <h2 className="text-xl font-semibold">{club.name}</h2>
+                                    <Chip
+                                        classNames={{
+                                            base: "ml-3 mt-0 bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-400/15",
+                                            content: "drop-shadow-xs shadow-white text-white",
+                                        }}
+                                    >
+                                        {club.abbreviation}
+                                    </Chip>
+                                </div>
+
+                                <p className="text-sm text-gray-500 mt-2">{club.description}</p>
                             </div>
 
-                            <Chip
-                                classNames={{
-                                    base: "ml-auto bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-400/15",
-                                    content: "drop-shadow-xs shadow-white text-white",
-                                }}
-                                variant="shadow"
-                            >
-                                {club.abbreviation}
-                            </Chip>
-                        </div>
 
+                            <Select variant="bordered" className="ml-auto max-w-30 mr-5" label="Season"
+                                    style={{minWidth: "140px"}}>
+                                {seasons.map((season) => (
+                                    <SelectItem key={season.id}>{season.seasonName}</SelectItem>
+                                ))}
+                            </Select>
+
+                            <Select variant="bordered" className="max-w-45 mr-10" label="Competition"
+                                    style={{minWidth: "220px"}}>
+
+                                {competitions.map((competition) => (
+                                    <SelectItem key={competition.id}>{competition.name}</SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                    </CardBody>
+                </Card>
+            </div>
+
+            {/* club analytics card  */}
+            <div className="mx-auto w-full max-w-4xl mb-4">
+                <Card className="rounded-2xl shadow-xl">
+                    <CardBody className="p-6">
                         <div className="flex items-center gap-3">
                             <div>
-                                <ClubPieChart club={club} />
+                                <ClubPieChart club={club}/>
                                 <Chip
                                     radius="sm"
                                     variant="bordered"
@@ -140,22 +164,6 @@ export default function ClubControversiesList() {
                                 </Chip>
                             </div>
                         </div>
-                        <div className="ml-auto flex gap-3 mt-6">
-                            <Select variant="bordered" className="max-w-3xs" label="Season"
-                                    style={{minWidth: "140px"}}>
-                            {seasons.map((season) => (
-                                    <SelectItem key={season.id}>{season.seasonName}</SelectItem>
-                                ))}
-                            </Select>
-
-                            <Select variant="bordered" className="max-w-3xs" label="Competition"
-                                    style={{minWidth: "220px"}}>
-
-                                {competitions.map((competition) => (
-                                    <SelectItem key={competition.id}>{competition.name}</SelectItem>
-                                ))}
-                            </Select>
-                        </div>
                     </CardBody>
                 </Card>
             </div>
@@ -167,7 +175,7 @@ export default function ClubControversiesList() {
                             <div className="mb-2 text-lg font-medium">
                                 {club.forControversies?.length ?? 0} benefited decisions
                             </div>
-                            <Divider className="my-1" />
+                            <Divider className="my-1"/>
 
                             <Listbox aria-label="club controversies" variant="bordered">
                                 {(club.forControversies ?? []).map((c) => (
