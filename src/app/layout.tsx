@@ -5,6 +5,7 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/navbar";
 import {Link} from "@heroui/link";
 import {Button} from "@heroui/button";
 import { Inter } from "next/font/google";
+import { Chip } from "@heroui/react";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -58,7 +59,9 @@ export default function RootLayout({
                 </Link>
                 {/*<p className=" text-inherit">VAR Analytics</p>*/}
             </NavbarBrand>
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+            {/*<div className="border border-gray-600/50 px-8 rounded-3xl sm:block">*/}
+                <NavbarContent
+                className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
                     <Button
                         as={Link}
@@ -120,6 +123,7 @@ export default function RootLayout({
                     </Button>
                 </NavbarItem>
             </NavbarContent>
+
             <NavbarContent justify="end">
                 <NavbarItem>
                     <Button

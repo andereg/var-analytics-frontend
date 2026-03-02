@@ -8,7 +8,7 @@ import {Controversy, Referee} from "@/api/types";
 type TrendCardProps = {
     title: string;
     value: string;
-    change: string;
+    change: number;
     changeType: "positive" | "neutral" | "negative";
     trendType: "up" | "neutral" | "down";
     trendChipPosition?: "top" | "bottom";
@@ -163,14 +163,14 @@ export default function KPIStats({ club }: { club: any }) {
 
     const cards: TrendCardProps[] = [
         {
-            title: "Most for",
+            title: "Most for decisions",
             value: mostFrequentAdvantagousReferee.referee?.name + " " + mostFrequentAdvantagousReferee.referee?.surname,
             change: mostFrequentAdvantagousReferee.count,
             changeType: toChangeType(1),
             trendType: toTrendType(1),
         },
         {
-            title: "Most against",
+            title: "Most against decisions",
             value: mostFrequentDisadvantagousReferee.referee?.name + " " + mostFrequentDisadvantagousReferee.referee?.surname,
             change: mostFrequentDisadvantagousReferee.count,
             changeType: toChangeType(-1),

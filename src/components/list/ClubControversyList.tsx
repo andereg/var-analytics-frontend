@@ -3,6 +3,7 @@ import {
     Card,
     CardBody,
     Avatar,
+    AvatarIcon,
     Listbox,
     ListboxItem,
     Chip,
@@ -23,6 +24,7 @@ import type {Club, Competition, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
 import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
+import ControversyCircleChart from "@/components/charts/CircleChart";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -167,23 +169,7 @@ export default function ClubControversiesList() {
                                     Ratio
                                 </h3>
                             </div>
-                            <ClubPieChart club={club}/>
-                            <div className="flex items-center gap-3 mb-2">
-                                <Chip
-                                    radius="sm"
-                                    variant="bordered"
-                                    className="border-[#3F51B5] text-gray-600 "
-                                >
-                                    {club.forControversies?.length ?? 0} for
-                                </Chip>
-                                <Chip
-                                    radius="sm"
-                                    variant="bordered"
-                                    className="border-[#FF2E7E] text-gray-600"
-                                >
-                                    {club.againstControversies?.length ?? 0} against
-                                </Chip>
-                            </div>
+                            <ControversyCircleChart club={club}/>
                         </CardBody>
                     </Card>
                     {/*<Card className="rounded-2xl shadow-sm md:col-span-3 md:row-span-1">*/}
@@ -210,18 +196,18 @@ export default function ClubControversiesList() {
                                 <Listbox aria-label="club controversies" variant="bordered">
                                     {(club.forControversies ?? []).map((c) => (
                                         <ListboxItem key={c.id} textValue={c.description}>
-                                            <div className="flex items-start gap-3">
+                                            <div className="flex items-start gap-4 mt-2 mb-2">
                                                 {/* opponent (victim) */}
                                                 <div className="flex items-center">
                                                     <img
                                                         src={c.beneficiary?.logo}
                                                         alt="second"
-                                                        className="w-10 h-10 border-0 object-contain"
+                                                        className="mt-5 w-10 h-10 border-0 object-contain"
                                                     />
                                                     <img
                                                         src={c.victim?.logo}
                                                         alt="first"
-                                                        className="-ml-5 w-10 h-10 border-0 z-10 object-contain"
+                                                        className="-ml-5 mt-5 w-10 h-10 border-0 z-10 object-contain"
                                                     />
                                                 </div>
 
@@ -269,6 +255,45 @@ export default function ClubControversiesList() {
                                                             ArchivoVar
                                                             </span>
                                                             </Chip>
+                                                        </Link>
+
+                                                        <Link href={"/referee/" + c.mainReferee?.id}>
+                                                            <div className="flex gap-4">
+                                                                <Chip
+                                                                    avatar={
+                                                                        <Avatar
+                                                                            classNames={{
+                                                                                base: "bg-white",
+                                                                                icon: "text-default-400",
+                                                                            }}
+                                                                            icon={<AvatarIcon />}
+                                                                        />}
+                                                                    variant="bordered"
+                                                                >
+                                                                <span className="text-xs text-gray-600 ml-1">
+                                                                {c.mainReferee?.name} {c.mainReferee?.surname}
+                                                                </span>
+                                                                </Chip>
+                                                            </div>
+                                                        </Link>
+                                                        <Link href={"/referee/" + c.varReferee?.id}>
+                                                            <div className="flex gap-4">
+                                                                <Chip
+                                                                    avatar={
+                                                                    <Avatar
+                                                                        classNames={{
+                                                                            base: "bg-white",
+                                                                            icon: "text-default-400",
+                                                                        }}
+                                                                        icon={<AvatarIcon />}
+                                                                    />}
+                                                                    variant="bordered"
+                                                                >
+                                                                <span className="text-xs text-gray-600 ml-1">
+                                                                {c.varReferee?.name} {c.varReferee?.surname} (VAR)
+                                                                </span>
+                                                                </Chip>
+                                                            </div>
                                                         </Link>
                                                     </div>
                                                 </div>
