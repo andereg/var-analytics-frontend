@@ -151,15 +151,20 @@ function getMostFrequentVarReferee(controversies: Controversy[]) {
     return top;
 }
 
+type Props = {
+    currentSeasonForControversies: Controversy[];
+    currentSeasonAgainstControversies: Controversy[];
+};
 
-export default function KPIStats({ club }: { club: any }) {
+export default function KPIStats({
+                                     currentSeasonForControversies,
+                                     currentSeasonAgainstControversies,
+                                 }: Props) {
+    const mostFrequentAdvantagousReferee = getMostFrequentMainReferee(currentSeasonForControversies ?? []);
+    const mostFrequentDisadvantagousReferee = getMostFrequentMainReferee(currentSeasonAgainstControversies ?? []);
 
-
-    const mostFrequentAdvantagousReferee = getMostFrequentMainReferee(club.forControversies ?? []);
-    const mostFrequentDisadvantagousReferee = getMostFrequentMainReferee(club.againstControversies ?? []);
-
-    const mostFrequentAdvantagousVARReferee = getMostFrequentVarReferee(club.forControversies ?? []);
-    const mostFrequentDisadvantagousVARReferee = getMostFrequentVarReferee(club.againstControversies ?? []);
+    const mostFrequentAdvantagousVARReferee = getMostFrequentVarReferee(currentSeasonForControversies ?? []);
+    const mostFrequentDisadvantagousVARReferee = getMostFrequentVarReferee(currentSeasonAgainstControversies ?? []);
 
     const cards: TrendCardProps[] = [
         {

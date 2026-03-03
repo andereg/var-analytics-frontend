@@ -65,6 +65,26 @@ export default function ClubControversiesList() {
         );
     }, [club, selectedSeason, selectedCompetition]);
 
+    const currentSeasonAgainstControversies = React.useMemo(() => {
+        const all = club?.againstControversies ?? [];
+
+        if (selectedSeason === "all" && selectedCompetition === "all") return all;
+
+        const seasonId = Number(selectedSeason);
+        const competitionId = Number(selectedCompetition);
+
+        if (selectedSeason === "all") {
+            return all.filter(c => c.competition?.id === competitionId);
+        }
+        if (selectedCompetition === "all") {
+            return all.filter(c => c.season?.id === seasonId);
+        }
+
+        return all.filter(
+            c => c.season?.id === seasonId && c.competition?.id === competitionId
+        );
+    }, [club, selectedSeason, selectedCompetition]);
+
     const onSeasonChange = (keys: any) => {
         const key = Array.from(keys)[0] as string;
         if (typeof key === "undefined") setSelectedSeason("all");
@@ -192,13 +212,13 @@ export default function ClubControversiesList() {
                     <Card className="rounded-2xl shadow-sm">
                         <CardBody>
                             <h3 className="text-lg font-semibold text-gray-500 ml-2">Fairness Index</h3>
-                            <DIndexKpi club={club}/>
+                            <DIndexKpi currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     <Card className="rounded-2xl shadow-sm md:col-span-2 md:row-span-2">
                         <CardBody>
                             <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
-                            <DecisionTypeBreakdown club={club}/>
+                            <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     <Card className="rounded-2xl shadow-sm">
@@ -208,7 +228,7 @@ export default function ClubControversiesList() {
                                     Ratio
                                 </h3>
                             </div>
-                            <ControversyCircleChart club={club}/>
+                            <ControversyCircleChart currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     {/*<Card className="rounded-2xl shadow-sm md:col-span-3 md:row-span-1">*/}
@@ -220,7 +240,7 @@ export default function ClubControversiesList() {
                 </div>
 
                 <div className="mx-auto w-full max-w-4xl mb-4">
-                    <KPIStats club={club}/>
+                    <KPIStats currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
                 </div>
                 {/* list for */}
                 <div className="mx-auto w-full max-w-4xl mb-4">

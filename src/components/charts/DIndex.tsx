@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Chip } from "@heroui/react";
+import {Controversy} from "@/api/types";
 
 function clamp(n: number, min: number, max: number) {
     return Math.min(max, Math.max(min, n));
@@ -21,15 +22,22 @@ function dindexLabel(dindex: number) {
     if (dindex <= -0.2) return "slightly disadvantaged";
     return "balanced";
 }
+type Props = {
+    currentSeasonForControversies: Controversy[];
+    currentSeasonAgainstControversies: Controversy[];
+};
 
-export function DIndexKpi({ club }: { club: any }) {
+export function DIndexKpi({
+                                                   currentSeasonForControversies,
+                                                   currentSeasonAgainstControversies,
+                                               }: Props) {
     const { forCount, againstCount, total, dindex } = useMemo(() => {
-        const forCount = club?.forControversies?.length ?? 0;
-        const againstCount = club?.againstControversies?.length ?? 0;
+        const forCount = currentSeasonForControversies?.length ?? 0;
+        const againstCount = currentSeasonAgainstControversies?.length ?? 0;
         const total = forCount + againstCount;
         const dindex = total > 0 ? (forCount - againstCount) / total : 0; // [-1..1]
         return { forCount, againstCount, total, dindex };
-    }, [club]);
+    }, [currentSeasonForControversies, currentSeasonAgainstControversies]);
 
     const color = dindexToColor(dindex);
     const markerLeftPct = ((clamp(dindex, -1, 1) + 1) / 2) * 100; // 0..100

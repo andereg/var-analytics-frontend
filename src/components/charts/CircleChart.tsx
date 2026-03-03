@@ -4,18 +4,7 @@ import type { ButtonProps, CardProps } from "@heroui/react";
 
 import React from "react";
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from "recharts";
-import {
-    Card,
-    Button,
-    Select,
-    SelectItem,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    cn,
-} from "@heroui/react";
-import { Icon } from "@iconify/react";
+import { Controversy } from "@/api/types";
 
 type ChartData = {
     name: string;
@@ -27,6 +16,11 @@ type CircleChartProps = {
     color: ButtonProps["color"];
     categories: string[];
     chartData: ChartData[];
+};
+
+type Props = {
+    currentSeasonForControversies: Controversy[];
+    currentSeasonAgainstControversies: Controversy[];
 };
 
 const formatTotal = (total: number) => {
@@ -82,7 +76,7 @@ const CircleChartCard = React.forwardRef<
                             dataKey="value"
                             innerRadius="68%"
                             nameKey="name"
-                            paddingAngle={-20}
+                            paddingAngle={0}
                             strokeWidth={0}
                         >
                             {chartData.map((_, index) => (
@@ -114,9 +108,12 @@ const CircleChartCard = React.forwardRef<
 
 CircleChartCard.displayName = "CircleChartCard";
 
-export default function ControversyCircleChart({ club }: { club: any }) {
-    const forCount = club?.forControversies?.length ?? 0;
-    const againstCount = club?.againstControversies?.length ?? 0;
+export default function ControversyCircleChart({
+                                                   currentSeasonForControversies,
+                                                   currentSeasonAgainstControversies,
+                                               }: Props) {
+    const forCount = currentSeasonForControversies?.length ?? 0;
+    const againstCount = currentSeasonAgainstControversies?.length ?? 0;
 
     const categories = ["for controversies", "against controversies"];
     const chartData: ChartData[] = [

@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Chip } from "@heroui/react";
+import {Controversy} from "@/api/types";
 
 function Bar({ value, max, color }: { value: number; max: number; color: string }) {
   const width = max > 0 ? (value / max) * 100 : 0;
@@ -17,27 +18,35 @@ function Bar({ value, max, color }: { value: number; max: number; color: string 
   );
 }
 
-export function DecisionTypeBreakdown({ club }: { club: any }) {
+type Props = {
+    currentSeasonForControversies: Controversy[];
+    currentSeasonAgainstControversies: Controversy[];
+};
+
+export function DecisionTypeBreakdown({
+                                          currentSeasonForControversies,
+                                          currentSeasonAgainstControversies,
+                                      }: Props) {
   const data = useMemo(() => {
     const map: Record<
       string,
       { for: number; against: number }
     > = {};
 
-    club?.forControversies?.forEach((c: any) => {
+      currentSeasonForControversies?.forEach((c: any) => {
       const key = c.controversyType?.code ?? "Unknown";
       map[key] = map[key] || { for: 0, against: 0 };
       map[key].for++;
     });
 
-    club?.againstControversies?.forEach((c: any) => {
+      currentSeasonAgainstControversies?.forEach((c: any) => {
       const key = c.controversyType?.code ?? "Unknown";
       map[key] = map[key] || { for: 0, against: 0 };
       map[key].against++;
     });
 
     return map;
-  }, [club]);
+  }, [currentSeasonForControversies, currentSeasonAgainstControversies]);
 
   const maxValue = Math.max(
     1,
