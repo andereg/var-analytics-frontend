@@ -60,4 +60,7 @@ export interface Club {
 
     againstControversies: Controversy[];
     forControversies: Controversy[];
+
+    currentSeasonAgainstControversies: Controversy[];
+    currentSeasonForControversies: Controversy[];
 }

@@ -20,7 +20,7 @@ import {Link2} from "lucide-react";
 import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-import type {Club, Competition, Season} from "@/api/types";
+import {Club, Competition, Controversy, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
 import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
@@ -37,9 +37,45 @@ export default function ClubControversiesList() {
 
     const [club, setClub] = useState<Club | null>(null);
     const [seasons, setSeason] = useState<Season[] | null>(null);
+    const [selectedSeason, setSelectedSeason] = React.useState<string>("all");
+
     const [competitions, setCompetition] = useState<Competition[] | null>(null);
+    const [selectedCompetition, setSelectedCompetition] = React.useState<string>("all");
+
     const [loading, setLoading] = useState(true);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+    const currentSeasonForControversies = React.useMemo(() => {
+        const all = club?.forControversies ?? [];
+
+        if (selectedSeason === "all" && selectedCompetition === "all") return all;
+
+        const seasonId = Number(selectedSeason);
+        const competitionId = Number(selectedCompetition);
+
+        if (selectedSeason === "all") {
+            return all.filter(c => c.competition?.id === competitionId);
+        }
+        if (selectedCompetition === "all") {
+            return all.filter(c => c.season?.id === seasonId);
+        }
+
+        return all.filter(
+            c => c.season?.id === seasonId && c.competition?.id === competitionId
+        );
+    }, [club, selectedSeason, selectedCompetition]);
+
+    const onSeasonChange = (keys: any) => {
+        const key = Array.from(keys)[0] as string;
+        if (typeof key === "undefined") setSelectedSeason("all");
+        else setSelectedSeason(key);
+    };
+
+    const onCompetitionChange = (keys: any) => {
+        const key = Array.from(keys)[0] as string;
+        if (typeof key === "undefined") setSelectedCompetition("all");
+        else setSelectedCompetition(key);
+    };
 
     useEffect(() => {
         let mounted = true;
@@ -130,17 +166,20 @@ export default function ClubControversiesList() {
 
 
                                 <Select variant="bordered" className="ml-auto max-w-30 mr-5" label="Season"
-                                        style={{minWidth: "140px"}}>
+                                        style={{minWidth: "140px"}}
+                                        onSelectionChange={onSeasonChange}
+                                >
                                     {seasons.map((season) => (
-                                        <SelectItem key={season.id}>{season.seasonName}</SelectItem>
+                                        <SelectItem key={season.id.toString()}>{season.seasonName}</SelectItem>
                                     ))}
                                 </Select>
 
                                 <Select variant="bordered" className="max-w-45 mr-10" label="Competition"
-                                        style={{minWidth: "220px"}}>
-
+                                        style={{minWidth: "220px"}}
+                                        onSelectionChange={onCompetitionChange}
+                                >
                                     {competitions.map((competition) => (
-                                        <SelectItem key={competition.id}>{competition.name}</SelectItem>
+                                        <SelectItem key={competition.id.toString()}>{competition.name}</SelectItem>
                                     ))}
                                 </Select>
                             </div>
@@ -189,12 +228,12 @@ export default function ClubControversiesList() {
                         <CardBody className="p-6">
                             <div>
                                 <div className="mb-2 text-lg font-medium">
-                                    {club.forControversies?.length ?? 0} benefited decisions
+                                    {currentSeasonForControversies?.length ?? 0} benefited decisions
                                 </div>
                                 <Divider className="my-1"/>
 
                                 <Listbox aria-label="club controversies" variant="bordered">
-                                    {(club.forControversies ?? []).map((c) => (
+                                    {(currentSeasonForControversies ?? []).map((c) => (
                                         <ListboxItem key={c.id} textValue={c.description}>
                                             <div className="flex items-start gap-4 mt-2 mb-2">
                                                 {/* opponent (victim) */}
