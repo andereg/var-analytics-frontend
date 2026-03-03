@@ -33,11 +33,11 @@ const TrendCard = ({
                 </div>
 
                 <Chip
-                    className={cn("absolute right-4", {
+                    className={cn("absolute right-3", {
                         "top-4": trendChipPosition === "top",
                         "bottom-4": trendChipPosition === "bottom",
                     })}
-                    classNames={{ content: "font-medium text-[1.1rem]" }}
+                    classNames={{ content: "font-medium text-[1.2rem]" }}
                     color={changeType === "positive" ? "success" : changeType === "neutral" ? "warning" : "danger"}
                     radius="sm"
                     size="sm"
@@ -59,14 +59,6 @@ const TrendCard = ({
     );
 };
 
-function formatMoney(n?: number) {
-    if (typeof n !== "number") return "—";
-    return n.toLocaleString(undefined, { style: "currency", currency: "usd", maximumFractionDigits: 0 });
-}
-function formatInt(n?: number) {
-    if (typeof n !== "number") return "—";
-    return n.toLocaleString();
-}
 function toTrendType(changePct?: number): TrendCardProps["trendType"] {
     if (typeof changePct !== "number") return "neutral";
     if (changePct > 0) return "up";
@@ -78,11 +70,6 @@ function toChangeType(changePct?: number): TrendCardProps["changeType"] {
     if (changePct > 0) return "positive";
     if (changePct < 0) return "negative";
     return "neutral";
-}
-function formatPct(changePct?: number) {
-    if (typeof changePct !== "number") return "—";
-    const sign = changePct > 0 ? "+" : "";
-    return `${sign}${changePct.toFixed(1)}%`;
 }
 
 function getMostFrequentMainReferee(controversies: Controversy[]) {

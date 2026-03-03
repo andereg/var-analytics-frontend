@@ -257,12 +257,13 @@ export default function ClubControversiesList() {
                               currentSeasonForControversies={currentSeasonForControversies}/>
                 </div>
                 {/* list for */}
-                <div className="mx-auto w-full max-w-4xl mb-4">
+                {currentSeasonForControversies?.length > 0 && (
+                    <div className="mx-auto w-full max-w-4xl mb-4">
                     <Card className="rounded-2xl shadow-xl">
                         <CardBody className="p-6">
                             <div>
                                 <div className="mb-2 text-lg font-medium">
-                                    {currentSeasonForControversies?.length ?? 0} benefited decisions
+                                    {currentSeasonForControversies?.length ?? 0} benefited {currentSeasonForControversies?.length == 1 ? "decision" : "decisions"}
                                 </div>
                                 <Divider className="my-1"/>
                                 <ListBoxControversies controversies={currentSeasonForControversies}/>
@@ -271,13 +272,15 @@ export default function ClubControversiesList() {
                         </CardBody>
                     </Card>
                 </div>
+                )}
                 {/* list against */}
-                <div className="mx-auto w-full max-w-4xl mb-4">
+                {currentSeasonAgainstControversies?.length > 0 && (
+                <div className="mx-auto w-full max-w-4xl mb-4" >
                     <Card className="rounded-2xl shadow-xl">
                         <CardBody className="p-6">
                             <div>
                                 <div className="mb-2 text-lg font-medium">
-                                    {currentSeasonAgainstControversies?.length ?? 0} decisions against
+                                    {currentSeasonAgainstControversies?.length ?? 0} {currentSeasonAgainstControversies?.length == 1 ? "decision" : "decisions"} against
                                 </div>
                                 <Divider className="my-1"/>
 
@@ -286,6 +289,7 @@ export default function ClubControversiesList() {
                         </CardBody>
                     </Card>
                 </div>
+                )}
             </div>
         </div>
     )
