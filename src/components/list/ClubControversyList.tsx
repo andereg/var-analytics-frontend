@@ -25,6 +25,7 @@ import {DIndexKpi} from "@/components/charts/DIndex";
 import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
 import ControversyCircleChart from "@/components/charts/CircleChart";
+import {ListBoxControversies} from "@/components/list/ListBoxControversies";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -212,13 +213,15 @@ export default function ClubControversiesList() {
                     <Card className="rounded-2xl shadow-sm">
                         <CardBody>
                             <h3 className="text-lg font-semibold text-gray-500 ml-2">Fairness Index</h3>
-                            <DIndexKpi currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
+                            <DIndexKpi currentSeasonAgainstControversies={currentSeasonAgainstControversies}
+                                       currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     <Card className="rounded-2xl shadow-sm md:col-span-2 md:row-span-2">
                         <CardBody>
                             <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
-                            <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
+                            <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies}
+                                                   currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     <Card className="rounded-2xl shadow-sm">
@@ -228,7 +231,9 @@ export default function ClubControversiesList() {
                                     Ratio
                                 </h3>
                             </div>
-                            <ControversyCircleChart currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
+                            <ControversyCircleChart
+                                currentSeasonAgainstControversies={currentSeasonAgainstControversies}
+                                currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
                     {/*<Card className="rounded-2xl shadow-sm md:col-span-3 md:row-span-1">*/}
@@ -240,7 +245,8 @@ export default function ClubControversiesList() {
                 </div>
 
                 <div className="mx-auto w-full max-w-4xl mb-4">
-                    <KPIStats currentSeasonAgainstControversies={currentSeasonAgainstControversies} currentSeasonForControversies={currentSeasonForControversies}/>
+                    <KPIStats currentSeasonAgainstControversies={currentSeasonAgainstControversies}
+                              currentSeasonForControversies={currentSeasonForControversies}/>
                 </div>
                 {/* list for */}
                 <div className="mx-auto w-full max-w-4xl mb-4">
@@ -251,121 +257,27 @@ export default function ClubControversiesList() {
                                     {currentSeasonForControversies?.length ?? 0} benefited decisions
                                 </div>
                                 <Divider className="my-1"/>
+                                <ListBoxControversies controversies={currentSeasonForControversies}/>
 
-                                <Listbox aria-label="club controversies" variant="bordered">
-                                    {(currentSeasonForControversies ?? []).map((c) => (
-                                        <ListboxItem key={c.id} textValue={c.description}>
-                                            <div className="flex items-start gap-4 mt-2 mb-2">
-                                                {/* opponent (victim) */}
-                                                <div className="flex items-center">
-                                                    <img
-                                                        src={c.beneficiary?.logo}
-                                                        alt="second"
-                                                        className="mt-5 w-10 h-10 border-0 object-contain"
-                                                    />
-                                                    <img
-                                                        src={c.victim?.logo}
-                                                        alt="first"
-                                                        className="-ml-5 mt-5 w-10 h-10 border-0 z-10 object-contain"
-                                                    />
-                                                </div>
-
-                                                <div className="min-w-0 flex-1">
-                                                    <div className="flex flex-wrap items-center gap-2">
-                                                    <span className="text-sm font-semibold">
-                                                       {c.beneficiary?.name} vs {c.victim?.name}
-                                                    </span>
-
-                                                        <Chip className="ml-auto" size="sm"
-                                                              variant="bordered"
-                                                              color="secondary">
-                                                            {c.controversyType?.code}
-                                                        </Chip>
-                                                        <Chip size="sm" variant="bordered">
-                                                            {formatDate(c.date)}
-                                                        </Chip>
-                                                    </div>
-
-                                                    <p className="mt-1 line-clamp-2 text-sm text-gray-700">
-                                                        {c.description}
-                                                    </p>
-
-                                                    <div className="mt-2 flex items-center gap-2">
-                                                        <div className="flex gap-4">
-                                                            <Chip
-                                                                avatar={<Avatar
-                                                                    src={c.competition?.logo}
-                                                                    name={c.competition?.name}
-                                                                />}
-                                                                variant="bordered"
-                                                            >
-                                                            <span className="text-xs text-gray-600 ml-1">
-                                                            {c.competition?.name}
-                                                            </span>
-                                                            </Chip>
-                                                        </div>
-
-
-                                                        <Link href={c.referenceLink} isExternal>
-                                                            <Chip className="pl-2" color="primary"
-                                                                  startContent={<Link2 size={18}/>}
-                                                                  variant="faded">
-                                                            <span className="text-xs text-gray-600">
-                                                            ArchivoVar
-                                                            </span>
-                                                            </Chip>
-                                                        </Link>
-
-                                                        <Link href={"/referee/" + c.mainReferee?.id}>
-                                                            <div className="flex gap-4">
-                                                                <Chip
-                                                                    avatar={
-                                                                        <Avatar
-                                                                            classNames={{
-                                                                                base: "bg-white",
-                                                                                icon: "text-default-400",
-                                                                            }}
-                                                                            icon={<AvatarIcon />}
-                                                                        />}
-                                                                    variant="bordered"
-                                                                >
-                                                                <span className="text-xs text-gray-600 ml-1">
-                                                                {c.mainReferee?.name} {c.mainReferee?.surname}
-                                                                </span>
-                                                                </Chip>
-                                                            </div>
-                                                        </Link>
-                                                        <Link href={"/referee/" + c.varReferee?.id}>
-                                                            <div className="flex gap-4">
-                                                                <Chip
-                                                                    avatar={
-                                                                    <Avatar
-                                                                        classNames={{
-                                                                            base: "bg-white",
-                                                                            icon: "text-default-400",
-                                                                        }}
-                                                                        icon={<AvatarIcon />}
-                                                                    />}
-                                                                    variant="bordered"
-                                                                >
-                                                                <span className="text-xs text-gray-600 ml-1">
-                                                                {c.varReferee?.name} {c.varReferee?.surname} (VAR)
-                                                                </span>
-                                                                </Chip>
-                                                            </div>
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ListboxItem>
-                                    ))}
-                                </Listbox>
                             </div>
                         </CardBody>
                     </Card>
-
                 </div>
                 {/* list against */}
+                <div className="mx-auto w-full max-w-4xl mb-4">
+                    <Card className="rounded-2xl shadow-xl">
+                        <CardBody className="p-6">
+                            <div>
+                                <div className="mb-2 text-lg font-medium">
+                                    {currentSeasonAgainstControversies?.length ?? 0} decisions against
+                                </div>
+                                <Divider className="my-1"/>
+
+                                <ListBoxControversies controversies={currentSeasonAgainstControversies}/>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
             </div>
         </div>
     )

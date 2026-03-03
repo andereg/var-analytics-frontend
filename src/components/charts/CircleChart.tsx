@@ -33,7 +33,7 @@ const CircleChartCard = React.forwardRef<
 >(({ className, title, categories, color, chartData, ...props }, ref) => {
     return (
 
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center overflow-hidden">
                 <ResponsiveContainer
                 className="[&_.recharts-surface]:outline-hidden" height={200} width="100%">
                     <PieChart accessibilityLayer margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
