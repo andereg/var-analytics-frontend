@@ -2,20 +2,13 @@ import React, {useEffect, useState} from "react";
 import {
     Card,
     CardBody,
-    Avatar,
-    AvatarIcon,
-    Listbox,
-    ListboxItem,
     Chip,
-    Link,
     Spinner,
     Select,
     SelectItem,
     Divider
 } from "@heroui/react";
-import {ClubPieChart} from "@/components/charts/ClubPieChart";
 import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
-import {Link2} from "lucide-react";
 
 import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
@@ -27,10 +20,6 @@ import KPIStats from "@/components/charts/KPIStats";
 import ControversyCircleChart from "@/components/charts/CircleChart";
 import {ListBoxControversies} from "@/components/list/ListBoxControversies";
 
-function formatDate(iso: string) {
-    // "2025-09-21T00:00:00" -> "2025-09-21"
-    return iso?.split("T")?.[0] ?? iso;
-}
 
 
 export default function ClubControversiesList() {
@@ -119,9 +108,26 @@ export default function ClubControversiesList() {
 
                 if (!mounted) return;
 
+                const forC = clubData?.forControversies ?? [];
+                const againstC = clubData?.againstControversies ?? [];
+                const allC = [...forC, ...againstC];
+                // collect ids that exist in the controversies
+                const seasonIds = new Set<number>(
+                    allC.map(c => c.season?.id).filter((id): id is number => typeof id === "number")
+                );
+
+                const competitionIds = new Set<number>(
+                    allC.map(c => c.competition?.id).filter((id): id is number => typeof id === "number")
+                );
+
+                // filter your dropdown options
+                const seasonsWithData = (seasons ?? []).filter(s => seasonIds.has(s.id));
+                const competitionsWithData = (competitions ?? []).filter(c => competitionIds.has(c.id));
+
+
                 setClub(clubData);
-                setSeason(seasons);
-                setCompetition(competitions);
+                setSeason(seasonsWithData);
+                setCompetition(competitionsWithData);
 
             } catch (e: any) {
                 if (!mounted) return;
@@ -189,6 +195,7 @@ export default function ClubControversiesList() {
                                 <Select variant="bordered" className="ml-auto max-w-30 mr-5" label="Season"
                                         style={{minWidth: "140px"}}
                                         onSelectionChange={onSeasonChange}
+                                        placeholder="All Seasons"
                                 >
                                     {seasons.map((season) => (
                                         <SelectItem key={season.id.toString()}>{season.seasonName}</SelectItem>
@@ -198,6 +205,7 @@ export default function ClubControversiesList() {
                                 <Select variant="bordered" className="max-w-45 mr-10" label="Competition"
                                         style={{minWidth: "220px"}}
                                         onSelectionChange={onCompetitionChange}
+                                        placeholder="All Competitions"
                                 >
                                     {competitions.map((competition) => (
                                         <SelectItem key={competition.id.toString()}>{competition.name}</SelectItem>

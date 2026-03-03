@@ -11,30 +11,30 @@ function formatDate(iso: string) {
 export function ListBoxControversies({ controversies }: { controversies: any }) {
         return (
             <Listbox aria-label="club controversies" variant="flat" selectionMode={"none"}
-                     shouldFocusOnHover={false}>
+                     shouldFocusOnHover={false}
+            >
                 {(controversies ?? []).map((c) => (
                     <ListboxItem key={c.id} textValue={c.description}
                     >
                         <div className="flex items-start gap-4 mt-2 mb-2">
-                            {/* opponent (victim) */}
                             <div className="flex items-center">
                                 <img
                                     src={c.beneficiary?.logo}
-                                    alt="second"
-                                    className="mt-5 w-10 h-10 border-0 object-contain"
+                                    alt="first"
+                                    className="mt-5 w-10 h-10 border-0 z-10 object-contain"
                                 />
                                 <img
                                     src={c.victim?.logo}
-                                    alt="first"
-                                    className="-ml-5 mt-5 w-10 h-10 border-0 z-10 object-contain"
+                                    alt="second"
+                                    className="-ml-5 mt-5 w-10 h-10 border-0 object-contain"
                                 />
                             </div>
 
                             <div className="min-w-0 flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
-<span className="text-sm font-semibold">
-    {c.beneficiary?.name} vs {c.victim?.name}
-</span>
+                                    <span className="text-sm font-semibold">
+                                        {c.beneficiary?.name} vs {c.victim?.name}
+                                    </span>
 
                                     <Chip className="ml-auto" size="sm"
                                           variant="bordered"

@@ -166,36 +166,55 @@ export default function KPIStats({
     const mostFrequentAdvantagousVARReferee = getMostFrequentVarReferee(currentSeasonForControversies ?? []);
     const mostFrequentDisadvantagousVARReferee = getMostFrequentVarReferee(currentSeasonAgainstControversies ?? []);
 
-    const cards: TrendCardProps[] = [
-        {
-            title: "Most for decisions",
-            value: mostFrequentAdvantagousReferee.referee?.name + " " + mostFrequentAdvantagousReferee.referee?.surname,
+    const cards: TrendCardProps[] = [];
+    if (mostFrequentAdvantagousReferee.referee !== null){
+        cards.push({
+            title: "Most for (On-Field)",
+            value:
+                mostFrequentAdvantagousReferee.referee?.name +
+                " " +
+                mostFrequentAdvantagousReferee.referee?.surname,
             change: mostFrequentAdvantagousReferee.count,
             changeType: toChangeType(1),
             trendType: toTrendType(1),
-        },
-        {
-            title: "Most against decisions",
-            value: mostFrequentDisadvantagousReferee.referee?.name + " " + mostFrequentDisadvantagousReferee.referee?.surname,
+        });
+    }
+    if (mostFrequentDisadvantagousReferee.referee !== null){
+        cards.push({
+            title: "Most against (On-Field)",
+            value:
+                mostFrequentDisadvantagousReferee.referee?.name +
+                " " +
+                mostFrequentDisadvantagousReferee.referee?.surname,
             change: mostFrequentDisadvantagousReferee.count,
             changeType: toChangeType(-1),
             trendType: toTrendType(-1),
-        },
-        {
+        });
+    }
+    if (mostFrequentAdvantagousVARReferee.referee !== null){
+        cards.push({
             title: "Most for (VAR)",
-            value: mostFrequentAdvantagousVARReferee.referee?.name + " " + mostFrequentAdvantagousVARReferee.referee?.surname,
+            value:
+                mostFrequentAdvantagousVARReferee.referee?.name +
+                " " +
+                mostFrequentAdvantagousVARReferee.referee?.surname,
             change: mostFrequentAdvantagousVARReferee.count,
             changeType: toChangeType(1),
             trendType: toTrendType(1),
-        },
-        {
+        });
+    }
+    if (mostFrequentDisadvantagousVARReferee.referee !== null){
+        cards.push({
             title: "Most against (VAR)",
-            value: mostFrequentDisadvantagousVARReferee.referee?.name + " " + mostFrequentDisadvantagousVARReferee.referee?.surname,
+            value:
+                mostFrequentDisadvantagousVARReferee.referee?.name +
+                " " +
+                mostFrequentDisadvantagousVARReferee.referee?.surname,
             change: mostFrequentDisadvantagousVARReferee.count,
             changeType: toChangeType(-1),
             trendType: toTrendType(-1),
-        },
-    ];
+        });
+    }
 
     return (
         <dl className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
