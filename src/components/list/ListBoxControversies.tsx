@@ -52,16 +52,18 @@ export function ListBoxControversies({ controversies }: { controversies: any }) 
 
                                 <div className="mt-2 flex items-center gap-2">
                                     <div className="flex gap-4">
+
                                         <Chip
-                                            avatar={<Avatar
-                                                src={c.competition?.logo}
-                                                name={c.competition?.name}
-                                            />}
-                                            variant="bordered"
-                                        >
-<span className="text-xs text-gray-600 ml-1">
-    {c.competition?.name}
-    </span>
+                                            avatar={
+                                                <img
+                                                    src={c.competition?.logo}
+                                                    className="w-14 h-14"
+                                        />}
+                                        variant="bordered"
+                                            >
+                                            <span className="text-xs text-gray-600">
+                                                {c.competition?.name}
+                                                </span>
                                         </Chip>
                                     </div>
 
