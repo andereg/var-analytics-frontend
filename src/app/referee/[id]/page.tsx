@@ -14,7 +14,7 @@ import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
 import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-import {Club, Competition, Controversy, Season} from "@/api/types";
+import {Club, Competition, Controversy, Referee, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
 import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
@@ -29,7 +29,7 @@ export default function ClubPage() {
 
     const REFEREE_ID = params.id;
 
-    const [club, setClub] = useState<Club | null>(null);
+    const [referee, setReferee] = useState<Referee | null>(null);
     const [seasons, setSeason] = useState<Season[] | null>(null);
     const [selectedSeason, setSelectedSeason] = React.useState<string>("all");
 
@@ -39,8 +39,8 @@ export default function ClubPage() {
     const [loading, setLoading] = useState(true);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-    const currentSeasonForControversies = React.useMemo(() => {
-        const all = club?.forControversies ?? [];
+    const currentSeasonMainControversies = React.useMemo(() => {
+        const all = referee?.mainRefereeControversies ?? [];
 
         if (selectedSeason === "all" && selectedCompetition === "all") return all;
 
@@ -57,10 +57,10 @@ export default function ClubPage() {
         return all.filter(
             c => c.season?.id === seasonId && c.competition?.id === competitionId
         );
-    }, [club, selectedSeason, selectedCompetition]);
+    }, [referee, selectedSeason, selectedCompetition]);
 
-    const currentSeasonAgainstControversies = React.useMemo(() => {
-        const all = club?.againstControversies ?? [];
+    const currentSeasonVarControversies = React.useMemo(() => {
+        const all = referee?.varRefereeControversies ?? [];
 
         if (selectedSeason === "all" && selectedCompetition === "all") return all;
 
@@ -77,7 +77,7 @@ export default function ClubPage() {
         return all.filter(
             c => c.season?.id === seasonId && c.competition?.id === competitionId
         );
-    }, [club, selectedSeason, selectedCompetition]);
+    }, [referee, selectedSeason, selectedCompetition]);
 
     const onSeasonChange = (keys: any) => {
         const key = Array.from(keys)[0] as string;
@@ -99,12 +99,7 @@ export default function ClubPage() {
                 setLoading(true);
                 setErrorMsg(null);
 
-                const data = await getRefereeById(REFEREE_ID);
-                if (!mounted) return;
-
-                setClub(data);
-
-                const [clubData, seasons, competitions] = await Promise.all([
+                const [refereeData, seasons, competitions] = await Promise.all([
                     getRefereeById(REFEREE_ID),
                     getSeasons(),
                     getCompetitions(),
@@ -112,8 +107,8 @@ export default function ClubPage() {
 
                 if (!mounted) return;
 
-                const forC = clubData?.forControversies ?? [];
-                const againstC = clubData?.againstControversies ?? [];
+                const forC = refereeData?.mainRefereeControversies ?? [];
+                const againstC = refereeData?.varRefereeControversies ?? [];
                 const allC = [...forC, ...againstC];
                 // collect ids that exist in the controversies
                 const seasonIds = new Set<number>(
@@ -124,12 +119,12 @@ export default function ClubPage() {
                     allC.map(c => c.competition?.id).filter((id): id is number => typeof id === "number")
                 );
 
-                // filter your dropdown options
+                // filter dropdown options
                 const seasonsWithData = (seasons ?? []).filter(s => seasonIds.has(s.id));
                 const competitionsWithData = (competitions ?? []).filter(c => competitionIds.has(c.id));
 
 
-                setClub(clubData);
+                setReferee(refereeData);
                 setSeason(seasonsWithData);
                 setCompetition(competitionsWithData);
 
@@ -164,7 +159,7 @@ export default function ClubPage() {
         );
     }
 
-    if (!club) return null;
+    if (!referee) return null;
 
     return (
         <div className="min-h-screen bg-stone-100 p-6">
@@ -176,23 +171,15 @@ export default function ClubPage() {
                             {/* header */}
                             <div className="flex items-center gap-3">
                                 <img
-                                    src={club.logo}
+                                    src={referee.logo}
                                     className="w-20 h-20 object-contain"
                                 />
                                 <div>
                                     <div className="flex items-center">
-                                        <h2 className="text-xl font-semibold">{club.name}</h2>
-                                        <Chip
-                                            classNames={{
-                                                base: "ml-3 mt-0 bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-400/15",
-                                                content: "drop-shadow-xs shadow-white text-white",
-                                            }}
-                                        >
-                                            {club.abbreviation}
-                                        </Chip>
+                                        <h2 className="text-xl font-semibold">{referee.name} {referee.surname} </h2>
                                     </div>
 
-                                    <p className="text-sm text-gray-300 mt-2">{club.description}</p>
+                                    {/*<p className="text-sm text-gray-300 mt-2">{club.description}</p>*/}
                                 </div>
 
 
@@ -225,16 +212,16 @@ export default function ClubPage() {
                     <Card className="rounded-2xl shadow-sm">
                         <CardBody>
                             <h3 className="text-lg font-semibold text-gray-500 ml-2">Fairness Index</h3>
-                            <DIndexKpi currentSeasonAgainstControversies={currentSeasonAgainstControversies}
-                                       currentSeasonForControversies={currentSeasonForControversies}/>
+                            <DIndexKpi currentSeasonAgainstControversies={currentSeasonMainControversies}
+                                       currentSeasonMainControversies={currentSeasonVarControversies}/>
                         </CardBody>
                     </Card>
                     <div className="md:col-span-2 md:row-span-2">
                         <Card className="rounded-2xl shadow-sm h-fit mb-2">
                             <CardBody>
                                 <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
-                                <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies}
-                                                       currentSeasonForControversies={currentSeasonForControversies}/>
+                                <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonMainControversies}
+                                                       currentSeasonMainControversies={currentSeasonVarControversies}/>
                             </CardBody>
                         </Card>
                         <Card className="rounded-2xl shadow-sm h-fit">
@@ -252,8 +239,8 @@ export default function ClubPage() {
                                 </h3>
                             </div>
                             <ControversyCircleChart
-                                currentSeasonAgainstControversies={currentSeasonAgainstControversies}
-                                currentSeasonForControversies={currentSeasonForControversies}/>
+                                currentSeasonAgainstControversies={currentSeasonMainControversies}
+                                currentSeasonMainControversies={currentSeasonVarControversies}/>
                         </CardBody>
                     </Card>
                     {/*<Card className="rounded-2xl shadow-sm md:col-span-3 md:row-span-1">*/}
@@ -265,20 +252,20 @@ export default function ClubPage() {
                 </div>
 
                 <div className="mx-auto w-full max-w-4xl mb-4">
-                    <KPIStats currentSeasonAgainstControversies={currentSeasonAgainstControversies}
-                              currentSeasonForControversies={currentSeasonForControversies}/>
+                    <KPIStats currentSeasonAgainstControversies={currentSeasonMainControversies}
+                              currentSeasonMainControversies={currentSeasonVarControversies}/>
                 </div>
                 {/* list for */}
-                {currentSeasonForControversies?.length > 0 && (
+                {currentSeasonMainControversies?.length > 0 && (
                     <div className="mx-auto w-full max-w-4xl mb-4">
                         <Card className="rounded-2xl shadow-xl">
                             <CardBody className="p-6">
                                 <div>
                                     <div className="mb-2 text-lg font-medium">
-                                        {currentSeasonForControversies?.length ?? 0} benefited {currentSeasonForControversies?.length == 1 ? "decision" : "decisions"}
+                                        {currentSeasonMainControversies?.length ?? 0} On-Field {currentSeasonMainControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
                                     <Divider className="my-1"/>
-                                    <ListBoxControversies controversies={currentSeasonForControversies}/>
+                                    <ListBoxControversies controversies={currentSeasonMainControversies}/>
 
                                 </div>
                             </CardBody>
@@ -286,17 +273,17 @@ export default function ClubPage() {
                     </div>
                 )}
                 {/* list against */}
-                {currentSeasonAgainstControversies?.length > 0 && (
+                {currentSeasonVarControversies?.length > 0 && (
                     <div className="mx-auto w-full max-w-4xl mb-4" >
                         <Card className="rounded-2xl shadow-xl">
                             <CardBody className="p-6">
                                 <div>
                                     <div className="mb-2 text-lg font-medium">
-                                        {currentSeasonAgainstControversies?.length ?? 0} {currentSeasonAgainstControversies?.length == 1 ? "decision" : "decisions"} against
+                                        {currentSeasonVarControversies?.length ?? 0} VAR {currentSeasonVarControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
                                     <Divider className="my-1"/>
 
-                                    <ListBoxControversies controversies={currentSeasonAgainstControversies}/>
+                                    <ListBoxControversies controversies={currentSeasonVarControversies}/>
                                 </div>
                             </CardBody>
                         </Card>

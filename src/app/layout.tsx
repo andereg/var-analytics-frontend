@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <NavbarItem>
                     <Button
                         as={Link}
-                        href="/club/40"
+                        href="/club/24"
                         radius="full"
                         color="primary"
                         variant="light"
@@ -86,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <NavbarItem>
                     <Button
                         as={Link}
-                        href="/club/15"
+                        href="/club/13"
                         radius="full"
                         color="primary"
                         variant="light"
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <NavbarItem>
                     <Button
                         as={Link}
-                        href="/club/65"
+                        href="/club/75"
                         radius="full"
                         color="primary"
                         variant="light"

@@ -38,16 +38,27 @@ export interface Controversy {
     season: Season;
     controversyType: ControversyType;
 
-    mainReferee: Referee;
-    varReferee: Referee;
-    firstAssistantReferee: Referee;
-    secondAssistantReferee: Referee;
+    mainReferee: RefereeBase;
+    varReferee: RefereeBase;
+    firstAssistantReferee: RefereeBase;
+    secondAssistantReferee: RefereeBase;
+}
+
+export interface RefereeBase {
+    id: number;
+    name: string;
+    surname: string;
 }
 
 export interface Referee {
     id: number;
     name: string;
     surname: string;
+
+    mainRefereeControversies: Controversy[];
+    varRefereeControversies: Controversy[];
+    firstAssistantRefereeControversies: Controversy[];
+    secondAssistantRefereeControversies: Controversy[];
 }
 
 // Main Club Interface (for full object)

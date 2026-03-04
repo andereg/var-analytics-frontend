@@ -118,7 +118,7 @@ export default function ClubPage() {
                     allC.map(c => c.competition?.id).filter((id): id is number => typeof id === "number")
                 );
 
-                // filter your dropdown options
+                // filter dropdown options
                 const seasonsWithData = (seasons ?? []).filter(s => seasonIds.has(s.id));
                 const competitionsWithData = (competitions ?? []).filter(c => competitionIds.has(c.id));
 

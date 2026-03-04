@@ -3,7 +3,7 @@
 import React from "react";
 import { Card, Chip, cn } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import {Controversy, Referee} from "@/api/types";
+import {Controversy, RefereeBase} from "@/api/types";
 
 type TrendCardProps = {
     title: string;
@@ -91,7 +91,7 @@ function getMostFrequentMainReferee(controversies: Controversy[]) {
         }
     }
 
-    let top: { referee: Referee | null; count: number } = {
+    let top: { referee: RefereeBase | null; count: number } = {
         referee: null,
         count: 0,
     };
@@ -106,7 +106,7 @@ function getMostFrequentMainReferee(controversies: Controversy[]) {
 }
 
 function getMostFrequentVarReferee(controversies: Controversy[]) {
-    const countMap = new Map<number, { referee: Referee; count: number }>();
+    const countMap = new Map<number, { referee: RefereeBase; count: number }>();
 
     for (const c of controversies) {
         const referees = [
@@ -124,7 +124,7 @@ function getMostFrequentVarReferee(controversies: Controversy[]) {
         }
     }
 
-    let top: { referee: Referee | null; count: number } = {
+    let top: { referee: RefereeBase | null; count: number } = {
         referee: null,
         count: 0,
     };
