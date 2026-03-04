@@ -1,22 +1,7 @@
 import React, { useMemo } from "react";
-import { Chip } from "@heroui/react";
+import {Chip, Progress, Tooltip} from "@heroui/react";
 import {Controversy} from "@/api/types";
 
-function Bar({ value, max, color }: { value: number; max: number; color: string }) {
-  const width = max > 0 ? (value / max) * 100 : 0;
-
-  return (
-    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-      <div
-        className="h-full rounded-full"
-        style={{
-          width: `${width}%`,
-          backgroundColor: color,
-        }}
-      />
-    </div>
-  );
-}
 
 type Props = {
     currentSeasonForControversies: Controversy[];
@@ -48,52 +33,45 @@ export function DecisionTypeBreakdown({
     return map;
   }, [currentSeasonForControversies, currentSeasonAgainstControversies]);
 
-  const maxValue = Math.max(
-    1,
-    ...Object.values(data).flatMap((d) => [d.for, d.against])
-  );
-
-  function StackedBar({
-                        forValue,
-                        againstValue,
-                      }: {
-    forValue: number;
-    againstValue: number;
-  }) {
-    const total = forValue + againstValue;
-    const forWidth = total > 0 ? (forValue / total) * 100 : 0;
-    const againstWidth = total > 0 ? (againstValue / total) * 100 : 0;
-
-    return (
-        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden flex">
-          <div
-              style={{ width: `${forWidth}%` }}
-              className="bg-[#3F51B5]"
-          />
-          <div
-              style={{ width: `${againstWidth}%` }}
-              className="bg-[#FF2E7E]"
-          />
-        </div>
-    );
-  }
 
   return (
-    <div className="space-y-4 ml-2 mt-2 mb-2 mr-1">
+    <div className="space-y-4 ml-0 mt-2 mb-0 mr-0">
       {Object.entries(data).map(([decision, counts]) => (
-          <div className="grid grid-cols-4 gap-4">
-            <span className="text-xs text-gray-600">{decision}
-            </span>
-            <div className="flex ml-auto text-xs items-center">
-              <span className="text-gray-600 flex">for: <span className="text-[#3F51B5]">{counts.for}</span></span>
-              <span className="ml-1 text-gray-600 flex">against: <span className="text-[#FF2E7E]">{counts.against}</span></span>
-            </div>
-            <div className="col-span-2 flex items-center">
-              <StackedBar
-                  forValue={counts.for}
-                  againstValue={counts.against}
-              />
-            </div>
+          <div className="grid grid-cols-3 mb-1 gap-2 border-2 border-gray-300/10 rounded-md p-2">
+              <Chip
+                   size="sm"
+                   variant="bordered"
+                   radius="sm"
+                >
+                  {decision}
+              </Chip>
+              <div className="col-span-2 flex items-center">
+                  <Tooltip
+                      content={`${counts.for} for | ${counts.for + counts.against} against`}
+                      placement="top"
+                  >
+                      <div className="w-full">
+                          <Progress
+                              aria-label={decision}
+                              maxValue={counts.for + counts.against}
+                              value={counts.for}
+                              color="warning"
+                              size="sm"
+                              classNames={{
+                                  track: "bg-emerald-500"
+                              }}
+                          />
+                          <div className="flex justify-between mt-1">
+                            <span className="text-gray-500 text-xs ml-1">
+                              {counts.for}
+                            </span>
+                              <span className="text-gray-500 text-xs mr-1">
+                              {counts.against}
+                            </span>
+                          </div>
+                      </div>
+                  </Tooltip>
+              </div>
           </div>
       ))}
     </div>

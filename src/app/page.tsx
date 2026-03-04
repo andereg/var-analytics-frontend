@@ -1,12 +1,12 @@
 "use client";
 
 import ClubControversiesList from "@/components/list/ClubControversyList";
-
+import React from "react";
 
 export default function Home() {
   return (
       <div>
-          <ClubControversiesList />
+            Home sweet home
           </div>
      )
 }

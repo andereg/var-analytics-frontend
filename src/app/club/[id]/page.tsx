@@ -1,3 +1,4 @@
+"use client";
 import React, {useEffect, useState} from "react";
 import {
     Card,
@@ -19,11 +20,13 @@ import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
 import ControversyCircleChart from "@/components/charts/CircleChart";
 import {ListBoxControversies} from "@/components/list/ListBoxControversies";
+import { useParams } from "next/navigation";
 
 
+export default function ClubPage() {
+    const params = useParams<{ id: string }>();
 
-export default function ClubControversiesList() {
-    const CLUB_ID = 36;
+    const CLUB_ID = params.id;
 
     const [club, setClub] = useState<Club | null>(null);
     const [seasons, setSeason] = useState<Season[] | null>(null);
@@ -94,11 +97,6 @@ export default function ClubControversiesList() {
             try {
                 setLoading(true);
                 setErrorMsg(null);
-
-                const data = await getClubById(CLUB_ID);
-                if (!mounted) return;
-
-                setClub(data);
 
                 const [clubData, seasons, competitions] = await Promise.all([
                     getClubById(CLUB_ID),
@@ -225,13 +223,21 @@ export default function ClubControversiesList() {
                                        currentSeasonForControversies={currentSeasonForControversies}/>
                         </CardBody>
                     </Card>
-                    <Card className="rounded-2xl shadow-sm md:col-span-2 md:row-span-2">
-                        <CardBody>
-                            <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
-                            <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies}
-                                                   currentSeasonForControversies={currentSeasonForControversies}/>
-                        </CardBody>
-                    </Card>
+                    <div className="md:col-span-2 md:row-span-2">
+                        <Card className="rounded-2xl shadow-sm h-fit mb-2">
+                            <CardBody>
+                                <h3 className="text-lg font-semibold text-gray-500 ml-2">Decisions by Type</h3>
+                                <DecisionTypeBreakdown currentSeasonAgainstControversies={currentSeasonAgainstControversies}
+                                                       currentSeasonForControversies={currentSeasonForControversies}/>
+                            </CardBody>
+                        </Card>
+                        {/*<Card className="rounded-2xl shadow-sm h-fit">*/}
+                        {/*    <CardBody>*/}
+                        {/*        <h3 className="text-sm font-semibold text-gray-500 ml-2">Controversies per Competition</h3>*/}
+
+                        {/*    </CardBody>*/}
+                        {/*</Card>*/}
+                    </div>
                     <Card className="rounded-2xl shadow-sm">
                         <CardBody>
                             <div className="relative">
@@ -259,36 +265,36 @@ export default function ClubControversiesList() {
                 {/* list for */}
                 {currentSeasonForControversies?.length > 0 && (
                     <div className="mx-auto w-full max-w-4xl mb-4">
-                    <Card className="rounded-2xl shadow-xl">
-                        <CardBody className="p-6">
-                            <div>
-                                <div className="mb-2 text-lg font-medium">
-                                    {currentSeasonForControversies?.length ?? 0} benefited {currentSeasonForControversies?.length == 1 ? "decision" : "decisions"}
-                                </div>
-                                <Divider className="my-1"/>
-                                <ListBoxControversies controversies={currentSeasonForControversies}/>
+                        <Card className="rounded-2xl shadow-xl">
+                            <CardBody className="p-6">
+                                <div>
+                                    <div className="mb-2 text-lg font-medium">
+                                        {currentSeasonForControversies?.length ?? 0} benefited {currentSeasonForControversies?.length == 1 ? "decision" : "decisions"}
+                                    </div>
+                                    <Divider className="my-1"/>
+                                    <ListBoxControversies controversies={currentSeasonForControversies}/>
 
-                            </div>
-                        </CardBody>
-                    </Card>
-                </div>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </div>
                 )}
                 {/* list against */}
                 {currentSeasonAgainstControversies?.length > 0 && (
-                <div className="mx-auto w-full max-w-4xl mb-4" >
-                    <Card className="rounded-2xl shadow-xl">
-                        <CardBody className="p-6">
-                            <div>
-                                <div className="mb-2 text-lg font-medium">
-                                    {currentSeasonAgainstControversies?.length ?? 0} {currentSeasonAgainstControversies?.length == 1 ? "decision" : "decisions"} against
-                                </div>
-                                <Divider className="my-1"/>
+                    <div className="mx-auto w-full max-w-4xl mb-4" >
+                        <Card className="rounded-2xl shadow-xl">
+                            <CardBody className="p-6">
+                                <div>
+                                    <div className="mb-2 text-lg font-medium">
+                                        {currentSeasonAgainstControversies?.length ?? 0} {currentSeasonAgainstControversies?.length == 1 ? "decision" : "decisions"} against
+                                    </div>
+                                    <Divider className="my-1"/>
 
-                                <ListBoxControversies controversies={currentSeasonAgainstControversies}/>
-                            </div>
-                        </CardBody>
-                    </Card>
-                </div>
+                                    <ListBoxControversies controversies={currentSeasonAgainstControversies}/>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </div>
                 )}
             </div>
         </div>
