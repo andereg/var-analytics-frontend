@@ -17,14 +17,8 @@ export const metadata: Metadata = {
 
 export const Logo = () => {
     return (
-        <svg fill="none" height="28" viewBox="0 0 16 16" width="28" className="mb-1">
-
-            <path d="M15 1H1V3H15V1Z" fill="white"/>
-            <path d="M1 5H3V15H1V5Z" fill="white"/>
-            <path d="M5 13H15V15H5V13Z" fill="white"/>
-            <path d="M15 9H5V11H15V9Z" fill="white"/>
-            <path d="M5 5H15V7H5V5Z" fill="white"/>
-
+        <svg fill="none" height="28" viewBox="0 0 3333 3333" width="28" className="mb-1">
+            <path d="M208 208h2629l41 417H208zM208 1041h417v2084H208zM1041 2708h2042l17 170 7 66v3l16 173h2v5H1041zM1041 1874h1960l41 418H1041zM1041 1041h1878l41 418H1041z" fill="white"/>
         </svg>
     );
 };

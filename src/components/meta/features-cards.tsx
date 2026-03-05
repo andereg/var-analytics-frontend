@@ -30,7 +30,7 @@ const featuresCategories = [
         icon: <Icon icon="solar:shield-warning-outline" width={40}/>,
         descriptions: [
             "Analysis is based on recorded incidents and independent referee assessments",
-            "Not an official judgment on refereeing decisions",
+            "Not an official judgment on refereeing decisions or performance of referees",
             "Incidents are subject to interpretation or incomplete data",
         ],
     },
