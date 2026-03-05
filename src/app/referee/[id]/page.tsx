@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {
     Card,
     CardBody,
-    Chip,
     Spinner,
     Select,
     SelectItem,
@@ -11,12 +10,10 @@ import {
 } from "@heroui/react";
 import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
 
-import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-import {Club, Competition, Controversy, Referee, Season} from "@/api/types";
+import {Competition, Referee, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
-import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
 import ControversyCircleChart from "@/components/charts/CircleChart";
 import {ListBoxControversies} from "@/components/list/ListBoxControversies";
@@ -264,7 +261,7 @@ export default function ClubPage() {
                                     <div className="mb-2 text-lg font-medium">
                                         {currentSeasonMainControversies?.length ?? 0} On-Field {currentSeasonMainControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
-                                    <Divider className="my-1"/>
+                                    <Divider className="my-1 opacity-30" />
                                     <ListBoxControversies controversies={currentSeasonMainControversies}/>
 
                                 </div>
@@ -281,8 +278,7 @@ export default function ClubPage() {
                                     <div className="mb-2 text-lg font-medium">
                                         {currentSeasonVarControversies?.length ?? 0} VAR {currentSeasonVarControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
-                                    <Divider className="my-1"/>
-
+                                    <Divider className="my-1 opacity-30" />
                                     <ListBoxControversies controversies={currentSeasonVarControversies}/>
                                 </div>
                             </CardBody>

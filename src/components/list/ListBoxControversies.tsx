@@ -1,4 +1,4 @@
-import {Avatar, AvatarIcon, Chip, Link, Listbox, ListboxItem} from "@heroui/react";
+import {Avatar, AvatarIcon, Chip, Divider, Link, Listbox, ListboxItem} from "@heroui/react";
 import React from "react";
 import {Link2} from "lucide-react";
 import {Button} from "@heroui/button";
@@ -15,9 +15,8 @@ export function ListBoxControversies({controversies}: { controversies: any }) {
                  shouldFocusOnHover={false}
         >
             {(controversies ?? []).map((c) => (
-                <ListboxItem key={c.id} textValue={c.description}
-                >
-                    <div className="flex items-start gap-2 mt-2 mb-2">
+                <ListboxItem className="cursor-default hover:bg-transparent data-[hover=true]:bg-transparent data-[focus=true]:bg-transparent" key={c.id} textValue={c.description} >
+                    <div className="flex items-start gap-2 mt-1 mb-1">
                         <div className="flex items-center">
                             <img
                                 src={c.beneficiary?.logo}
@@ -106,9 +105,9 @@ export function ListBoxControversies({controversies}: { controversies: any }) {
                                                 />}
                                             variant="bordered"
                                         >
-<span className="text-xs text-gray-600 ml-1">
-    {c.mainReferee?.name} {c.mainReferee?.surname}
-</span>
+                                        <span className="text-xs text-gray-600 ml-1">
+                                            {c.mainReferee?.name} {c.mainReferee?.surname}
+                                        </span>
                                         </Chip>
                                     </div>
                                 </Link>

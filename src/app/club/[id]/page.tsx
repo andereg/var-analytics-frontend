@@ -14,9 +14,8 @@ import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
 import {getClubById} from "@/api/clubs";
 import {getCompetitions} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-import {Club, Competition, Controversy, Season} from "@/api/types";
+import {Club, Competition, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
-import {DecisionsTimeline} from "@/components/charts/DecisionsTimeline";
 import KPIStats from "@/components/charts/KPIStats";
 import ControversyCircleChart from "@/components/charts/CircleChart";
 import {ListBoxControversies} from "@/components/list/ListBoxControversies";
@@ -271,7 +270,7 @@ export default function ClubPage() {
                                     <div className="mb-2 text-lg font-medium">
                                         {currentSeasonForControversies?.length ?? 0} benefited {currentSeasonForControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
-                                    <Divider className="my-1"/>
+                                    <Divider className="my-1 opacity-30"/>
                                     <ListBoxControversies controversies={currentSeasonForControversies}/>
 
                                 </div>
@@ -288,7 +287,7 @@ export default function ClubPage() {
                                     <div className="mb-2 text-lg font-medium">
                                         {currentSeasonAgainstControversies?.length ?? 0} {currentSeasonAgainstControversies?.length == 1 ? "decision" : "decisions"} against
                                     </div>
-                                    <Divider className="my-1"/>
+                                    <Divider className="my-1 opacity-30" />
 
                                     <ListBoxControversies controversies={currentSeasonAgainstControversies}/>
                                 </div>

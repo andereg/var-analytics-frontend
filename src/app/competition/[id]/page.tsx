@@ -13,7 +13,7 @@ import {DecisionTypeBreakdown} from "@/components/charts/DecisionTypeBreakdown";
 
 import {getCompetitionById} from "@/api/competitions";
 import {getSeasons} from "@/api/seasons";
-import {Club, Competition, Season} from "@/api/types";
+import {Competition, Season} from "@/api/types";
 import {DIndexKpi} from "@/components/charts/DIndex";
 
 import KPIStats from "@/components/charts/KPIStats";
@@ -215,7 +215,7 @@ export default function ClubPage() {
                                     <div className="mb-2 text-lg font-medium">
                                         {currentSeasonControversies?.length ?? 0} controversial {currentSeasonControversies?.length == 1 ? "decision" : "decisions"}
                                     </div>
-                                    <Divider className="my-1"/>
+                                    <Divider className="my-1 opacity-30" />
                                     <ListBoxControversies controversies={currentSeasonControversies}  />
                                 </div>
                             </CardBody>
