@@ -1,8 +1,8 @@
 import { api } from "./client";
-import { Club } from "./types";
+import { Club, ClubBase } from "./types";
 
-export const getClubs = async (): Promise<Club[]> => {
-    const response = await api.get<Club[]>("/Club");
+export const getClubs = async (): Promise<ClubBase[]> => {
+    const response = await api.get<ClubBase[]>("/Club");
     return response.data;
 };
 

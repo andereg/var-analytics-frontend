@@ -1,12 +1,5 @@
-"use client";
-
-import ClubControversiesList from "@/components/list/ClubControversyList";
-import React from "react";
+import HomeClient from "@/components/meta/HomeClient";
 
 export default function Home() {
-  return (
-      <div>
-            Home sweet home
-          </div>
-     )
+    return <HomeClient />;
 }
