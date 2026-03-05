@@ -1,6 +1,7 @@
 import {Avatar, AvatarIcon, Chip, Link, Listbox, ListboxItem} from "@heroui/react";
 import React from "react";
 import {Link2} from "lucide-react";
+import {Button} from "@heroui/button";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -8,117 +9,142 @@ function formatDate(iso: string) {
 }
 
 
-export function ListBoxControversies({ controversies }: { controversies: any }) {
-        return (
-            <Listbox aria-label="club controversies" variant="flat" selectionMode={"none"}
-                     shouldFocusOnHover={false}
-            >
-                {(controversies ?? []).map((c) => (
-                    <ListboxItem key={c.id} textValue={c.description}
-                    >
-                        <div className="flex items-start gap-4 mt-2 mb-2">
-                            <div className="flex items-center">
-                                <img
-                                    src={c.beneficiary?.logo}
-                                    alt="first"
-                                    className="mt-5 w-10 h-10 border-0 z-10 object-contain"
-                                />
-                                <img
-                                    src={c.victim?.logo}
-                                    alt="second"
-                                    className="-ml-5 mt-5 w-10 h-10 border-0 object-contain"
-                                />
-                            </div>
+export function ListBoxControversies({controversies}: { controversies: any }) {
+    return (
+        <Listbox aria-label="club controversies" variant="flat" selectionMode={"none"}
+                 shouldFocusOnHover={false}
+        >
+            {(controversies ?? []).map((c) => (
+                <ListboxItem key={c.id} textValue={c.description}
+                >
+                    <div className="flex items-start gap-2 mt-2 mb-2">
+                        <div className="flex items-center">
+                            <img
+                                src={c.beneficiary?.logo}
+                                alt="first"
+                                className="mt-5 w-10 h-10 border-0 z-10 object-contain"
+                            />
+                            <img
+                                src={c.victim?.logo}
+                                alt="second"
+                                className="-ml-6 mt-5 w-10 h-10 border-0 object-contain"
+                            />
+                        </div>
 
-                            <div className="min-w-0 flex-1">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <span className="text-sm font-semibold">
-                                        {c.beneficiary?.name} vs {c.victim?.name}
+                        <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                                <div className="items-center flex gap-1">
+                                    <Button variant="bordered" radius="full" className="px-3 bg-transparent hover:border-gray-300 border-transparent hover:!opacity-100" >
+                                        <Link color="foreground" href={"/club/" + c.beneficiary?.id}>
+                                            <span className="text-sm font-semibold">
+                                                {c.beneficiary?.name}
+                                            </span>
+                                            <img
+                                                src={c.beneficiary?.logo}
+                                                className="w-6 h-6 ml-2 border-0 object-contain"
+                                            />
+                                        </Link>
+                                    </Button>
+                                    <span className="text-sm text-gray-800 font-semibold mx-1">
+                                        3 - 2
                                     </span>
-
-                                    <Chip className="ml-auto" size="sm"
-                                          variant="bordered"
-                                          color="secondary">
-                                        {c.controversyType?.code}
-                                    </Chip>
-                                    <Chip size="sm" variant="bordered">
-                                        {formatDate(c.date)}
-                                    </Chip>
+                                    <Button variant="bordered" radius="full" className="px-3 bg-transparent hover:border-gray-300 border-transparent hover:!opacity-100" >
+                                        <Link color="foreground" href={"/club/" + c.victim?.id}>
+                                            <img
+                                                src={c.victim?.logo}
+                                                className="w-6 h-6 mr-2 border-0 object-contain"
+                                            />
+                                            <span className="text-sm font-semibold">
+                                                {c.victim?.name}
+                                            </span>
+                                        </Link>
+                                    </Button>
                                 </div>
 
-                                <p className="mt-1 line-clamp-2 text-sm text-gray-700">
-                                    {c.description}
-                                </p>
 
-                                <div className="mt-2 flex items-center gap-2">
-                                    <Link href={"/competition/" + c.competition?.id}>
-                                        <Chip
-                                            avatar={
-                                                <img
-                                                    src={c.competition?.logo}
-                                                    className="w-14 h-14"
-                                                />}
-                                            variant="bordered"
-                                            className="pl-2"
-                                        >
+                                <Chip className="ml-auto" size="sm"
+                                      variant="bordered"
+                                      color="secondary">
+                                    {c.controversyType?.code}
+                                </Chip>
+                                <Chip size="sm" variant="bordered">
+                                    {formatDate(c.date)}
+                                </Chip>
+                            </div>
+
+                            <p className="mt-1 ml-3 line-clamp-2 text-sm text-gray-700">
+                                {c.description}
+                            </p>
+
+                            <div className="mt-2 ml-1 flex items-center gap-2">
+                                <Link href={"/competition/" + c.competition?.id}>
+                                    <Chip
+                                        avatar={
+                                            <img
+                                                src={c.competition?.logo}
+                                                className="w-14 h-14"
+                                            />}
+                                        variant="bordered"
+                                        className="pl-2"
+                                    >
                                             <span className="text-xs text-gray-600">
                                                 {c.competition?.name}
                                                 </span>
-                                        </Chip>
-                                    </Link>
+                                    </Chip>
+                                </Link>
 
-                                    <Link href={"/referee/" + c.mainReferee?.id}>
-                                        <div className="flex gap-4">
-                                            <Chip
-                                                avatar={
-                                                    <Avatar
-                                                        classNames={{
-                                                            base: "bg-white",
-                                                            icon: "text-default-400",
-                                                        }}
-                                                        icon={<AvatarIcon/>}
-                                                    />}
-                                                variant="bordered"
-                                            >
+                                <Link href={"/referee/" + c.mainReferee?.id}>
+                                    <div className="flex gap-4">
+                                        <Chip
+                                            avatar={
+                                                <Avatar
+                                                    classNames={{
+                                                        base: "bg-white",
+                                                        icon: "text-default-400",
+                                                    }}
+                                                    icon={<AvatarIcon/>}
+                                                />}
+                                            variant="bordered"
+                                        >
 <span className="text-xs text-gray-600 ml-1">
     {c.mainReferee?.name} {c.mainReferee?.surname}
 </span>
-                                            </Chip>
-                                        </div>
-                                    </Link>
-                                    <Link href={"/referee/" + c.varReferee?.id}>
-                                        <div className="flex gap-4">
-                                            <Chip
-                                                avatar={
-                                                    <Avatar
-                                                        classNames={{
-                                                            base: "bg-white",
-                                                            icon: "text-default-400",
-                                                        }}
-                                                        icon={<AvatarIcon/>}
-                                                    />}
-                                                variant="bordered"
-                                            >
+                                        </Chip>
+                                    </div>
+                                </Link>
+                                <Link href={"/referee/" + c.varReferee?.id}>
+                                    <div className="flex gap-4">
+                                        <Chip
+                                            avatar={
+                                                <Avatar
+                                                    classNames={{
+                                                        base: "bg-white",
+                                                        icon: "text-default-400",
+                                                    }}
+                                                    icon={<AvatarIcon/>}
+                                                />}
+                                            variant="bordered"
+                                        >
 <span className="text-xs text-gray-600 ml-1">
     {c.varReferee?.name} {c.varReferee?.surname} (VAR)
 </span>
-                                            </Chip>
-                                        </div>
-                                    </Link>
-                                    <Link href={c.referenceLink} isExternal>
-                                        <Chip className="pl-2" color="primary"
-                                              startContent={<Link2 size={18}/>}
-                                              variant="faded">
+                                        </Chip>
+                                    </div>
+                                </Link>
+                                <Link href={c.referenceLink} isExternal>
+                                    <Chip className="pl-2" color="primary"
+                                          startContent={<Link2 size={18}/>}
+                                          variant="faded">
 <span className="text-xs text-gray-600">
     ArchivoVar
     </span>
-                                        </Chip>
-                                    </Link>
-                                </div>
+                                    </Chip>
+                                </Link>
                             </div>
                         </div>
-                    </ListboxItem>
-                ))}
-            </Listbox>
-        )
+                    </div>
+                </ListboxItem>
+            ))}
+        </Listbox>
+    )
 }
