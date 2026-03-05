@@ -1,5 +1,6 @@
 import {Avatar, AvatarIcon, Chip, Link, Listbox, ListboxItem} from "@heroui/react";
 import React from "react";
+import {Link2} from "lucide-react";
 
 function formatDate(iso: string) {
     // "2025-09-21T00:00:00" -> "2025-09-21"
@@ -50,7 +51,7 @@ export function ListBoxControversies({ controversies }: { controversies: any }) 
                                 </p>
 
                                 <div className="mt-2 flex items-center gap-2">
-                                    <Link href={"/competition/" + c.competition.id}>
+                                    <Link href={"/competition/" + c.competition?.id}>
                                         <Chip
                                             avatar={
                                                 <img
@@ -103,6 +104,15 @@ export function ListBoxControversies({ controversies }: { controversies: any }) 
 </span>
                                             </Chip>
                                         </div>
+                                    </Link>
+                                    <Link href={c.referenceLink} isExternal>
+                                        <Chip className="pl-2" color="primary"
+                                              startContent={<Link2 size={18}/>}
+                                              variant="faded">
+<span className="text-xs text-gray-600">
+    ArchivoVar
+    </span>
+                                        </Chip>
                                     </Link>
                                 </div>
                             </div>

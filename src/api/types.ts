@@ -3,6 +3,8 @@ export interface Competition {
     name: string;
     description: string;
     logo: string;
+
+    controversies: Controversy[];
 }
 
 export interface Season {
