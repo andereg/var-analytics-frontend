@@ -132,16 +132,16 @@ export default function TORAnalysis() {
 
                 <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                     {torCategories.map((item) => (
-                        <Card key={item.id} className="rounded-[2rem] border border-default-200 shadow-lg transition-transform duration-200 hover:-translate-y-1">
+                        <Card key={item.id} className="rounded-[2rem] border border-default-200 shadow-lg transition-transform">
                             <CardHeader className="flex items-start justify-between gap-4 px-6 pb-2 pt-6">
                                     <h3 className="text-xl font-bold">{item.category}</h3>
                                     <ScoreBadge pro={item.pro} contra={item.contra} />
 
                             </CardHeader>
 
-                            <CardBody className="space-y-10 px-6 pb-6 pt-2">
+                            <CardBody className="space-y-5 px-6  pt-2 min-w-[180px]">
                                 <div className="flex justify-center py-2">
-                                    <CircleChart pro={item.pro} contra={item.contra} />
+                                    <CircleChart pro={item.pro} contra={item.contra} size={200} />
                                 </div>
                             </CardBody>
                         </Card>

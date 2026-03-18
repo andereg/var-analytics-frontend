@@ -5,10 +5,12 @@ import RowSteps from "@/components/steppers/row-steps";
 import ThesisForm from "@/components/studyond/ThesisForm";
 import HomeClient from "@/components/meta/HomeClient";
 import TORAnalysis from "@/components/studyond/TORAnalysis";
+import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 
 const stepsContent = [
     <ThesisForm/>,
-    <TORAnalysis />
+    <TORAnalysis />,
+    <RecommendedTopics />
 ];
 
 
