@@ -19,7 +19,7 @@ export default function HomeClient() {
                 const data = await getControversies();
                 setControversies(data);
             } catch (err) {
-                console.error("failed to load controversies:", err);
+                console.error("failed to load data:", err);
             } finally {
                 setLoading(false);
             }
@@ -29,7 +29,7 @@ export default function HomeClient() {
     }, []);
 
     if (loading) {
-        return <Spinner label="Loading controversies..."/>;
+        return <Spinner label="Loading data..."/>;
     }
 
     return (
