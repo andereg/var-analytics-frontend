@@ -6,11 +6,13 @@ import ThesisForm from "@/components/studyond/ThesisForm";
 import HomeClient from "@/components/meta/HomeClient";
 import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
+import RecommendedExperts from "@/components/studyond/RecommendedExperts";
 
 const stepsContent = [
     <ThesisForm/>,
     <TORAnalysis />,
-    <RecommendedTopics />
+    <RecommendedTopics />,
+    <RecommendedExperts />
 ];
 
 
