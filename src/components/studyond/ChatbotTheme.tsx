@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     Avatar,
     Button,
@@ -18,9 +18,10 @@ import { cn } from "@heroui/react";
 import CircleChart from "@/components/charts/CircleChart";
 import PromptInput from "@/components/meta/PromptInput";
 import Chatbot from "@/components/meta/Chatbot";
+import allTopics from "@/mock-data/topics.json";
 
 type Topic = {
-    id: number;
+    id: string;
     title: string;
     description: string;
     compatibility: number;
@@ -39,58 +40,29 @@ type Topic = {
     }>;
 };
 
-const suggestedTopics: Topic[] = [
+const INITIAL_TOPICS: Topic[] = [
     {
-        id: 1,
-        title: "Human-Computer Interaction for Learning Platforms",
+        id: "topic-01",
+        title: "AI-Driven Demand Forecasting for Perishable Goods",
         description:
-            "Design and evaluate interactive features that improve engagement, accessibility, and usability in digital study environments.",
+            "Develop a machine learning model to predict demand for short-shelf-life products across Nestle's European distribution network.",
         compatibility: 92,
         interestMatch: 90,
         torFit: 94,
         chips: [
             { label: "best overall fit", color: "success", variant: "flat" },
-            { label: "strong transcript fit", color: "primary", variant: "flat" },
-            { label: "matches your interests", color: "secondary", variant: "flat" },
         ],
     },
     {
-        id: 2,
-        title: "AI-Based Recommendation System for Thesis Topics",
+        id: "topic-03",
+        title: "Biomarker Discovery Using Multi-Omics Data Integration",
         description:
-            "Build a recommendation engine that maps transcript performance and interests to suitable research directions.",
+            "Apply computational biology methods to integrate transcriptomic, proteomic, and metabolomic datasets for identifying novel biomarkers.",
         compatibility: 87,
         interestMatch: 96,
         torFit: 78,
         chips: [
             { label: "best interest match", color: "secondary", variant: "flat" },
-            { label: "innovation potential", color: "warning", variant: "flat" },
-        ],
-    },
-    {
-        id: 3,
-        title: "Web Platform for Industry–Student Thesis Matching",
-        description:
-            "Create a platform that connects students, supervisors, and companies around thesis opportunities.",
-        compatibility: 84,
-        interestMatch: 85,
-        torFit: 83,
-        chips: [
-            { label: "balanced fit", color: "success", variant: "flat" },
-            { label: "practical impact", color: "warning", variant: "flat" },
-        ],
-    },
-    {
-        id: 4,
-        title: "Learning Analytics Dashboard for Student Progress",
-        description:
-            "Build dashboards that surface useful learning insights for universities using student data.",
-        compatibility: 79,
-        interestMatch: 74,
-        torFit: 85,
-        chips: [
-            { label: "strong transcript alignment", color: "primary", variant: "flat" },
-            { label: "data-driven topic", color: "secondary", variant: "flat" },
         ],
     },
 ];
@@ -156,13 +128,39 @@ function TopicCard({ topic, selectTopic = () => {} }: MyTopicProps) {
         </Card>
     );
 }
-export default function ChatbotTheme({ selectTopic } : {selectTopic?: () => void}) {
+export default function ChatbotTheme() {
+    const [suggestedTopics, setSuggestedTopics] = useState<Topic[]>(INITIAL_TOPICS);
+
+    const handleTopicsRecommended = (topicIds: string[]) => {
+        // Filter allTopics by IDs and map to our UI Topic format
+        const newTopics = allTopics
+            .filter(t => topicIds.includes(t.id))
+            .map(t => ({
+                id: t.id,
+                title: t.title,
+                description: t.description,
+                compatibility: 70 + Math.floor(Math.random() * 25), // Mock scores
+                interestMatch: 70 + Math.floor(Math.random() * 25),
+                torFit: 70 + Math.floor(Math.random() * 25),
+                chips: [
+                    { label: "AI recommendation", color: "primary" as const, variant: "flat" as const }
+                ]
+            }));
+
+        if (newTopics.length > 0) {
+            setSuggestedTopics(newTopics);
+        }
+    };
 
     return (
         <div className="min-h-screen">
             <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 py-4 lg:px-6 lg:py-6">
                 <div className="flex min-w-0 flex-1 flex-col">
-                    <Chatbot showChips={true} showTopics={true}/>
+                    <Chatbot
+                        showChips={true}
+                        showTopics={true}
+                        onTopicsRecommended={handleTopicsRecommended}
+                    />
                 </div>
 
                 <aside className="hidden w-[390px] shrink-0 xl:block">
@@ -176,7 +174,7 @@ export default function ChatbotTheme({ selectTopic } : {selectTopic?: () => void
                                         Ranked from interests and TOR
                                     </p>
                                 </div>
-                                <Chip color="secondary" variant="flat">4 matches</Chip>
+                                <Chip color="secondary" variant="flat">{suggestedTopics.length} matches</Chip>
                             </div>
                         </CardHeader>
 

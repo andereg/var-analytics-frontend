@@ -17,6 +17,7 @@ export interface TORAnalysisData {
   averageFit: number;
   skills: string[];
   recommendedFields: string[];
+  degree: 'bsc' | 'msc' | 'phd';
 }
 
 interface TORContextType {

@@ -89,9 +89,16 @@ export default function TORAnalysis() {
                     <Card className="rounded-[2rem] border border-default-200 bg-background/90 shadow-xl">
                         <CardBody className="gap-6 p-8 md:p-10">
                             <div className="space-y-4">
-                                <Chip color="primary" variant="flat" className="w-fit">
-                                    Transcript of Records Analysis
-                                </Chip>
+                                <div className="flex items-center gap-2">
+                                    <Chip color="primary" variant="flat" className="w-fit">
+                                        Transcript of Records Analysis
+                                    </Chip>
+                                    {analysis?.degree && (
+                                        <Chip color="secondary" variant="dot" className="w-fit font-bold uppercase">
+                                            {analysis.degree} LEVEL
+                                        </Chip>
+                                    )}
+                                </div>
                                 <div className="space-y-3">
                                     <h1 className="max-w-4xl text-4xl font-black tracking-tight md:text-5xl">
                                         Thesis topic fit based on TOR categories

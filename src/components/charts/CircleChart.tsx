@@ -3,8 +3,7 @@
 import type { ButtonProps, CardProps } from "@heroui/react";
 
 import React from "react";
-import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from "recharts";
-import { Controversy } from "@/api/types";
+import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 type ChartData = {
     name: string;
@@ -96,7 +95,7 @@ export default function CircleChart({
         { name: "contra", value: againstCount },
     ];
 
-    const dynamicColor = getColorFromScore(forCount);
+    const dynamicColor = getColorFromScore(forCount) as ButtonProps["color"];
 
     return (
         <CircleChartCard
