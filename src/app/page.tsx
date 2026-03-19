@@ -8,9 +8,11 @@ import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 import RecommendedExperts from "@/components/studyond/RecommendedExperts";
 import ProgressModal from "@/components/charts/ProgressModal";
+import ChatbotTheme from "@/components/studyond/ChatbotTheme";
 
 const stepsContent = [
     <ThesisForm/>,
+    <ChatbotTheme/>,
     <TORAnalysis />,
     <RecommendedTopics />,
     <RecommendedExperts />
