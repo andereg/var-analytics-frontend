@@ -111,9 +111,11 @@ function scoreTone(score: number) {
     return { label: "lower fit", color: "danger" as const };
 }
 
+interface Props {
+    selectCompany?: () => void
+}
 
-
-export default function ChatbotCompany() {
+export default function ChatbotCompany(props: Props) {
     const [thesisTopic, setThesisTopic] = useState(
         "Machine Learning Applications in Healthcare Diagnostics"
     );
@@ -240,11 +242,20 @@ export default function ChatbotCompany() {
                                                         <Button
                                                             className="w-full justify-between rounded-2xl"
                                                             color="default"
-                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
                                                             variant="flat"
                                                             onPress={onOpen}
                                                         >
                                                             View company
+                                                        </Button>
+
+                                                        <Button
+                                                            className="w-full justify-between rounded-2xl border-default border-2"
+                                                            color="default"
+                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                                            variant="flat"
+                                                            onPress={props.selectCompany}
+                                                        >
+                                                            Select company
                                                         </Button>
                                                     </div>
                                                 </CardBody>

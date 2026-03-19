@@ -219,7 +219,7 @@ export default function ThesisDashboard() {
                                 <div>
                                     <div className="flex gap-3 items-center">
                                         <h3 className="text-xl md:text-2xl font-bold text-white">
-                                            Find the right interviewees
+                                            Find the right interview partners
                                         </h3>
                                         <Chip
                                             classNames={{
@@ -243,7 +243,7 @@ export default function ThesisDashboard() {
                                 className="bg-white font-semibold"
                                 endContent={<ChevronRight className="w-5 h-5"/>}
                             >
-                                Match with interviewees
+                                Match with experts
                             </Button>
                         </div>
                     </CardBody>

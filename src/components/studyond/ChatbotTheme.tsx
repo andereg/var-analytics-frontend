@@ -109,7 +109,13 @@ function scoreTone(score: number) {
     return { label: "lower fit", color: "danger" as const };
 }
 
-function TopicCard({ topic }: { topic: Topic }) {
+
+interface MyTopicProps {
+    topic: Topic;
+    selectTopic?: () => void;
+}
+
+function TopicCard({ topic, selectTopic = () => {} }: MyTopicProps) {
     return (
         <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
             <CardBody className="h-auto overflow-visible p-4">
@@ -140,6 +146,7 @@ function TopicCard({ topic }: { topic: Topic }) {
                             color="default"
                             endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
                             variant="flat"
+                            onClick={() => selectTopic()}
                         >
                             Select topic
                         </Button>
@@ -149,7 +156,7 @@ function TopicCard({ topic }: { topic: Topic }) {
         </Card>
     );
 }
-export default function ChatbotTheme() {
+export default function ChatbotTheme({ selectTopic } : {selectTopic?: () => void}) {
 
     return (
         <div className="min-h-screen">
@@ -179,7 +186,7 @@ export default function ChatbotTheme() {
                             <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                 <div className="space-y-4">
                                     {suggestedTopics.map((topic) => (
-                                        <TopicCard key={topic.id} topic={topic}/>
+                                        <TopicCard key={topic.id} topic={topic} selectTopic={selectTopic}/>
                                     ))}
                                 </div>
                             </div>

@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="dashboard slop 2">
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/CompanyModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotTheme.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ChatbotTheme.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/MyTopic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/MyTopic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/TopicCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/TopicCard.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\rapha\\Documents\\GitHub\\var-analytics-frontend2\\src\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/home/yann/WebstormProjects/var-analytics-frontend/src/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

@@ -1,15 +1,23 @@
 import React from "react";
 import { Card, CardBody, Chip, Button } from "@heroui/react";
-import { ArrowRight, Building2, GraduationCap } from "lucide-react";
+import {ArrowRight, Building2, GraduationCap, User} from "lucide-react";
 import { Topic } from "@/types/studyond";
 
 interface TopicCardProps {
     topic: Topic;
     companyName?: string;
+    hasTopicSelector?: boolean;
+    hasDefiniteSelector?: boolean;
     onSelect?: () => void;
 }
 
-export const TopicCard = ({ topic, companyName, onSelect }: TopicCardProps) => {
+export const TopicCard = ({
+                              topic,
+                              companyName,
+                              onSelect,
+    hasTopicSelector = true,
+    hasDefiniteSelector = false
+}: TopicCardProps) => {
     return (
         <Card className="rounded-[2.5rem] border border-default-200 bg-white shadow-sm transition-all hover:shadow-md">
             <CardBody className="p-8">
@@ -51,9 +59,33 @@ export const TopicCard = ({ topic, companyName, onSelect }: TopicCardProps) => {
                                 {topic.workplaceType || "Flexible"}
                             </Chip>
                         </div>
+
+                        {
+                            hasDefiniteSelector ?
+                                <div className="flex gap-2">
+                                    <User />
+                                    Supervisor: Prof. Dr. Michael Müller
+                                </div>
+                                : ''
+                        }
+
+                        {
+                            hasDefiniteSelector && (
+                                <div>
+                                    <Button
+                                        radius="full"
+                                        variant="flat"
+                                        onPress={onSelect}
+                                        className="mt-2 float-end bg-default-100"
+                                    >
+                                        Select as definite topic <ArrowRight size={20} />
+                                    </Button>
+                                </div>
+                            )
+                        }
                     </div>
 
-                    {onSelect && (
+                    {onSelect && hasTopicSelector && (
                         <div className="flex justify-end md:block">
                             <Button
                                 isIconOnly
@@ -66,6 +98,7 @@ export const TopicCard = ({ topic, companyName, onSelect }: TopicCardProps) => {
                             </Button>
                         </div>
                     )}
+
                 </div>
             </CardBody>
         </Card>
