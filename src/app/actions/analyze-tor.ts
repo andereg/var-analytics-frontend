@@ -1,10 +1,13 @@
 'use server';
 
+import fs from 'fs';
+import path from 'path';
+
 /**
  * Ultra-compatible Direct Fetch implementation.
  * Uses gemini-2.5-flash - the current 2026 stable baseline model.
  */
-export async function analyzeTORAction(fileContent: string) {
+export async function analyzeTORAction(fileContent: string, studentId: string = "student-01") {
   const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
   // 1. Updated to the current active model
@@ -40,7 +43,8 @@ export async function analyzeTORAction(fileContent: string) {
       "averageFit": 0-100,
       "skills": ["Skill1", "Skill2"],
       "recommendedFields": ["Field Name from the official list above"],
-      "degree": "bsc" | "msc" | "phd" (infer from courses)
+      "degree": "bsc" | "msc" | "phd" (infer from courses),
+      "narrativeMemory": "A LONG, detailed narrative description of the student's academic profile. Start with 'The student ${studentId} is interested in...'. Describe their strengths, potential thesis directions based on their grades, and academic personality. This will be the base of their long-term memory."
     }
 
     TOR CONTENT:
@@ -77,6 +81,18 @@ export async function analyzeTORAction(fileContent: string) {
     // Because of responseMimeType, this is guaranteed to be a clean JSON string
     const textResponse = result.candidates[0].content.parts[0].text;
     const data = JSON.parse(textResponse);
+
+    // Persist the narrative memory
+    if (data.narrativeMemory) {
+        const memoriesDir = path.join(process.cwd(), 'memories');
+        const memoryPath = path.join(memoriesDir, `${studentId}.md`);
+        
+        if (!fs.existsSync(memoriesDir)) {
+            fs.mkdirSync(memoriesDir, { recursive: true });
+        }
+        
+        fs.writeFileSync(memoryPath, data.narrativeMemory, 'utf8');
+    }
 
     return { success: true, data };
 
