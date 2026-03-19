@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/DeadlineCountdown.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/ThesisSummary.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/UpcomingTasks.tsx" afterDir="false" />
+    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="dashboard slop 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" afterDir="false" />
     </list>
@@ -89,6 +86,15 @@
       <workItem from="1773865614802" duration="8060000" />
       <workItem from="1773907155593" duration="7621000" />
     </task>
+    <task id="LOCAL-00001" summary="dashboard slop 2">
+      <option name="closed" value="true" />
+      <created>1773919897301</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1773919897301</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +110,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dashboard slop 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="dashboard slop 2" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
