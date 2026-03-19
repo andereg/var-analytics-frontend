@@ -216,7 +216,7 @@ export default function WritingDashboard() {
     const progressPercentage = (completedChapters / thesisPlan.length) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="max-w-7xl mx-auto space-y-6">
 
                 {/* Interview Banner */}

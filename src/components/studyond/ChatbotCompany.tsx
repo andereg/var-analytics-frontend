@@ -20,7 +20,6 @@ import CompanyModal from "@/components/studyond/CompanyModal";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getAllCompanies, getAllSupervisors, getCompanyById, getSupervisorById } from "@/api/mockData";
 import PersonModal from "@/components/studyond/PersonModal";
-import {ResearchBoxesMinimal} from "@/components/studyond/ResearchBoxes";
 
 type Suggestion = {
     id: string;
@@ -171,7 +170,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
 
     return (
 
-        <div className="min-h-screen">
+        <div className="min-h-screen animate-in fade-in slide-in-from-bottom-4 duration-700">
             { mode == 'company' ?
                 <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
             :
