@@ -101,6 +101,12 @@ export interface Topic {
   universityId: string | null;  // set for supervisor topics
   supervisorIds: string[];      // supervisor topics: always >=1 (the posting supervisor); company topics: []
   expertIds: string[];          // company topics: 1-2 experts; supervisor topics: []
+  // Hydrated fields (optional)
+  supervisors?: Supervisor[];
+  experts?: Expert[];
+  company?: Company | null;
+  university?: University | null;
+  fields?: Field[];
 }
 
 export interface ThesisProject {

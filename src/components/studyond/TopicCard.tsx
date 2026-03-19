@@ -61,12 +61,16 @@ export const TopicCard = ({
                         </div>
 
                         {
-                            hasDefiniteSelector ?
-                                <div className="flex gap-2">
-                                    <User />
-                                    Supervisor: Prof. Dr. Michael Müller
+                            hasDefiniteSelector && (
+                                <div className="flex items-center gap-2 text-default-600">
+                                    <User size={18} />
+                                    <span className="text-sm font-medium">
+                                        Supervisor: {topic.supervisors && topic.supervisors.length > 0
+                                            ? topic.supervisors.map(s => `${s.title} ${s.firstName} ${s.lastName}`).join(", ")
+                                            : "TBD"}
+                                    </span>
                                 </div>
-                                : ''
+                            )
                         }
 
                         {

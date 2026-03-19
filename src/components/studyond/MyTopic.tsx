@@ -4,7 +4,7 @@ import React, {useState, useMemo, useEffect} from "react";
 import { Button, Card, CardBody } from "@heroui/react";
 import { Plus, Sparkles } from "lucide-react";
 import { TopicCard } from "./TopicCard";
-import { getHydratedTopic } from "@/api/mockData";
+import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
 import { useTopics } from "@/context/TopicContext";
 
 interface MyTopicProps {
@@ -22,13 +22,33 @@ export default function MyTopic({
     onDefiniteTopicSelect = () => {},
     hasSupervisor = false
 }: MyTopicProps) {
-    const { selectedTopicIds } = useTopics();
+    const { selectedTopicIds, topicSelections, addTopic } = useTopics();
     const [hasTopic, setHasTopic] = useState(false);
 
-    // Get mock data for all selected topics
+    // Get mock data for all selected topics and merge with user selections
     const savedTopics = useMemo(() => {
-        return selectedTopicIds.map(id => getHydratedTopic(id)).filter(Boolean);
-    }, [selectedTopicIds]);
+        return selectedTopicIds.map(id => {
+            const base = getHydratedTopic(id);
+            if (!base) return null;
+
+            const selection = topicSelections[id];
+            if (!selection) return base;
+
+            const hydrated = { ...base };
+            if (selection.companyId) {
+                hydrated.companyId = selection.companyId;
+                hydrated.company = getCompanyById(selection.companyId) || null;
+            }
+            if (selection.supervisorId) {
+                const supervisor = getSupervisorById(selection.supervisorId);
+                if (supervisor) {
+                    hydrated.supervisors = [supervisor];
+                    hydrated.supervisorIds = [selection.supervisorId];
+                }
+            }
+            return hydrated;
+        }).filter(Boolean);
+    }, [selectedTopicIds, topicSelections]);
 
     useEffect(() => {
         setHasTopic(hasFoundTopic || selectedTopicIds.length > 0)
@@ -99,16 +119,27 @@ export default function MyTopic({
                     </div>
 
                     <div className="space-y-6">
-                        {savedTopics.map((topic) => (
-                            <TopicCard 
-                                key={topic!.id}
-                                topic={topic!}
-                                companyName={topic!.company?.name || "Partner Company"}
-                                onSelect={hasSupervisor ? onDefiniteTopicSelect : selectSupervisor}
-                                hasTopicSelector={!hasSupervisor}
-                                hasDefiniteSelector={hasSupervisor}
-                            />
-                        ))}
+                        {savedTopics.map((topic) => {
+                            const isDefiniteReady = hasSupervisor && (topic.supervisors?.length ?? 0) > 0;
+                            
+                            return (
+                                <TopicCard 
+                                    key={topic!.id}
+                                    topic={topic!}
+                                    companyName={topic!.company?.name || "Partner Company"}
+                                    onSelect={() => {
+                                        addTopic(topic!.id);
+                                        if (isDefiniteReady) {
+                                            onDefiniteTopicSelect();
+                                        } else {
+                                            selectSupervisor();
+                                        }
+                                    }}
+                                    hasTopicSelector={!isDefiniteReady}
+                                    hasDefiniteSelector={isDefiniteReady}
+                                />
+                            );
+                        })}
                     </div>
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

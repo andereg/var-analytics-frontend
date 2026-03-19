@@ -21,16 +21,20 @@ export default function Home() {
     const [hasTopic, setHasTopic] = React.useState(false);
 
     const stepsContent = [
-        <ThesisForm onContinue={() => setStep(1)} />,
-        <ChatbotTheme selectTopic={() => {
+        <ThesisForm key="step-0"/>,
+        <ChatbotTheme key={`step-1-${topicDashboard}`} selectTopic={() => {
             setTopicDashboard(true)
             setHasTopic(true)
         }}/>,
-        <ChatbotCompany selectCompany={() => setTopicDashboard(true)}/>,
-        <ThesisDashboard/>,
-        <ExecutionDashboard/>,
-        <WritingDashboard/>,
-        <SubmissionDashboard/>,
+        <ChatbotCompany
+            key={`step-2-${topicDashboard}`}
+            selectCompany={() => setTopicDashboard(true)}
+            initialMessage="I've analyzed your selected topic. Let's find the best industry partner and academic supervisor for it!"
+        />,
+        <ThesisDashboard key="step-3"/>,
+        <ExecutionDashboard key="step-4"/>,
+        <WritingDashboard key="step-5"/>,
+        <SubmissionDashboard key="step-6"/>,
     ];
 
     return (
@@ -86,10 +90,14 @@ export default function Home() {
 
                 {
                     (step == 1 || step == 2) && topicDashboard ?
-                        <MyTopic onFindTopic={() => setTopicDashboard(false)} hasFoundTopic={hasTopic}
+                        <MyTopic onFindTopic={() => {
+                                     setStep(1);
+                                     setTopicDashboard(false);
+                                 }}
+                                 hasFoundTopic={hasTopic}
                                  selectSupervisor={() => {
-                                     setStep(step + 1)
-                                     setTopicDashboard(false)
+                                     if (step === 1) setStep(2);
+                                     setTopicDashboard(false);
                                  }}
                                  onDefiniteTopicSelect={() => setStep(step + 1)}
                                  hasSupervisor={step == 2 && topicDashboard}

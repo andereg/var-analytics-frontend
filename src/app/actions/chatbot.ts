@@ -12,30 +12,47 @@ export async function chatAction(messages: { role: string; content: string }[], 
   const model = "gemini-2.5-flash";
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-  // Read all topics from mock data to give AI knowledge
+  // Read knowledge bases
   const topicsPath = path.join(process.cwd(), 'mock-data/topics.json');
+  const supervisorsPath = path.join(process.cwd(), 'mock-data/supervisors.json');
+  const companiesPath = path.join(process.cwd(), 'mock-data/companies.json');
+
   const allTopics = JSON.parse(fs.readFileSync(topicsPath, 'utf8'));
-  const topicKnowledge = allTopics.map((t: any) => `- ${t.id}: ${t.title} (${t.description.substring(0, 100)}...)`).join('\n');
+  const allSupervisors = JSON.parse(fs.readFileSync(supervisorsPath, 'utf8'));
+  const allCompanies = JSON.parse(fs.readFileSync(companiesPath, 'utf8'));
+
+  const topicKnowledge = allTopics.map((t: any) => `- ${t.id}: ${t.title}`).join('\n');
+  const supervisorKnowledge = allSupervisors.map((s: any) => `- ${s.id}: ${s.title} ${s.firstName} ${s.lastName} (Interests: ${s.researchInterests.join(", ")})`).join('\n');
+  const companyKnowledge = allCompanies.map((c: any) => `- ${c.id}: ${c.name} (${c.domains.join(", ")})`).join('\n');
 
   // Build a system prompt based on TOR data
   let systemPrompt = `You are the Studyond Thesis Assistant. Your goal is to help students find thesis topics, supervisors, and companies.
-    
+
     GUIDELINES:
-    1. BE EXTREMELY CONCISE. Never write more than 2-3 short paragraphs.
-    2. ALWAYS use Markdown for formatting (bold, lists, etc.).
-    3. Be professional and encouraging.
-    4. Use the provided student profile data to personalize your advice.
-    5. DETECT INTEREST SHIFTS: If the user indicates they are interested in something else, or if the current topics don't fit, suggest NEW topic IDs from the list below.
-    6. Swiss grading system: 6.0 is best, 4.0 is pass.
-    
-    AVAILABLE TOPICS KNOWLEDGE:
+    1. BE EXTREMELY CONCISE. 2-3 short paragraphs max.
+    2. ALWAYS use Markdown.
+    3. Use the student profile to personalize advice.
+    4. DETECT MATCHING PHASE: 
+       - If they need a TOPIC, suggest IDs from TOPICS.
+       - If they have a topic but need a COMPANY, suggest IDs from COMPANIES.
+       - If they have a topic/company but need a SUPERVISOR, suggest IDs from SUPERVISORS.
+
+    KNOWLEDGE BASE:
+
+    [TOPICS]
     ${topicKnowledge}
-    
+
+    [SUPERVISORS]
+    ${supervisorKnowledge}
+
+    [COMPANIES]
+    ${companyKnowledge}
+
     OUTPUT FORMAT:
-    You MUST return a JSON object with this exact structure:
+    You MUST return a JSON object:
     {
-      "message": "Your markdown-formatted response text here. If suggesting topics, mention their titles briefly.",
-      "recommendedTopicIds": ["topic-id-1", "topic-id-2"] (Pick 2-4 most relevant IDs from the list above based on current interests and transcript)
+      "message": "Your response text. Briefly mention the names of what you are recommending.",
+      "recommendedTopicIds": ["id-1", "id-2"] (Use this field for ANY recommendation - topic, company, or supervisor IDs)
     }`;
 
   if (torData) {
