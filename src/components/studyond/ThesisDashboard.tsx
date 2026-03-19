@@ -258,7 +258,7 @@ export default function ThesisDashboard() {
 
 
                 {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 👋 I see you're in the planning phase of your thesis. How's it going so far? Whether you need help with your research questions, methodology selection, or structuring your outline - I'm here to assist. Any questions or changes to your plan?"/>
@@ -266,7 +266,7 @@ export default function ThesisDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <div className="flex flex-col gap-6 lg:col-span-1">
+                    <div className="flex flex-col gap-3 lg:col-span-1">
                         <ThesisSummary
                             {...thesisSummary}
                             topic={displayTopic}

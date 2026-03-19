@@ -20,7 +20,7 @@ export default function DeadlineCountdown({
     const isUrgent = days < 14;
 
     return (
-        <Card className={`overflow-hidden ${isUrgent ? "border-2 border-warning" : ""} h-36`}>
+        <Card className={`overflow-hidden ${isUrgent ? "border-2 border-warning" : ""} flex-none`}>
             <CardBody className="flex flex-row items-center gap-4 p-4 overflow-hidden">
                 <div className={`
                     p-3 rounded-xl shrink-0

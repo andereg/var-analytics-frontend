@@ -50,20 +50,17 @@ export default function ThesisSummary({
     };
 
     return (
-        <Card className="h-150">
+        <Card className="flex-none">
             <CardHeader className="flex justify-between items-center">
                 <h3 className="font-semibold flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
+                    <BookOpen className="w-5 h-5 ml-1" />
                     Thesis Summary
                 </h3>
-                <Chip color={statusColors[status]} variant="flat" size="sm">
-                    {statusLabels[status]}
-                </Chip>
             </CardHeader>
             <Divider />
-            <CardBody className="space-y-4 p-4">
+            <CardBody className="space-y-3 px-4 py-2">
                 {/* Topic */}
-                <div>
+                <div className="mb-2">
                     <p className="text-xs text-default-400 uppercase tracking-wide">Topic</p>
                     <p className="font-medium mt-1">{topic}</p>
                 </div>
@@ -106,7 +103,7 @@ export default function ThesisSummary({
                         </div>
                     </div>
 
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-2 mb-1">
                         <Target className="w-4 h-4 text-default-400 mt-0.5" />
                         <div>
                             <p className="text-xs text-default-400">Methodology</p>

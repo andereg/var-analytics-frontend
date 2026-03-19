@@ -253,7 +253,7 @@ export default function ExecutionDashboard() {
 
 
                 {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hey! 👋 You're making progress - the execution phase is where things get exciting! How are your interviews and data collection going? If you need guidance on participant recruitment, interview techniques, or handling unexpected challenges - just ask. How can I help you today?"/>
@@ -261,7 +261,7 @@ export default function ExecutionDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <div className="flex flex-col gap-6 lg:col-span-1">
+                    <div className="flex flex-col gap-3 lg:col-span-1">
                         <ThesisSummary
                             {...thesisSummary}
                             topic={displayTopic}
