@@ -261,7 +261,7 @@ export default function SubmissionDashboard() {
 
 
                 {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 🎓 You're almost there - the finish line is in sight! How's the final review going? If you need help with proofreading, formatting, citations, or preparing for submission - I've got your back. Any last questions or concerns?"/>
@@ -269,7 +269,7 @@ export default function SubmissionDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <div className="flex flex-col gap-6 lg:col-span-1">
+                    <div className="flex flex-col gap-3 lg:col-span-1">
                         <ThesisSummary
                             {...thesisSummary}
                             topic={displayTopic}

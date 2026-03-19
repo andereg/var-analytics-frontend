@@ -16,7 +16,6 @@ export const metadata: Metadata = {
     description: "Your interactive helper for your thesis"
 };
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">

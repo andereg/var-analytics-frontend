@@ -217,7 +217,7 @@ export default function WritingDashboard() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
-                
+
                 {/* Interview Banner */}
                 <Card className="bg-primary overflow-hidden p-2">
                     <CardBody className="py-6">
@@ -261,7 +261,7 @@ export default function WritingDashboard() {
 
 
                 {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hello! ✍️ You've reached the writing phase - great progress! How's the writing coming along? Whether you're struggling with structure, need feedback on a chapter, or want tips on academic writing - I'm here for you. What can I help you with?"/>
@@ -269,7 +269,7 @@ export default function WritingDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <div className="flex flex-col gap-6 lg:col-span-1">
+                    <div className="flex flex-col gap-3 lg:col-span-1">
                         <ThesisSummary
                             {...thesisSummary}
                             topic={displayTopic}
