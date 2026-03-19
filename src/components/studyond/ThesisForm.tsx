@@ -7,7 +7,6 @@ import {
     Textarea,
     Select,
     SelectItem,
-    Checkbox,
     Button,
     Divider,
 } from "@heroui/react";
