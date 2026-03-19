@@ -40,6 +40,14 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdForModal, setSelectedIdForModal] = useState<string | null>(null);
 
+    const randomPeople = Array.from({ length: 50 }, (_, i) => ({
+        name: `Person ${i + 1}`,
+        src: `https://i.pravatar.cc/100?img=${i + 1}`,
+    }));
+
+    function getRandomPerson() {
+        return randomPeople[Math.floor(Math.random() * randomPeople.length)];
+    }
     // Get the topic we are currently working on
     const topicData = useMemo(() => {
         if (!lastAddedTopicId) return null;
@@ -169,8 +177,6 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
             :
                 <PersonModal isOpen={isOpen} onOpenChange={onOpenChange} />
             }
-                <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange}/>
-
                 {/* Topic Banner */}
                 <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
                     <Card className="bg-default-50 border border-default-200 shadow-sm">
@@ -260,7 +266,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                                         <Avatar
                                                                             className="h-7 w-7"
                                                                             name={item.name}
-                                                                            src={item.logo}
+                                                                            src={getRandomPerson().src}
                                                                             icon={item.type === "supervisor" ?
                                                                                 <User size={14}/> :
                                                                                 <Building2 size={14}/>}
@@ -299,12 +305,12 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                             >
                                                                 View Profile
                                                             </Button>
-
                                                             <Button
-                                                                className="flex-1 rounded-2xl border-default border-2"
+                                                                className="flex-1 justify-between rounded-2xl text-black"
                                                                 color="primary"
-                                                                variant="flat"
                                                                 size="sm"
+                                                                endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                                                variant="flat"
                                                                 onPress={() => handleSelect(item.id)}
                                                             >
                                                                 Select

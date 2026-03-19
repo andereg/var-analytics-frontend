@@ -130,7 +130,7 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
         setIsThinking(true);
 
         const result = await chatAction([...messages, userMessage], analysis);
-        
+
         setIsThinking(false);
         if (result.success && result.content) {
             setMessages(prev => [...prev, { role: "assistant", content: result.content! }]);
@@ -138,8 +138,10 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
                 props.onTopicsRecommended(result.recommendedTopicIds);
             }
         } else {
-            setMessages(prev => [...prev, { role: "assistant", content: "Sorry, I encountered an error. Please try again." }]);
+            const errorMsg = result.error || "An unknown error occurred.";
+            setMessages(prev => [...prev, { role: "assistant", content: `❌ **Error:** ${errorMsg}\n\nPlease try again.` }]);
         }
+
     };
 
     return (
