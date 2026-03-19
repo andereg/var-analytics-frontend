@@ -110,62 +110,29 @@ function scoreTone(score: number) {
 }
 
 function TopicCard({ topic }: { topic: Topic }) {
-    const tone = scoreTone(topic.compatibility);
-
     return (
-        <Card className="rounded-3xl border border-default-200 bg-background/80 shadow-sm transition-transform hover:-translate-y-0.5">
-            <CardBody className="p-4">
+        <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
+            <CardBody className="h-auto overflow-visible p-4">
                 <div className="flex gap-3">
-                    <div className="shrink-0">
-                        <CircleChart
-                            pro={topic.compatibility}
-                            contra={Math.max(0, 100 - topic.compatibility)}
-                            size={56}
-                        />
-                    </div>
-
-                    <div className="min-w-0 flex-1 space-y-3">
+                    <div className="min-w-0 space-y-3">
                         <div className="space-y-1">
-                            <div className="flex items-start gap-2">
-                                <h3 className="min-w-0 flex-1 text-sm font-semibold leading-5 md:text-base">
+                            <div className="flex items-center gap-3">
+                                <div className="shrink-0">
+                                    <CircleChart
+                                        pro={topic.compatibility}
+                                        contra={Math.max(0, 100 - topic.compatibility)}
+                                        size={25}
+                                    />
+                                </div>
+
+                                <h3 className="min-w-0 font-semibold leading-5 md:text-base">
                                     {topic.title}
                                 </h3>
-                                <Chip className="shrink-0" color={tone.color} size="sm" variant="flat">
-                                    {tone.label}
-                                </Chip>
                             </div>
 
-                            <p className="text-xs leading-5 text-default-500 md:text-sm">
+                            <p className="break-words text-xs leading-5 text-default-500 md:text-sm">
                                 {topic.description}
                             </p>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2">
-                            {topic.chips.map((chip, index) => (
-                                <Chip
-                                    key={`${topic.id}-${chip.label}-${index}`}
-                                    color={chip.color}
-                                    size="sm"
-                                    variant={chip.variant ?? "flat"}
-                                >
-                                    {chip.label}
-                                </Chip>
-                            ))}
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-2">
-                            <div className="rounded-2xl bg-default-100 px-3 py-2 text-center">
-                                <p className="text-[10px] uppercase tracking-wide text-default-500">fit</p>
-                                <p className="mt-1 text-sm font-semibold">{topic.compatibility}%</p>
-                            </div>
-                            <div className="rounded-2xl bg-default-100 px-3 py-2 text-center">
-                                <p className="text-[10px] uppercase tracking-wide text-default-500">interests</p>
-                                <p className="mt-1 text-sm font-semibold">{topic.interestMatch}%</p>
-                            </div>
-                            <div className="rounded-2xl bg-default-100 px-3 py-2 text-center">
-                                <p className="text-[10px] uppercase tracking-wide text-default-500">tor</p>
-                                <p className="mt-1 text-sm font-semibold">{topic.torFit}%</p>
-                            </div>
                         </div>
 
                         <Button
@@ -182,36 +149,40 @@ function TopicCard({ topic }: { topic: Topic }) {
         </Card>
     );
 }
-
 export default function ChatbotTheme() {
 
     return (
-        <div className="min-h-screen bg-default-50">
+        <div className="min-h-screen">
             <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 py-4 lg:px-6 lg:py-6">
                 <div className="flex min-w-0 flex-1 flex-col">
                     <Chatbot/>
-                 </div>
+                </div>
 
                 <aside className="hidden w-[390px] shrink-0 xl:block">
-                    <Card className="sticky top-6 rounded-[2rem] border border-default-200 bg-background/90 shadow-xl">
-                        <CardHeader className="flex flex-col items-start gap-2 px-5 py-5">
+                    <Card
+                        className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col overflow-hidden rounded-[2rem] border border-default-200 shadow-xl">
+                        <CardHeader className="flex shrink-0 flex-col items-start gap-2 px-5 py-5">
                             <div className="flex w-full items-center justify-between gap-3">
                                 <div>
                                     <h2 className="text-lg font-semibold">Suggested topics</h2>
                                     <p className="text-sm text-default-500">
-                                        Ranked from interests and transcript fit
+                                        Ranked from interests and TOR
                                     </p>
                                 </div>
-                                <Chip color="primary" variant="flat">4 matches</Chip>
+                                <Chip color="secondary" variant="flat">4 matches</Chip>
                             </div>
                         </CardHeader>
 
-                        <Divider />
+                        <Divider className="shrink-0"/>
 
-                        <CardBody className="max-h-[calc(100vh-8rem)] gap-4 overflow-y-auto px-4 py-4">
-                            {suggestedTopics.map((topic) => (
-                                <TopicCard key={topic.id} topic={topic} />
-                            ))}
+                        <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
+                            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+                                <div className="space-y-4">
+                                    {suggestedTopics.map((topic) => (
+                                        <TopicCard key={topic.id} topic={topic}/>
+                                    ))}
+                                </div>
+                            </div>
                         </CardBody>
                     </Card>
                 </aside>
