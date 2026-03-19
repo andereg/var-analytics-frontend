@@ -96,7 +96,7 @@ const defaultExpert = {
     role: "Expert:in",
     position: "Fachkader",
     avatarUrl:
-        "https://thispersondoesnotexist.com/",
+        "https://as1.ftcdn.net/jpg/02/94/62/14/1000_F_294621430_9dwIpCeY1LqefWCcU23pP9i11BgzOS0N.jpg",
     backgroundUrl:
         "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVzaW5lc3MlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww",
     company: {
