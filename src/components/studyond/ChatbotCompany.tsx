@@ -332,8 +332,20 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                 <p className="text-sm">Ask the assistant to recommend {mode}s</p>
                                             </div>
                                         )}
+                                        <Button
+                                            color="secondary"
+                                            size="md"
+                                            radius="full"
+                                            fullWidth
+                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                            className="h-12 text-sm text-gray-500 shadow-xl shadow-primary/10"
+                                            onPress={() => handleSelect("1")}
+                                        >
+                                            <i>I already have a supervisor</i>
+                                        </Button>
                                     </div>
                                 </div>
+
                             </CardBody>
                         </Card>
                     </aside>

@@ -92,6 +92,15 @@ export default function MyTopic({
                     >
                         Find My Topic
                     </Button>
+                    <Button
+                        color="secondary"
+                        size="md"
+                        radius="full"
+                        onPress={onFindTopic}
+                        className="h-12 mt-4 px-8 text-sm text-gray-500 shadow-xl shadow-primary/10"
+                    >
+                        <i>I already have a topic</i>
+                    </Button>
                 </div>
             ) : (
                 /* Saved State */
