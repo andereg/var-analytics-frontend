@@ -111,9 +111,11 @@ function scoreTone(score: number) {
     return { label: "lower fit", color: "danger" as const };
 }
 
+interface Props {
+    selectCompany?: () => void
+}
 
-
-export default function ChatbotCompany() {
+export default function ChatbotCompany(props: Props) {
     const [thesisTopic, setThesisTopic] = useState(
         "Machine Learning Applications in Healthcare Diagnostics"
     );
@@ -183,8 +185,8 @@ export default function ChatbotCompany() {
                             <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
                                 <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                     <div className="space-y-4">
-                                        {suggestedCompanies.map((company) => (
-                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
+                                        {suggestedCompanies.map((company, idx) => (
+                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm" key={idx}>
                                                 <CardBody className="h-auto overflow-visible p-4">
                                                     <div className="space-y-4">
                                                         <div className="flex items-start gap-3">
@@ -203,7 +205,7 @@ export default function ChatbotCompany() {
                                                                             {/* avatar centered inside */}
                                                                             <div className="absolute inset-0 flex items-center justify-center">
                                                                                 <Avatar
-                                                                                    className="h-9 w-9"
+                                                                                    className="h-7 w-7"
                                                                                     name={company.name}
                                                                                     src={company.logo}
                                                                                 />
@@ -240,11 +242,20 @@ export default function ChatbotCompany() {
                                                         <Button
                                                             className="w-full justify-between rounded-2xl"
                                                             color="default"
-                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
                                                             variant="flat"
                                                             onPress={onOpen}
                                                         >
                                                             View company
+                                                        </Button>
+
+                                                        <Button
+                                                            className="w-full justify-between rounded-2xl border-default border-2"
+                                                            color="default"
+                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                                            variant="flat"
+                                                            onPress={props.selectCompany}
+                                                        >
+                                                            Select company
                                                         </Button>
                                                     </div>
                                                 </CardBody>

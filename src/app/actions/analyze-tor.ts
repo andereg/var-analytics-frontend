@@ -12,19 +12,35 @@ export async function analyzeTORAction(fileContent: string) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const prompt = `
-    Analyze this Swiss Transcript of Records (TOR). 
+    Analyze this Swiss Transcript of Records (TOR) for Studyond, a platform connecting Students, Companies, and Universities for thesis projects.
+    
+    Studyond Context:
+    - Swiss grades range from 1.0 to 6.0 (6.0 is best, 4.0 is passing).
+    - Match performance to these official "recommendedFields": Computer Science, Data Science, Artificial Intelligence, Business Administration, Finance, Marketing, Supply Chain Management, Sustainability, Mechanical Engineering, Electrical Engineering, Biotechnology, Healthcare & Medicine, Economics, Law, Communication & Media, Psychology, Environmental Science, Architecture & Design, Education, Public Policy.
+    - Extract skills relevant for research and industry (e.g., Python, Statistical Analysis, CAD, Project Management).
+    - Group academic modules into 4-6 high-level "categories" (e.g., Mathematics, Programming, Management).
+
     Return ONLY a raw JSON object.
     
     JSON Structure:
     {
       "categories": [
-        { "id": 1, "category": "Name", "pro": 80, "contra": 20, "ects": 10, "averageGrade": "5.2", "summary": "Short summary" }
+        { 
+          "id": 1, 
+          "category": "Broad category name", 
+          "pro": 0-100 (matching strength), 
+          "contra": 0-100 (weaknesses), 
+          "ects": number (total ECTS), 
+          "averageGrade": "string (e.g. 5.2)", 
+          "summary": "Short analysis of performance in this area" 
+        }
       ],
       "bestCategory": "Name",
       "weakestCategory": "Name",
-      "averageFit": 75,
+      "averageFit": 0-100,
       "skills": ["Skill1", "Skill2"],
-      "recommendedFields": ["Field1", "Field2"]
+      "recommendedFields": ["Field Name from the official list above"],
+      "degree": "bsc" | "msc" | "phd" (infer from courses)
     }
 
     TOR CONTENT:

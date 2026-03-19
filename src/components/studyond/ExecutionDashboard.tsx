@@ -60,7 +60,7 @@ const thesisSteps = [
     {key: "submission", label: "Submission", icon: CheckCircle},
 ];
 
-export default function ThesisDashboard() {
+export default function ExecutionDashboard() {
     // State
     const [currentStep, setCurrentStep] = useState(1); // 0: Planning, 1: Writing, 2: Submission
     const [thesisTopic, setThesisTopic] = useState(
@@ -91,39 +91,35 @@ export default function ThesisDashboard() {
     });
 
     const [thesisPlan, setThesisPlan] = useState<ThesisPlanItem[]>([
+        // ... deine bestehenden Tasks ...
+
+        // === EXECUTION PHASE ===
         {
-            id: "1",
-            chapter: "Kickoff meeting",
-            description: "First meeting with your supervisor and company",
-            deadline: "2026-05-20",
+            id: "7",
+            chapter: "Interview guide creation",
+            description: "Develop interview questions based on research questions",
+            deadline: "2025-03-10",
             completed: true,
         },
         {
-            id: "2",
-            chapter: "Choose methodology",
-            description: "Select research methodology (qualitative, quantitative, mixed methods)",
-            deadline: "2026-06-17",
-            completed: true,
-        },
-        {
-            id: "3",
-            chapter: "Literature review",
-            description: "Initial research on existing papers and identify research gaps",
-            deadline: "2026-06-10",
+            id: "9",
+            chapter: "Conduct interviews",
+            description: "Execute all interviews and record sessions",
+            deadline: "2025-04-14",
             completed: false,
         },
         {
-            id: "5",
-            chapter: "Create thesis outline",
-            description: "Define chapter structure and main content for each section",
-            deadline: "2025-02-24",
+            id: "10",
+            chapter: "Transcription",
+            description: "Transcribe all interview recordings",
+            deadline: "2025-04-21",
             completed: false,
         },
         {
-            id: "6",
-            chapter: "Set up tools & environment",
-            description: "Prepare writing tools, citation manager, and data collection setup",
-            deadline: "2025-03-03",
+            id: "11",
+            chapter: "Data analysis",
+            description: "Code transcripts, identify themes and synthesize findings",
+            deadline: "2025-05-05",
             completed: false,
         },
     ]);
@@ -214,12 +210,12 @@ export default function ThesisDashboard() {
                         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
                                 <div className="p-4 bg-white/20 rounded-xl">
-                                    <Users className="w-10 h-10 text-white"/>
+                                    <BookOpen className="w-10 h-10 text-white"/>
                                 </div>
                                 <div>
                                     <div className="flex gap-3 items-center">
                                         <h3 className="text-xl md:text-2xl font-bold text-white">
-                                            Find the right interview partners
+                                            How to conduct good interviews
                                         </h3>
                                         <Chip
                                             classNames={{
@@ -234,7 +230,7 @@ export default function ThesisDashboard() {
 
 
                                     <p className="text-white/80">
-                                        Find experts for your interviews that match with your thesis
+                                        A guide on how to conduct good interviews for your thesis
                                     </p>
                                 </div>
                             </div>
@@ -243,7 +239,7 @@ export default function ThesisDashboard() {
                                 className="bg-white font-semibold"
                                 endContent={<ChevronRight className="w-5 h-5"/>}
                             >
-                                Match with experts
+                                Read
                             </Button>
                         </div>
                     </CardBody>
@@ -264,7 +260,7 @@ export default function ThesisDashboard() {
 
                         <Card className="h-full p-2">
                             <CardHeader className="flex justify-between items-center">
-                                <h2 className="text-xl font-semibold">Planning phase</h2>
+                                <h2 className="text-xl font-semibold">Execution phase</h2>
 
                             </CardHeader>
                             <CardBody className="space-y-3">

@@ -71,7 +71,7 @@ export const users = [
     },
 ];
 
-export const EyeIcon = (props) => {
+export const EyeIcon = (props: React.SVGProps<SVGSVGElement>) => {
     return (
         <svg
             aria-hidden="true"
@@ -101,7 +101,7 @@ export const EyeIcon = (props) => {
     );
 };
 
-export const DeleteIcon = (props) => {
+export const DeleteIcon = (props: React.SVGProps<SVGSVGElement>) => {
     return (
         <svg
             aria-hidden="true"
@@ -152,7 +152,7 @@ export const DeleteIcon = (props) => {
     );
 };
 
-export const EditIcon = (props) => {
+export const EditIcon = (props: React.SVGProps<SVGSVGElement>) => {
     return (
         <svg
             aria-hidden="true"
@@ -192,15 +192,15 @@ export const EditIcon = (props) => {
     );
 };
 
-const statusColorMap = {
+const statusColorMap: Record<string, "success" | "danger" | "warning"> = {
     active: "success",
     paused: "danger",
     vacation: "warning",
 };
 
 export default function UsersTable() {
-    const renderCell = React.useCallback((user, columnKey) => {
-        const cellValue = user[columnKey];
+    const renderCell = React.useCallback((user: any, columnKey: React.Key) => {
+        const cellValue = user[columnKey as keyof typeof user];
 
         switch (columnKey) {
             case "name":
@@ -270,4 +270,3 @@ export default function UsersTable() {
         </Table>
     );
 }
-

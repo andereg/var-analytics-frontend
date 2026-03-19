@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, {useState, useMemo, useEffect} from "react";
 import { Button, Card, CardBody } from "@heroui/react";
 import { Plus, Sparkles } from "lucide-react";
 import { TopicCard } from "./TopicCard";
@@ -8,15 +8,29 @@ import { getHydratedTopic } from "@/api/mockData";
 
 interface MyTopicProps {
     onFindTopic?: () => void;
+    selectSupervisor?: () => void;
+    onDefiniteTopicSelect?: () => void;
+    hasFoundTopic?: boolean;
+    hasSupervisor?: boolean;
 }
 
-export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
+export default function MyTopic({
+                                    hasFoundTopic = false,
+                                    onFindTopic = () => {},
+                                    selectSupervisor = () => {},
+                                    onDefiniteTopicSelect = () => {},
+    hasSupervisor = false
+}: MyTopicProps) {
     const [hasTopic, setHasTopic] = useState(false);
 
     // Get mock data for a specific topic (e.g., 'topic-01')
     const savedTopicData = useMemo(() => {
         return getHydratedTopic("topic-01");
     }, []);
+
+    useEffect(() => {
+        setHasTopic(hasFoundTopic)
+    }, [hasFoundTopic])
 
     const companyName = savedTopicData?.company?.name || "Partner Company";
 
@@ -82,7 +96,12 @@ export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
                         </Button>
                     </div>
 
-                    <TopicCard topic={savedTopicData} companyName={companyName} />
+                    <TopicCard topic={savedTopicData}
+                               companyName={companyName}
+                               onSelect={hasSupervisor ? onDefiniteTopicSelect : selectSupervisor}
+                               hasTopicSelector={!hasSupervisor}
+                               hasDefiniteSelector={hasSupervisor}
+                    />
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <Card className="rounded-[2rem] border border-default-100 bg-default-50/50 shadow-none">

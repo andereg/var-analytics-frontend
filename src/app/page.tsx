@@ -1,26 +1,37 @@
 "use client";
-import React from "react";
+import React, {useState} from "react";
 import RowSteps from "@/components/steppers/row-steps";
 import ThesisForm from "@/components/studyond/ThesisForm";
 import ThesisDashboard from "@/components/studyond/ThesisDashboard";
-import TORAnalysis from "@/components/studyond/TORAnalysis";
-import RecommendedTopics from "@/components/studyond/RecommendedThemes";
-import RecommendedExperts from "@/components/studyond/RecommendedExperts";
 import ChatbotTheme from "@/components/studyond/ChatbotTheme";
 import Sidebar from "@/components/studyond/Sidebar";
-
-const stepsContent = [
-    <ThesisForm/>,
-    <ChatbotTheme/>,
-    <TORAnalysis/>,
-    <RecommendedTopics/>,
-    <ThesisDashboard/>,
-    <RecommendedExperts/>,
-];
+import ChatbotCompany from "@/components/studyond/ChatbotCompany";
+import MyTopic from "@/components/studyond/MyTopic";
+import ExecutionDashboard from "@/components/studyond/ExecutionDashboard";
+import WritingDashboard from "@/components/studyond/WritingDashboard";
+import SubmissionDashboard from "@/components/studyond/SubmissionDashboard";
 
 
 export default function Home() {
-    const [step, setStep] = React.useState(4);
+    const [step, setStep] = React.useState<number>(1);
+    const [topicDashboard, setTopicDashboard] = useState(true)
+
+
+    const [searchTopic, setSearchTopic] = React.useState(false);
+    const [hasTopic, setHasTopic] = React.useState(false);
+
+    const stepsContent = [
+        <ThesisForm/>,
+        <ChatbotTheme selectTopic={() => {
+            setTopicDashboard(true)
+            setHasTopic(true)
+        }}/>,
+        <ChatbotCompany selectCompany={() => setTopicDashboard(true)}/>,
+        <ThesisDashboard/>,
+        <ExecutionDashboard/>,
+        <WritingDashboard/>,
+        <SubmissionDashboard/>,
+    ];
 
     return (
 
@@ -30,7 +41,7 @@ export default function Home() {
                 <Sidebar/>
             </div>
 
-            <div className="flex flex-col justify-center items-center flex-1 p-6">
+            <div className="flex flex-col  items-center flex-1 p-6">
 
 
                 <div className="flex items-center justify-center">
@@ -51,13 +62,10 @@ export default function Home() {
                                 title: "Start",
                             },
                             {
-                                title: "Information",
+                                title: "Choose Topic",
                             },
                             {
-                                title: "Topic",
-                            },
-                            {
-                                title: "Resources",
+                                title: "Choose Company",
                             },
                             {
                                 title: "Planning",
@@ -67,11 +75,41 @@ export default function Home() {
                             },
                             {
                                 title: "Writing",
+                            },
+                            {
+                                title: "Finalization",
                             }
                         ]}
                     />
                 </div>
-                {stepsContent[step]}
+
+
+                {
+                    (step == 1 || step == 2) && topicDashboard ?
+                        <MyTopic onFindTopic={() => setTopicDashboard(false)} hasFoundTopic={hasTopic}
+                                 selectSupervisor={() => {
+                                     setStep(step + 1)
+                                     setTopicDashboard(false)
+                                 }}
+                                 onDefiniteTopicSelect={() => setStep(step + 1)}
+                                 hasSupervisor={step == 2 && topicDashboard}
+                        /> : stepsContent[step]
+                }
+
+
+
+
+                {/*{step == 1 && searchTopic ?*/}
+                {/*    stepsContent[step]*/}
+                {/*    :*/}
+                {/*    step == 1 ?*/}
+
+                {/*        <MyTopic onFindTopic={() => setSearchTopic(true)} hasFoundTopic={hasTopic}*/}
+                {/*                 onDefiniteTopicSelect={() => setStep(step + 1)}*/}
+                {/*        /> : ''*/}
+
+                {/*}*/}
+                {/*{step != 1 ? stepsContent[step] : ''}*/}
                 {/*<LandingPage/>*/}
             </div>
 

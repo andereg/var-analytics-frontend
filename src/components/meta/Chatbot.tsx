@@ -1,7 +1,10 @@
-import {Avatar, Button, Card, CardHeader, Chip, cn, ScrollShadow, Tooltip} from "@heroui/react";
+import {Avatar, Button, Card, CardHeader, Chip, cn, ScrollShadow, Tooltip, Divider} from "@heroui/react";
 import {Icon} from "@iconify/react";
 import PromptInput from "@/components/meta/PromptInput";
 import React from "react";
+import { useTOR } from "@/context/TORContext";
+import { chatAction } from "@/app/actions/chatbot";
+import ReactMarkdown from "react-markdown";
 
 
 const promptIdeas = [
@@ -23,22 +26,10 @@ const promptIdeas = [
     },
 ];
 
-const initialMessages = [
-    {
-        role: "assistant",
-        content:
-            "Hi — I can help you find suitable bachelor thesis topics based on your transcript, interests, and academic strengths.",
-    },
-    {
-        role: "user",
-        content: "I want topics that fit my transcript well and still feel practical.",
-    },
-    {
-        role: "assistant",
-        content:
-            "Great choice. Based on your profile, I would prioritize HCI, applied AI systems, and learning analytics. The suggested topics on the right are ranked by compatibility.",
-    },
-];
+interface Message {
+    role: "user" | "assistant";
+    content: string;
+}
 
 function ChatMessage({ role, content }: { role: "user" | "assistant"; content: string }) {
     const isAssistant = role === "assistant";
@@ -61,7 +52,16 @@ function ChatMessage({ role, content }: { role: "user" | "assistant"; content: s
                         : "bg-foreground text-background"
                 )}
             >
-                {content}
+                <ReactMarkdown
+                    components={{
+                        p: ({children}) => <p className="mb-2 last:mb-0">{children}</p>,
+                        ul: ({children}) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
+                        ol: ({children}) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
+                        li: ({children}) => <li className="mb-1">{children}</li>,
+                    }}
+                >
+                    {content}
+                </ReactMarkdown>
             </div>
 
             {!isAssistant && (
@@ -80,18 +80,73 @@ interface Props {
     subtitle?: string;
     showChips?: boolean;
     showTopics?: boolean;
+    onTopicsRecommended?: (topicIds: string[]) => void;
 }
 
 
 export default function Chatbot(props: Props) {
     const [prompt, setPrompt] = React.useState<string>("");
+    const { analysis } = useTOR();
+    const [messages, setMessages] = React.useState<Message[]>([]);
+    const [isThinking, setIsThinking] = React.useState(false);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    // Initial greeting based on TOR data
+    React.useEffect(() => {
+        if (analysis) {
+            setMessages([
+                {
+                    role: "assistant",
+                    content: `Hi! I've analyzed your **${analysis.degree.toUpperCase()}** transcript. 
+                    
+Your strongest category is **${analysis.bestCategory}**. I can help you find suitable thesis topics or recommend partners like **${analysis.recommendedFields[0]}** experts.`
+                }
+            ]);
+        } else {
+            setMessages([
+                {
+                    role: "assistant",
+                    content: "Hi! I'm your Studyond Thesis Assistant. Upload your **Transcript of Records (TOR)** to get personalized topic recommendations."
+                }
+            ]);
+        }
+    }, [analysis]);
+
+    // Scroll to bottom when messages change
+    React.useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages, isThinking]);
+
+    const handleSendMessage = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        if (!prompt.trim() || isThinking) return;
+
+        const userMessage: Message = { role: "user", content: prompt };
+        setMessages(prev => [...prev, userMessage]);
+        setPrompt("");
+        setIsThinking(true);
+
+        const result = await chatAction([...messages, userMessage], analysis);
+        
+        setIsThinking(false);
+        if (result.success && result.content) {
+            setMessages(prev => [...prev, { role: "assistant", content: result.content! }]);
+            if (result.recommendedTopicIds && props.onTopicsRecommended) {
+                props.onTopicsRecommended(result.recommendedTopicIds);
+            }
+        } else {
+            setMessages(prev => [...prev, { role: "assistant", content: "Sorry, I encountered an error. Please try again." }]);
+        }
+    };
 
     return (
         <Card className="flex min-h-[calc(100vh-2rem)] flex-col rounded-[2rem] border border-default-200 bg-background/90 shadow-xl lg:min-h-[calc(100vh-3rem)]">
             <CardHeader className="flex items-center justify-between gap-4 border-b border-default-100 px-5 py-4 md:px-6">
                 <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-foreground bg-ai">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-foreground bg-ai text-background">
                             <Icon icon="solar:stars-outline" width={18} />
                         </div>
                         <div>
@@ -99,7 +154,7 @@ export default function Chatbot(props: Props) {
                                 {props.title ? props.title : 'Thesis Topic Assistant'}
                             </h1>
                             <p className="text-xs text-default-500 md:text-sm">
-                                {props.subtitle ? props.subtitle : 'Transcript - aware topic recommendations'}
+                                {props.subtitle ? props.subtitle : 'Transcript-aware topic recommendations'}
                             </p>
                         </div>
                     </div>
@@ -115,11 +170,11 @@ export default function Chatbot(props: Props) {
 
             </CardHeader>
 
-                <div className="mx-auto flex h-full w-full max-w-4xl flex-col px-4 py-4 md:px-6 md:py-6 flex-1 min-h-0 flex-1">
-                    <ScrollShadow className="flex-1 pr-2 h-full" hideScrollBar>
+                <div className="mx-auto flex h-full w-full max-w-4xl flex-col px-4 py-4 md:px-6 md:py-6 flex-1 min-h-0">
+                    <ScrollShadow ref={scrollRef} className="flex-1 pr-2 h-full" hideScrollBar>
                         <div className="flex flex-col gap-6 pb-6">
 
-                            {props.showChips ? <div className="flex w-full flex-col gap-3">
+                            {props.showChips && messages.length <= 1 ? <div className="flex w-full flex-col gap-3">
                                 <ScrollShadow hideScrollBar className="flex flex-nowrap gap-2" orientation="horizontal">
                                     <div className="flex gap-2 pb-1">
                                         {promptIdeas.map(({ title, description }, index) => (
@@ -127,7 +182,10 @@ export default function Chatbot(props: Props) {
                                                 key={index}
                                                 className="h-auto min-w-[220px] flex-col items-start gap-0 rounded-2xl px-4 py-3 text-left"
                                                 variant="flat"
-                                                onPress={() => setPrompt(title)}
+                                                onPress={() => {
+                                                    setPrompt(title);
+                                                    // Optional: auto-send
+                                                }}
                                             >
                                                 <p className="w-full truncate text-sm font-medium">{title}</p>
                                                 <p className="w-full truncate text-xs text-default-500">{description}</p>
@@ -139,17 +197,33 @@ export default function Chatbot(props: Props) {
 
 
 
-                            {initialMessages.map((message, index) => (
+                            {messages.map((message, index) => (
                                 <ChatMessage
                                     key={`${message.role}-${index}`}
                                     content={message.content}
-                                    role={message.role as "user" | "assistant"}
+                                    role={message.role}
                                 />
                             ))}
+
+                            {isThinking && (
+                                <div className="flex w-full justify-start gap-3">
+                                    <Avatar
+                                        className="mt-1 shrink-0 bg-foreground text-background animate-pulse"
+                                        icon={<Icon icon="solar:stars-outline" width={18} />}
+                                        size="sm"
+                                    />
+                                    <div className="bg-default-100 text-default-800 max-w-[85%] rounded-3xl px-4 py-3 text-sm italic">
+                                        Thinking...
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </ScrollShadow>
 
-                    <form className="mt-4 rounded-[1.75rem] border border-default-200 bg-default-100/70 transition-colors hover:bg-default-100">
+                    <form 
+                        onSubmit={handleSendMessage}
+                        className="mt-4 rounded-[1.75rem] border border-default-200 bg-default-100/70 transition-colors hover:bg-default-100"
+                    >
                         <PromptInput
                             classNames={{
                                 inputWrapper: "bg-transparent! shadow-none",
@@ -161,8 +235,9 @@ export default function Chatbot(props: Props) {
                                     <Tooltip showArrow content="Send message">
                                         <Button
                                             isIconOnly
+                                            type="submit"
                                             color={!prompt ? "default" : "primary"}
-                                            isDisabled={!prompt}
+                                            isDisabled={!prompt || isThinking}
                                             radius="lg"
                                             size="sm"
                                             variant="solid"
@@ -184,6 +259,12 @@ export default function Chatbot(props: Props) {
                             value={prompt}
                             variant="flat"
                             onValueChange={setPrompt}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleSendMessage();
+                                }
+                            }}
                         />
 
                         <div className="flex w-full items-center justify-between gap-2 overflow-auto px-4 pb-4">
@@ -192,6 +273,7 @@ export default function Chatbot(props: Props) {
                                     size="sm"
                                     startContent={<Icon className="text-default-500" icon="solar:paperclip-linear" width={18} />}
                                     variant="flat"
+                                    isDisabled={isThinking}
                                 >
                                     Attach TOR
                                 </Button>
@@ -199,6 +281,7 @@ export default function Chatbot(props: Props) {
                                     size="sm"
                                     startContent={<Icon className="text-default-500" icon="solar:notes-linear" width={18} />}
                                     variant="flat"
+                                    isDisabled={isThinking}
                                 >
                                     Templates
                                 </Button>
@@ -206,6 +289,12 @@ export default function Chatbot(props: Props) {
                                     size="sm"
                                     startContent={<Icon className="text-default-500" icon="solar:sort-from-top-to-bottom-linear" width={18} />}
                                     variant="flat"
+                                    isDisabled={isThinking}
+                                    onPress={() => {
+                                        if (analysis) {
+                                            setPrompt(`Analyze my academic profile in detail. My best category is ${analysis.bestCategory}. What specific thesis paths do you see for me?`);
+                                        }
+                                    }}
                                 >
                                     Analyze profile
                                 </Button>
