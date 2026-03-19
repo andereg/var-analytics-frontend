@@ -16,10 +16,10 @@ const SAVED_TOPIC: Topic = {
 };
 
 interface MyTopicProps {
-    onFindTopic: () => void;
+    onFindTopic?: () => void;
 }
 
-export const MyTopic = ({ onFindTopic }: MyTopicProps) => {
+export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
     const [hasTopic, setHasTopic] = useState(false);
 
     return (

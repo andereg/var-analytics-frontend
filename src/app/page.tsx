@@ -10,7 +10,7 @@ import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 import RecommendedExperts from "@/components/studyond/RecommendedExperts";
 import ProgressModal from "@/components/charts/ProgressModal";
-import ChatbotTheme from "@/components/studyond/ChatbotTheme";
+import MyTopic  from "@/components/studyond/MyTopic";
 
 const stepsContent = [
     <ThesisForm/>,
@@ -18,24 +18,15 @@ const stepsContent = [
     <TORAnalysis />,
     <RecommendedTopics />,
     <ThesisDashboard />,
+    <MyTopic onFindTopic={function(): void {
+        throw new Error("Function not implemented.");
+    } } />,
     <RecommendedExperts />,
 ];
 
-import { MyTopic } from "@/components/studyond/MyTopic";
 
 export default function Home() {
     const [step, setStep] = React.useState(4);
-
-    // Make sure this array has exactly 7 items to match your RowSteps array
-    const stepsContent = [
-        <ThesisForm key="step-0" />,
-        <ChatbotTheme key="step-1" />,
-        <TORAnalysis key="step-2" />,
-        <RecommendedTopics key="step-3" />,
-        <RecommendedExperts key="step-4" />,
-        <MyTopic key="step-5" onFindTopic={() => setStep(0)} />,
-        <div key="step-6" className="p-4 text-center">Writing Step Placeholder</div>
-    ];
 
     return (
         <div className="min-h-screen bg-stone-100 p-6">
