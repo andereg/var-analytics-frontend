@@ -170,7 +170,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
 
     return (
 
-        <div className="min-h-screen">
+        <div className="min-h-screen animate-in fade-in slide-in-from-bottom-4 duration-700">
             { mode == 'company' ?
                 <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
             :

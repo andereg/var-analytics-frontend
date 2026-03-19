@@ -38,6 +38,7 @@ import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSumm
 import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
+import {ResearchBoxesWithDescription} from "@/components/studyond/ResearchBoxes";
 
 // Types
 interface ThesisPlanItem {
@@ -208,7 +209,7 @@ export default function ExecutionDashboard() {
     const progressPercentage = (completedChapters / thesisPlan.length) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Interview Banner */}
                 <Card className="bg-primary overflow-hidden p-2">
@@ -257,6 +258,8 @@ export default function ExecutionDashboard() {
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hey! 👋 You're making progress - the execution phase is where things get exciting! How are your interviews and data collection going? If you need guidance on participant recruitment, interview techniques, or handling unexpected challenges - just ask. How can I help you today?"/>
+
+                        <ResearchBoxesWithDescription/>
                     </div>
 
 

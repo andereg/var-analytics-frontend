@@ -200,7 +200,7 @@ export default function ThesisForm({ onContinue }: ThesisFormProps) {
         <div>
             <ProgressModal progress={progress} />
 
-            <div className="min-h-screen px-4 py-4 md:px-8">
+            <div className="min-h-screen px-4 py-4 md:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <div className="mx-auto max-w-5xl">
                     <Card className="rounded-3xl border border-default-200 shadow-lg">
                         <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">

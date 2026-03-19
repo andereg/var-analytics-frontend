@@ -144,7 +144,7 @@ export default function ChatbotTheme(props: ChatbotThemeProps) {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="mx-auto flex min-h-screen w-full max-w-7xl gap-6 px-4 py-4 lg:px-6 lg:py-6">
                 <div className="flex min-w-0 flex-1 flex-col">
                     <Chatbot

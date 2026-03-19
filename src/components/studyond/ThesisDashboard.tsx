@@ -1,43 +1,15 @@
 // components/ThesisDashboard.tsx
 "use client";
 
-import {useState, useMemo} from "react";
-import {
-    Avatar,
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Chip,
-    Divider,
-    Input,
-    Progress,
-    Textarea
-} from "@heroui/react";
-import {
-    BookOpen,
-    Building2,
-    Calendar,
-    Check,
-    CheckCircle,
-    ChevronRight,
-    Edit3,
-    FileText,
-    Goal,
-    GraduationCap,
-    MessageCircle,
-    Save,
-    Send,
-    User,
-    Users
-} from "lucide-react";
+import {useMemo, useState} from "react";
+import {Button, Card, CardBody, CardHeader, Chip, Textarea} from "@heroui/react";
+import {Calendar, CheckCircle, ChevronRight, Edit3, FileText, Goal, Users} from "lucide-react";
 import Chatbot from "@/components/meta/Chatbot";
 import DeadlineCountdown from "@/components/studyond/dashboard-components/DeadlineCountdown";
 import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSummary";
-import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
-import { useTopics } from "@/context/TopicContext";
-import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
+import {useTopics} from "@/context/TopicContext";
+import {getCompanyById, getHydratedTopic, getSupervisorById} from "@/api/mockData";
+import {ResearchBoxesWithDescription} from "@/components/studyond/ResearchBoxes";
 
 // Types
 interface ThesisPlanItem {
@@ -64,7 +36,7 @@ const thesisSteps = [
 ];
 
 export default function ThesisDashboard() {
-    const { definiteTopicId, topicSelections } = useTopics();
+    const {definiteTopicId, topicSelections} = useTopics();
 
     // Get mock data for all selected topics and merge with user selections
     const hydratedTopic = useMemo(() => {
@@ -75,7 +47,7 @@ export default function ThesisDashboard() {
         const selection = topicSelections[definiteTopicId];
         if (!selection) return base;
 
-        const hydrated = { ...base };
+        const hydrated = {...base};
         if (selection.companyId) {
             hydrated.companyId = selection.companyId;
             hydrated.company = getCompanyById(selection.companyId) || null;
@@ -212,7 +184,7 @@ export default function ThesisDashboard() {
     const progressPercentage = (completedChapters / thesisPlan.length) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="max-w-7xl mx-auto space-y-6">
 
                 {/* Interview Banner */}
@@ -261,7 +233,9 @@ export default function ThesisDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
                     <div className="lg:col-span-2 ">
-                        <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 👋 I see you're in the planning phase of your thesis. How's it going so far? Whether you need help with your research questions, methodology selection, or structuring your outline - I'm here to assist. Any questions or changes to your plan?"/>
+                        <Chatbot title="Thesis assistant" subtitle=" "
+                                 initialMessage="Hi! 👋 I see you're in the planning phase of your thesis. How's it going so far? Whether you need help with your research questions, methodology selection, or structuring your outline - I'm here to assist. Any questions or changes to your plan?"/>
+                        <ResearchBoxesWithDescription/>
                     </div>
 
 
@@ -274,7 +248,7 @@ export default function ThesisDashboard() {
                             company={displayCompany}
                             studyProgram={displayStudyProgram}
                         />
-                        <DeadlineCountdown deadline={deadline} title="Submission Deadline" />
+                        <DeadlineCountdown deadline={deadline} title="Submission Deadline"/>
                         <Card className="h-full p-2">
                             <CardHeader className="flex justify-between items-center">
                                 <h2 className="text-xl font-semibold">Planning phase</h2>
