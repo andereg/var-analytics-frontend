@@ -143,7 +143,7 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
     };
 
     return (
-        <Card className="flex min-h-[calc(100vh-2rem)] flex-col rounded-[2rem] border border-default-200 bg-background/90 shadow-xl lg:min-h-[calc(100vh-3rem)]">
+        <Card className="flex min-h-[calc(100vh-10rem)] flex-col rounded-[2rem] border border-default-200 bg-background/90 shadow-xl lg:min-h-[calc(100vh-10rem)]">
             <CardHeader className="flex items-center justify-between gap-4 border-b border-default-100 px-5 py-4 md:px-6">
                 <div className="space-y-1">
                     <div className="flex items-center gap-2">

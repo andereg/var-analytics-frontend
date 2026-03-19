@@ -69,20 +69,6 @@ const INITIAL_TOPICS: Topic[] = [
 ];
 
 
-function scoreTone(score: number) {
-    if (score >= 85) {
-        return { label: "excellent fit", color: "success" as const };
-    }
-    if (score >= 70) {
-        return { label: "strong fit", color: "primary" as const };
-    }
-    if (score >= 55) {
-        return { label: "moderate fit", color: "warning" as const };
-    }
-    return { label: "lower fit", color: "danger" as const };
-}
-
-
 interface MyTopicProps {
     topic: Topic;
     selectTopic?: () => void;
