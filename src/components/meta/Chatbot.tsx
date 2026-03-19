@@ -84,7 +84,7 @@ export default function Chatbot() {
             <CardHeader className="flex items-center justify-between gap-4 border-b border-default-100 px-5 py-4 md:px-6">
                 <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-foreground text-background">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-foreground bg-ai">
                             <Icon icon="solar:stars-outline" width={18} />
                         </div>
                         <div>
@@ -98,7 +98,7 @@ export default function Chatbot() {
 
                 <div className="hidden items-center gap-2 md:flex">
                     <Chip variant="flat">Bachelor thesis</Chip>
-                    <Chip color="primary" variant="flat">AI-assisted matching</Chip>
+                    <Chip color="primary" className="text-ai" variant="bordered" >AI-assisted matching</Chip>
                 </div>
             </CardHeader>
 
