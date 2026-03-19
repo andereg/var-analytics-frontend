@@ -7,6 +7,7 @@ import HomeClient from "@/components/meta/HomeClient";
 import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 import RecommendedExperts from "@/components/studyond/RecommendedExperts";
+import ProgressModal from "@/components/charts/ProgressModal";
 
 const stepsContent = [
     <ThesisForm/>,
@@ -22,6 +23,8 @@ export default function Home() {
     return (
 
         <div className="min-h-screen bg-stone-100 p-6">
+
+
             <div className="flex items-center justify-center">
 
                 <RowSteps

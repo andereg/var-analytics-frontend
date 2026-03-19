@@ -11,6 +11,8 @@ import {
     Button,
     Divider,
 } from "@heroui/react";
+import ProgressModal from "@/components/charts/ProgressModal";
+import TorUpload from "@/components/meta/TorUpload";
 
 const degreePrograms = [
     "Computer Science",
@@ -46,7 +48,12 @@ const supervisionAreas = [
 ];
 
 export default function ThesisForm() {
+    const progress = 72;
+
     return (
+        <div>
+            <ProgressModal progress={progress} />
+
         <div className="min-h-screen px-4 py-8 md:px-8">
             <div className="mx-auto max-w-5xl">
                 <Card className="rounded-3xl border border-default-200 shadow-lg">
@@ -64,25 +71,6 @@ export default function ThesisForm() {
 
                     <CardBody className="px-6 pb-8 pt-2 md:px-8">
                         <form className="space-y-8">
-                            <section className="space-y-4">
-                                <div>
-                                    <h2 className="text-lg font-semibold">Student Information</h2>
-                                    <p className="text-sm text-default-500">
-                                        Basic personal and contact details.
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <Input label="First Name" placeholder="Enter your first name" variant="bordered" isRequired />
-                                    <Input label="Last Name" placeholder="Enter your last name" variant="bordered" isRequired />
-                                    <Input label="University Email" type="email" placeholder="name@university.edu" variant="bordered" isRequired />
-                                    <Input label="Student ID" placeholder="e.g. 20234567" variant="bordered" isRequired />
-                                    <Input label="Phone Number" placeholder="Optional" variant="bordered" />
-                                    <Input label="Current Semester" type="number" placeholder="e.g. 6" variant="bordered" />
-                                </div>
-                            </section>
-
-                            <Divider />
 
                             <section className="space-y-4">
                                 <div>
@@ -93,9 +81,6 @@ export default function ThesisForm() {
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <Input label="University" placeholder="e.g. University of Zurich" variant="bordered" isRequired />
-                                    <Input label="Faculty / Department" placeholder="e.g. Department of Informatics" variant="bordered" isRequired />
-
                                     <Select label="Degree Program" placeholder="Select your degree program" variant="bordered" isRequired>
                                         {degreePrograms.map((program) => (
                                             <SelectItem key={program}>{program}</SelectItem>
@@ -205,52 +190,21 @@ export default function ThesisForm() {
 
                             <section className="space-y-4">
                                 <div>
-                                    <h2 className="text-lg font-semibold">Required Documents</h2>
+                                    <h2 className="text-sm font-semibold">Required Documents</h2>
                                     <p className="text-sm text-default-500">
                                         Upload your academic documents and supporting files.
                                     </p>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <Input
-                                        label="Transcript of Records"
-                                        type="file"
-                                        variant="bordered"
-                                        description="Upload PDF of your transcript"
-                                        accept=".pdf"
-                                        isRequired
-                                    />
-
-                                    <Input
-                                        label="CV / Resume"
-                                        type="file"
-                                        variant="bordered"
-                                        description="Upload your current CV in PDF format"
-                                        accept=".pdf"
-                                    />
-
-                                    <Input
-                                        label="Motivation Letter"
-                                        type="file"
-                                        variant="bordered"
-                                        description="Optional PDF upload"
-                                        accept=".pdf"
-                                    />
-
-                                    <Input
-                                        label="Additional Supporting Documents"
-                                        type="file"
-                                        variant="bordered"
-                                        description="Optional: certificates, project reports, portfolio"
-                                        accept=".pdf,.doc,.docx"
-                                    />
+                                <div className="rounded-3xl border border-default-200 bg-background p-4 shadow-sm">
+                                    <TorUpload/>
                                 </div>
                             </section>
 
-                            <Divider />
+                            <Divider/>
 
                             <section className="space-y-4">
-                                <div>
+                            <div>
                                     <h2 className="text-lg font-semibold">Availability & Notes</h2>
                                     <p className="text-sm text-default-500">
                                         Add any constraints or additional details.
@@ -285,5 +239,6 @@ export default function ThesisForm() {
                 </Card>
             </div>
         </div>
+    </div>
     );
 }
