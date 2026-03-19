@@ -37,22 +37,29 @@ type Suggestion = {
 export default function ChatbotCompany({ selectCompany, initialMessage }: { selectCompany?: () => void, initialMessage?: string }) {
     const { lastAddedTopicId, topicSelections, setCompanyForTopic, setSupervisorForTopic } = useTopics();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [selectedIdForModal, setSelectedIdForModal] = useState<string | null>(null);
+    const [selectedItem, setSelectedItem] = useState<Suggestion | null>(null);
 
     const randomPeople = [
         { name: "Alice Johnson", src: "https://as1.ftcdn.net/jpg/02/94/62/14/1000_F_294621430_9dwIpCeY1LqefWCcU23pP9i11BgzOS0N.jpg" },
         { name: "Bob Smith", src: "https://static.vecteezy.com/system/resources/thumbnails/072/596/987/small/confident-man-in-suit-stands-in-bright-modern-office-space-illuminated-by-natural-light-his-professional-demeanor-reflects-success-and-ambition-photo.jpeg" },
         { name: "Charlie Brown", src: "https://blog-pixomatic.s3.appcnt.com/image/22/01/26/61f166e1e3b25/_orig/pixomatic_1572877090227.png" },
         { name: "Diana Prince", src: "https://www.headshotphoto.io/images/linkedin/img-4.webp" },
-        { name: "Alice Johnson", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkGb0KXZff72_aNYCOMxSo3wBXLUugcSQItw&s" },
-        { name: "Bob Smith", src: "https://i0.wp.com/annemariesegal.com/wp-content/uploads/2017/04/adobestock_86346713-cropped-young-woman-in-suit.jpg?fit=1200%2C1118&ssl=1" },
-        { name: "Charlie Brown", src: "https://retratosbarcelona.com/wp-content/uploads/2022/09/Retratos-Barcelona-Linkedin-Photography-Alejandra.jpg" },
-        { name: "Diana Prince", src: "https://www.corporatephotographylondon.com/wp-content/uploads/2019/01/DSC0799-copy.jpg" },
+        { name: "Eva Green", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkGb0KXZff72_aNYCOMxSo3wBXLUugcSQItw&s" },
+        { name: "Frank Miller", src: "https://i0.wp.com/annemariesegal.com/wp-content/uploads/2017/04/adobestock_86346713-cropped-young-woman-in-suit.jpg?fit=1200%2C1118&ssl=1" },
+        { name: "Grace Hopper", src: "https://retratosbarcelona.com/wp-content/uploads/2022/09/Retratos-Barcelona-Linkedin-Photography-Alejandra.jpg" },
+        { name: "Henry Cavill", src: "https://www.corporatephotographylondon.com/wp-content/uploads/2019/01/DSC0799-copy.jpg" },
     ];
 
-    function getRandomPerson() {
-        return randomPeople[Math.floor(Math.random() * randomPeople.length)];
+    const getStablePerson = (id: string) => {
+        // Simple hash from string to index
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+            hash = id.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % randomPeople.length;
+        return randomPeople[index];
     }
+
     // Get the topic we are currently working on
     const topicData = useMemo(() => {
         if (!lastAddedTopicId) return null;
@@ -86,42 +93,44 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
     const mode = currentCompany ? "supervisor" : "company";
 
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+    const [hasUserRequested, setHasUserRequested] = useState(false);
 
     const handleRecommendations = useCallback((ids: string[]) => {
-        if (mode === "company") {
-            const matches = getAllCompanies().filter(c => ids.includes(c.id));
-            const mapped = matches.map(c => ({
-                id: c.id,
-                name: c.name,
-                description: c.description,
-                compatibility: 70 + Math.floor(Math.random() * 25),
-                type: "company" as const,
-                location: "Switzerland",
-                industry: c.domains[0],
-            }));
-            if (mapped.length > 0) setSuggestions(mapped);
-        } else {
-            const matches = getAllSupervisors().filter(s => ids.includes(s.id));
-            const mapped = matches.map(s => ({
-                id: s.id,
-                name: `${s.title} ${s.firstName} ${s.lastName}`,
-                description: s.about || "Expert in your thesis field.",
-                compatibility: 70 + Math.floor(Math.random() * 25),
-                type: "supervisor" as const,
-                university: "Swiss University",
-            }));
-            if (mapped.length > 0) setSuggestions(mapped);
-        }
-    }, [mode]);
+        setHasUserRequested(true);
+        // Look for both companies and supervisors
+        const companyMatches = getAllCompanies().filter(c => ids.includes(c.id));
+        const supervisorMatches = getAllSupervisors().filter(s => ids.includes(s.id));
 
-    // Reset suggestions when mode changes
-    useEffect(() => {
-        setSuggestions([]);
-    }, [mode]);
+        const mappedCompanies = companyMatches.map(c => ({
+            id: c.id,
+            name: c.name,
+            description: c.description,
+            compatibility: 70 + Math.floor(Math.random() * 25),
+            type: "company" as const,
+            location: "Switzerland",
+            industry: c.domains[0],
+        }));
 
-    // Provide initial suggestions based on topic
+        const mappedSupervisors = supervisorMatches.map(s => ({
+            id: s.id,
+            name: `${s.title} ${s.firstName} ${s.lastName}`,
+            description: s.about || "Expert in your thesis field.",
+            compatibility: 70 + Math.floor(Math.random() * 25),
+            type: "supervisor" as const,
+            university: "Swiss University",
+        }));
+
+        // Combine them, but prioritize those that match the current IDs order
+        const combined = [...mappedCompanies, ...mappedSupervisors].sort((a, b) => {
+            return ids.indexOf(a.id) - ids.indexOf(b.id);
+        });
+
+        setSuggestions(combined);
+    }, []);
+
+    // Provide initial suggestions based on topic and mode
     useEffect(() => {
-        if (!topicData || suggestions.length > 0) return;
+        if (!topicData || hasUserRequested) return;
 
         if (mode === "company") {
             const companyIds = [];
@@ -133,37 +142,66 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                 .filter(c => c.id !== topicData.companyId)
                 .slice(0, 3 - companyIds.length)
                 .map(c => c.id);
-            handleRecommendations([...companyIds, ...others]);
+            
+            const ids = [...companyIds, ...others];
+            const matches = getAllCompanies().filter(c => ids.includes(c.id));
+            setSuggestions(matches.map(c => ({
+                id: c.id,
+                name: c.name,
+                description: c.description,
+                compatibility: 70 + Math.floor(Math.random() * 25),
+                type: "company",
+                location: "Switzerland",
+                industry: c.domains[0],
+            })));
         } else {
-            const supervisorIds = [...topicData.supervisorIds];
+            const supervisorIds = topicData.supervisorIds || [];
             // Find supervisors with matching fields
             const matched = getAllSupervisors()
                 .filter(s => !supervisorIds.includes(s.id) && s.fieldIds.some(fid => topicData.fieldIds.includes(fid)))
-                .slice(0, 3 - supervisorIds.length)
+                .slice(0, Math.max(0, 3 - supervisorIds.length))
                 .map(s => s.id);
             
             // If still few, add some more
             const finalIds = [...supervisorIds, ...matched];
-            if (finalIds.length < 2) {
+            if (finalIds.length < 3) {
                 const randoms = getAllSupervisors()
                     .filter(s => !finalIds.includes(s.id))
-                    .slice(0, 2 - finalIds.length)
+                    .slice(0, 3 - finalIds.length)
                     .map(s => s.id);
                 finalIds.push(...randoms);
             }
             
-            handleRecommendations(finalIds);
+            const matches = getAllSupervisors().filter(s => finalIds.includes(s.id));
+            setSuggestions(matches.map(s => ({
+                id: s.id,
+                name: `${s.title} ${s.firstName} ${s.lastName}`,
+                description: s.about || "Expert in your thesis field.",
+                compatibility: 70 + Math.floor(Math.random() * 25),
+                type: "supervisor",
+                university: "Swiss University",
+            })));
         }
-    }, [topicData?.id, mode, suggestions.length, handleRecommendations, topicData]);
+    }, [topicData, mode, hasUserRequested]);
 
-    const handleSelect = (id: string) => {
+    // Reset user requested flag when topic or mode changes to allow fresh initial suggestions
+    useEffect(() => {
+        setHasUserRequested(false);
+    }, [topicData?.id, mode]);
+
+    const handleSelect = (item: Suggestion) => {
         if (!lastAddedTopicId) return;
-        if (mode === "company") {
-            setCompanyForTopic(lastAddedTopicId, id);
+        if (item.type === "company") {
+            setCompanyForTopic(lastAddedTopicId, item.id);
         } else {
-            setSupervisorForTopic(lastAddedTopicId, id);
+            setSupervisorForTopic(lastAddedTopicId, item.id);
         }
         selectCompany?.();
+    };
+
+    const handleViewProfile = (item: Suggestion) => {
+        setSelectedItem(item);
+        onOpen();
     };
 
     if (!topicData) {
@@ -271,7 +309,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                                         <Avatar
                                                                             className="h-7 w-7"
                                                                             name={item.name}
-                                                                            src={getRandomPerson().src}
+                                                                            src={getStablePerson(item.id).src}
                                                                             icon={item.type === "supervisor" ?
                                                                                 <User size={14}/> :
                                                                                 <Building2 size={14}/>}
@@ -305,7 +343,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                                 className="flex-1 rounded-2xl"
                                                                 color="default"
                                                                 variant="flat"
-                                                                onPress={onOpen}
+                                                                onPress={() => handleViewProfile(item)}
                                                                 size="sm"
                                                             >
                                                                 View Profile
@@ -316,7 +354,7 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
                                                                 size="sm"
                                                                 endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
                                                                 variant="flat"
-                                                                onPress={() => handleSelect(item.id)}
+                                                                onPress={() => handleSelect(item)}
                                                             >
                                                                 Select
                                                             </Button>

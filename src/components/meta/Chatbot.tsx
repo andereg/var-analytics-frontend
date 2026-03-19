@@ -134,8 +134,8 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
         setIsThinking(false);
         if (result.success && result.content) {
             setMessages(prev => [...prev, { role: "assistant", content: result.content! }]);
-            if (result.recommendedTopicIds && props.onTopicsRecommended) {
-                props.onTopicsRecommended(result.recommendedTopicIds);
+            if (result.recommendedIds && props.onTopicsRecommended) {
+                props.onTopicsRecommended(result.recommendedIds);
             }
         } else {
             const errorMsg = result.error || "An unknown error occurred.";
