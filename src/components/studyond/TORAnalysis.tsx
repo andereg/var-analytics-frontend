@@ -1,8 +1,11 @@
-import React from "react";
-import { Card, CardBody, CardHeader, Chip, Divider, Progress } from "@heroui/react";
-import CircleChart from "@/components/charts/CircleChart";
+"use client";
 
-const torCategories = [
+import React from "react";
+import { Card, CardBody, CardHeader, Chip, Progress, Skeleton } from "@heroui/react";
+import CircleChart from "@/components/charts/CircleChart";
+import { useTOR } from "@/context/TORContext";
+
+const MOCK_CATEGORIES = [
     {
         id: 1,
         category: "Mathematics",
@@ -31,15 +34,6 @@ const torCategories = [
         summary: "Solid entry-level performance with room to improve for more theory-heavy thesis work.",
     },
     {
-        id: 4,
-        category: "Systems",
-        pro: 41,
-        contra: 59,
-        ects: 15,
-        averageGrade: "4.2",
-        summary: "Mixed performance in systems-oriented modules, suggesting weaker alignment for low-level topics.",
-    },
-    {
         id: 5,
         category: "Human-Computer Interaction",
         pro: 100,
@@ -48,39 +42,45 @@ const torCategories = [
         averageGrade: "5.8",
         summary: "Excellent fit. Grades indicate strong potential for HCI- or UX-oriented thesis topics.",
     },
-    {
-        id: 6,
-        category: "Databases",
-        pro: 0,
-        contra: 100,
-        ects: 6,
-        averageGrade: "3.7",
-        summary: "Not a strong category based on the transcript. Database-heavy topics may be risky without extra preparation.",
-    },
 ];
 
-function ScoreBadge({ pro, contra }) {
-    if (contra === 0) {
-        return <Chip color="success" variant="bordered">excellent match</Chip>;
-    }
-    if (pro === 0) {
-        return <Chip color="danger" variant="bordered">weak category</Chip>;
-    }
-    if (pro >= 70) {
-        return <Chip color="primary" variant="bordered">strong match</Chip>;
-    }
-    if (pro >= 50) {
-        return <Chip color="warning" variant="bordered">moderate match</Chip>;
-    }
+function ScoreBadge({ pro, contra }: { pro: number; contra: number }) {
+    if (contra === 0) return <Chip color="success" variant="bordered">excellent match</Chip>;
+    if (pro === 0) return <Chip color="danger" variant="bordered">weak category</Chip>;
+    if (pro >= 70) return <Chip color="primary" variant="bordered">strong match</Chip>;
+    if (pro >= 50) return <Chip color="warning" variant="bordered">moderate match</Chip>;
     return <Chip color="danger" variant="bordered">risky match</Chip>;
 }
 
 export default function TORAnalysis() {
-    const bestCategory = [...torCategories].sort((a, b) => b.pro - a.pro)[0];
-    const weakestCategory = [...torCategories].sort((a, b) => a.pro - b.pro)[0];
-    const averageFit = Math.round(
-        torCategories.reduce((sum, item) => sum + item.pro, 0) / torCategories.length
-    );
+    const { analysis, isAnalyzing } = useTOR();
+
+    // Use analysis data or fallback to mock data
+    const categories = analysis?.categories || MOCK_CATEGORIES;
+    const bestCategory = analysis?.bestCategory || "Human-Computer Interaction";
+    const weakestCategory = analysis?.weakestCategory || "Systems";
+    const averageFit = analysis?.averageFit || 75;
+
+    if (isAnalyzing) {
+        return (
+            <div className="min-h-screen bg-default-50 px-4 py-8 md:px-8">
+                <div className="mx-auto max-w-7xl space-y-8">
+                    <Card className="rounded-[2rem] border border-default-200 p-8">
+                        <Skeleton className="h-8 w-48 rounded-lg mb-4" />
+                        <Skeleton className="h-12 w-full rounded-lg mb-4" />
+                        <Skeleton className="h-24 w-full rounded-lg" />
+                    </Card>
+                    <div className="grid gap-6 md:grid-cols-4">
+                        {[1, 2, 3, 4].map((i) => (
+                            <Card key={i} className="h-64 rounded-[2rem] p-6">
+                                <Skeleton className="h-full w-full rounded-[2rem]" />
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-default-50 via-background to-default-100 px-4 py-8 md:px-8 lg:px-12">
@@ -97,10 +97,8 @@ export default function TORAnalysis() {
                                         Thesis topic fit based on TOR categories
                                     </h1>
                                     <p className="max-w-3xl text-base leading-7 text-default-600 md:text-lg">
-                                        This dashboard groups transcript performance into topic categories and converts them into
-                                        a simple <span className="font-semibold text-foreground">pro / contra</span> signal.
-                                        A topic is especially promising when <span className="font-semibold text-primary">contra = 0</span>,
-                                        and a category is weak when <span className="font-semibold text-danger">pro = 0</span>.
+                                        AI has grouped your transcript performance into topic categories. 
+                                        {analysis && " This is live data from your uploaded document."}
                                     </p>
                                 </div>
                             </div>
@@ -114,40 +112,108 @@ export default function TORAnalysis() {
 
                                 <div className="rounded-3xl border border-default-200 bg-default-50 p-5">
                                     <p className="text-sm text-default-500">best category</p>
-                                    <p className="mt-2 text-2xl font-bold">{bestCategory.category}</p>
-                                    <p className="mt-2 text-sm text-default-600">pro {bestCategory.pro} · contra {bestCategory.contra}</p>
+                                    <p className="mt-2 text-2xl font-bold">{bestCategory}</p>
                                 </div>
 
                                 <div className="rounded-3xl border border-default-200 bg-default-50 p-5">
                                     <p className="text-sm text-default-500">needs support</p>
-                                    <p className="mt-2 text-2xl font-bold">{weakestCategory.category}</p>
-                                    <p className="mt-2 text-sm text-default-600">pro {weakestCategory.pro} · contra {weakestCategory.contra}</p>
+                                    <p className="mt-2 text-2xl font-bold">{weakestCategory}</p>
                                 </div>
                             </div>
                         </CardBody>
                     </Card>
 
-
+                    {analysis && (
+                        <Card className="rounded-[2rem] border border-default-200 bg-primary-50/30 p-8 shadow-none">
+                            <h3 className="text-xl font-bold mb-4 text-primary">AI Extracted Skills</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {analysis.skills.map((skill, i) => (
+                                    <Chip key={i} variant="dot" color="primary">{skill}</Chip>
+                                ))}
+                            </div>
+                            <Divider className="my-6" />
+                            <h3 className="text-xl font-bold mb-4 text-secondary">Recommended Fields</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {analysis.recommendedFields.map((field, i) => (
+                                    <Chip key={i} variant="flat" color="secondary">{field}</Chip>
+                                ))}
+                            </div>
+                        </Card>
+                    )}
                 </section>
 
                 <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                    {torCategories.map((item) => (
+                    {categories.map((item) => (
                         <Card key={item.id} className="rounded-[2rem] border border-default-200 shadow-lg transition-transform">
                             <CardHeader className="flex items-start justify-between gap-4 px-6 pb-2 pt-6">
-                                    <h3 className="text-xl font-bold">{item.category}</h3>
-                                    <ScoreBadge pro={item.pro} contra={item.contra} />
-
+                                <h3 className="text-xl font-bold">{item.category}</h3>
+                                <ScoreBadge pro={item.pro} contra={item.contra} />
                             </CardHeader>
 
-                            <CardBody className="space-y-5 px-6  pt-2 min-w-[180px]">
+                            <CardBody className="space-y-5 px-6 pt-2 min-w-[180px]">
                                 <div className="flex justify-center py-2">
                                     <CircleChart pro={item.pro} contra={item.contra} size={200} />
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-default-500">ECTS: {item.ects}</span>
+                                        <span className="font-bold">Grade: {item.averageGrade}</span>
+                                    </div>
+                                    <p className="text-xs text-default-600 line-clamp-3">
+                                        {item.summary}
+                                    </p>
                                 </div>
                             </CardBody>
                         </Card>
                     ))}
                 </section>
+
+                {analysis && (
+                    <section className="mt-12 space-y-6">
+                        <div className="flex items-center gap-4">
+                            <h2 className="text-2xl font-bold">Detailed Analysis Breakdown</h2>
+                            <div className="h-px flex-1 bg-default-200" />
+                        </div>
+                        
+                        <div className="grid gap-4">
+                            {analysis.categories.map((cat) => (
+                                <div key={cat.id} className="flex flex-col gap-2 rounded-2xl border border-default-100 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="space-y-1">
+                                        <p className="font-bold text-lg">{cat.category}</p>
+                                        <p className="text-sm text-default-500">{cat.summary}</p>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-right">
+                                        <div className="text-sm">
+                                            <p className="text-default-400">ECTS</p>
+                                            <p className="font-mono font-bold">{cat.ects}</p>
+                                        </div>
+                                        <div className="text-sm">
+                                            <p className="text-default-400">Grade</p>
+                                            <p className="font-mono font-bold">{cat.averageGrade}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <Card className="mt-8 border-none bg-default-900 text-default-50">
+                            <CardBody className="p-6">
+                                <details className="group">
+                                    <summary className="flex cursor-pointer list-none items-center justify-between font-mono text-sm font-bold uppercase tracking-widest text-primary-400">
+                                        <span>View Raw AI Data (JSON)</span>
+                                        <span className="transition-transform group-open:rotate-180">▼</span>
+                                    </summary>
+                                    <pre className="mt-4 max-h-[400px] overflow-auto rounded-xl bg-black/30 p-4 font-mono text-xs leading-relaxed text-success-300">
+                                        {JSON.stringify(analysis, null, 2)}
+                                    </pre>
+                                </details>
+                            </CardBody>
+                        </Card>
+                    </section>
+                )}
             </div>
         </div>
     );
 }
+
+const Divider = ({ className }: { className?: string }) => <div className={`h-px bg-default-200 ${className}`} />;

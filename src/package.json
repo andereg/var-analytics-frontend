@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.43",
+    "@google/generative-ai": "^0.24.1",
     "@heroui/link": "^2.2.25",
     "@heroui/navbar": "^2.2.29",
     "@heroui/react": "^2.8.9",
@@ -16,6 +18,7 @@
     "@heroui/system": "^2.4.27",
     "@heroui/theme": "^2.4.26",
     "@iconify/react": "^6.0.2",
+    "ai": "^6.0.116",
     "axios": "^1.13.6",
     "framer-motion": "^12.34.3",
     "iconify": "^1.4.0",
@@ -24,7 +27,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-router-dom": "^7.13.1",
-    "recharts": "^3.7.0"
+    "recharts": "^3.7.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
