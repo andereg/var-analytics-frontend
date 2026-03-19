@@ -1,0 +1,77 @@
+TRANSCRIPT OF RECORDS
+
+Student Information
+
+    Name: Fontanelli, Matteo Daniele 
+
+    Date of Birth: 28.12.2001 
+
+    Origin: Biel/Bienne BE 
+
+    Matriculation Number: 24-481-228 
+
+Academic Program
+
+    Institution: Bern University of Applied Sciences (Berner Fachhochschule) 
+
+    Degree Program: BSc Informatik 
+
+    Study Form: Full-time (Vollzeit) 
+
+    Start Date: 01.08.2024 
+
+ACADEMIC PERFORMANCE SUMMARY
+
+    Total ECTS Credits Earned: 90 
+
+    Total ECTS Credits Accountable: 90 
+
+    Overall Grade Point Average: 5.19 (weighted by 68 ECTS) 
+
+    Required Credits for Diploma: 180 
+
+MODULE DETAILS
+
+Computer Science Basics (Fachgrundlagen)
+| Code | Module Title | Semester | Grade | ECTS |
+| :--- | :--- | :--- | :--- | :--- |
+| BT11021 | Computer Science Basics | 2024 HS | 5.5 | 4 |
+| BTI1101 | Interaction Design | 2024 HS | 4.5 | 2 |
+| BTI1111 | Requirements Engineering | 2024 HS | 5.5 | 2 |
+| BT11121 | Software Engineering | 2025 HS | 5.0 | 4 |
+| BT11301 | Web Programming | 2025 FS | 5.0 | 4 |
+| BT11311 | Databases | 2025 FS | 5.0 | 4 |
+| BT11321 | Introduction to IT-Security | 2025 HS | 4.5 | 2 |
+| BT11331 | Computer Networks | 2025 HS | 6.0 | 4 |
+| BTI1341 | Operating Systems | 2025 FS | 5.0 | 4 |
+| BT11401 | Algorithms and Datastructures | 2024 HS | 5.5 | 4 |
+| BZG1155 | Diskrete Mathematik 1 | 2024 HS | 4.0 | 4 |
+| BZG1156 | Diskrete Mathematik 2 | 2025 HS | 5.5 | 4 |
+| BZG1157 | Lineare Algebra | 2025 FS | 4.5 | 4 |
+| BZG1158 | Analysis | 2025 HS | 5.0 | 4 |
+| BT11001 | Programming 1 with Java | 2024 HS | 6.0 | 4 |
+| BT11011 | Programming 2 with Java | 2025 FS | 6.0 | 4 |
+
+General Modules & Projects (Überfachliche Module)
+| Code | Module Title | Semester | Grade | ECTS |
+| :--- | :--- | :--- | :--- | :--- |
+| BZG3407 | International English 1 | 2025 HS | 5.5 | - |
+| BT13001 | Project and Training 1 | 2024 HS | Pass | - |
+| BT13011 | Project and Training 2 | 2025 FS | Pass | - |
+| BT13021 | Project and Training 3 | 2025 HS | Pass | - |
+| BZG3110 | Kommunikation 1 Deutsch | 2024 HS | 5.5 | - |
+| BZG3111 | Kommunikation 2 Deutsch | 2025 FS | 5.5 | 2 |
+
+Electives (Wahlmodule)
+| Code | Module Title | Semester | Grade | ECTS |
+| :--- | :--- | :--- | :--- | :--- |
+| BT15204 | Special Week 1 | 2024 HS | Pass | 2 |
+| BT15205 | Special Week 2 | 2025 HS | Pass | 2 |
+| BTE5446 | Embedded Linux | 2025 HS | 4.5 | 2 |
+| BZG1315 | Zufallsgesteuerte Algorithmen | 2025 HS | 5.0 | 2 |
+
+OFFICIAL INFORMATION
+
+    Location/Date: Biel/Bienne, 13.02.2026 
+
+    Signatory: Dr. Michael Röthlin, Head of Department (Technik und Informatik)
