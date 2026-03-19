@@ -21,8 +21,8 @@ export default function Home() {
     const [hasTopic, setHasTopic] = React.useState(false);
 
     const stepsContent = [
-        <ThesisForm key="step-0"/>,
-        <ChatbotTheme key={`step-1-${topicDashboard}`} selectTopic={() => {
+        <ThesisForm onContinue={() => setStep(1)} />,
+        <ChatbotTheme selectTopic={() => {
             setTopicDashboard(true)
             setHasTopic(true)
         }}/>,
