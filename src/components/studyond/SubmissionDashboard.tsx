@@ -181,36 +181,6 @@ export default function SubmissionDashboard() {
         <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
 
-                {/* Topic Banner */}
-                <Card className="from-primary-500 to-secondary-500">
-                    <CardBody className="py-8">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/20 rounded-xl">
-                                <BookOpen className="w-8 h-8 "/>
-                            </div>
-                            <div>
-                                <p className=" text-sm font-medium opacity-50">Your chosen topic</p>
-                                <h1 className="text-2xl md:text-2xl font-bold">
-                                    {thesisTopic}
-                                </h1>
-                                <div className="flex gap-4 flex-wrap">
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <User className="w-5 h-5 "/>
-                                        Dr. Michael Müller</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <Building2 className="w-5 h-5 "/>
-                                        SBB Swiss Railways</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <GraduationCap className="w-5 h-5 "/>
-                                        MSc. in Artificial Intelligence</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </CardBody>
-                </Card>
-
-
                 {/* Interview Banner */}
                 <Card className="bg-primary overflow-hidden p-2">
                     <CardBody className="py-6">
@@ -263,7 +233,35 @@ export default function SubmissionDashboard() {
 
                     {/* Thesis Plan */}
                     <div className="flex flex-col gap-6 lg:col-span-1">
-                        <DeadlineCountdown deadline={deadline} title="Submission Deadline" />
+                        {/* Topic Banner */}
+                        <Card className="from-primary-500 to-secondary-500 h-54">
+                            <CardBody className="py-4">
+                                <div className="flex items-center">
+                                    <div className="p-3 bg-white/20 rounded-xl">
+                                        <BookOpen className="w-8 h-8 "/>
+                                    </div>
+                                    <div>
+                                        <p className=" text-sm font-medium opacity-50">Your chosen topic</p>
+                                        <h1 className="text-md md:text-md font-bold">
+                                            {thesisTopic}
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap">
+                                    <p className="text-sm mt-2 flex gap-2 mr-4 items-center">
+                                        <User className="w-5 h-5 "/>
+                                        Dr. Michael Müller</p>
+                                    <p className="text-sm mt-2 flex gap-2 items-center">
+                                        <Building2 className="w-5 h-5 "/>
+                                        SBB Swiss Railways</p>
+                                    <p className="text-sm mt-2 flex gap-2 items-center">
+                                        <GraduationCap className="w-5 h-5 "/>
+                                        MSc. in Artificial Intelligence</p>
+                                </div>
+                            </CardBody>
+                        </Card>
+
+                        <DeadlineCountdown deadline={deadline} title="Submission Deadline"/>
 
                         <Card className="h-full p-2">
                             <CardHeader className="flex justify-between items-center">
@@ -278,7 +276,7 @@ export default function SubmissionDashboard() {
                     p-4 rounded-xl border-2 transition-all
                     ${item.completed
                                             ? "border-default-100"
-                                            : "bg-default-50 border-default-200 hover:border-primary-200"
+                                            : "bg-default-50 border-default-200 hover:border-primary"
                                         }
                   `}
                                     >
