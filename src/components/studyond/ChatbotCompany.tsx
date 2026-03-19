@@ -19,6 +19,7 @@ import Chatbot from "@/components/meta/Chatbot";
 import CompanyModal from "@/components/studyond/CompanyModal";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getAllCompanies, getAllSupervisors, getCompanyById, getSupervisorById } from "@/api/mockData";
+import PersonModal from "@/components/studyond/PersonModal";
 
 type Suggestion = {
     id: string;
@@ -161,7 +162,13 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
 
     return (
         <div className="min-h-screen">
-            <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
+
+            { mode == 'company' ?
+                <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
+            :
+                <PersonModal isOpen={isOpen} onOpenChange={onOpenChange} />
+            }
+
 
             {/* Topic Banner */}
             <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
