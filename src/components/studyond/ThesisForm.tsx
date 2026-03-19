@@ -18,7 +18,11 @@ import {
     getAllUniversities,
     getAllStudyPrograms,
 } from "@/api/mockData";
+
+import { StudentObjective } from "@/types/studyond";
 import { Github, Linkedin } from "lucide-react";
+
+
 
 const availableSkills = [
     "Python",
