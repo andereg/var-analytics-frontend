@@ -4,16 +4,23 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface TopicContextType {
   selectedTopicIds: string[];
+  lastAddedTopicId: string | null;
+  topicSelections: Record<string, { companyId?: string; supervisorId?: string }>;
   addTopic: (id: string) => void;
   removeTopic: (id: string) => void;
+  setCompanyForTopic: (topicId: string, companyId: string) => void;
+  setSupervisorForTopic: (topicId: string, supervisorId: string) => void;
 }
 
 const TopicContext = createContext<TopicContextType | undefined>(undefined);
 
 export function TopicProvider({ children }: { children: ReactNode }) {
   const [selectedTopicIds, setSelectedTopicIds] = useState<string[]>([]);
+  const [lastAddedTopicId, setLastAddedTopicId] = useState<string | null>(null);
+  const [topicSelections, setTopicSelections] = useState<Record<string, { companyId?: string; supervisorId?: string }>>({});
 
   const addTopic = (id: string) => {
+    setLastAddedTopicId(id);
     setSelectedTopicIds((prev) => {
       if (prev.includes(id)) return prev;
       return [...prev, id];
@@ -22,10 +29,33 @@ export function TopicProvider({ children }: { children: ReactNode }) {
 
   const removeTopic = (id: string) => {
     setSelectedTopicIds((prev) => prev.filter((topicId) => topicId !== id));
+    if (lastAddedTopicId === id) setLastAddedTopicId(null);
+  };
+
+  const setCompanyForTopic = (topicId: string, companyId: string) => {
+    setTopicSelections(prev => ({
+      ...prev,
+      [topicId]: { ...prev[topicId], companyId }
+    }));
+  };
+
+  const setSupervisorForTopic = (topicId: string, supervisorId: string) => {
+    setTopicSelections(prev => ({
+      ...prev,
+      [topicId]: { ...prev[topicId], supervisorId }
+    }));
   };
 
   return (
-    <TopicContext.Provider value={{ selectedTopicIds, addTopic, removeTopic }}>
+    <TopicContext.Provider value={{ 
+      selectedTopicIds, 
+      lastAddedTopicId, 
+      topicSelections,
+      addTopic, 
+      removeTopic,
+      setCompanyForTopic,
+      setSupervisorForTopic
+    }}>
       {children}
     </TopicContext.Provider>
   );

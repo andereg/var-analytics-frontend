@@ -139,22 +139,21 @@ export default function ChatbotTheme(props: ChatbotThemeProps) {
 
     const handleTopicsRecommended = (topicIds: string[]) => {
         // Filter allTopics by IDs and map to our UI Topic format
-        const newTopics = allTopics
-            .filter(t => topicIds.includes(t.id))
-            .map(t => ({
-                id: t.id,
-                title: t.title,
-                description: t.description,
-                compatibility: 70 + Math.floor(Math.random() * 25), // Mock scores
-                interestMatch: 70 + Math.floor(Math.random() * 25),
-                torFit: 70 + Math.floor(Math.random() * 25),
-                chips: [
-                    { label: "AI recommendation", color: "primary" as const, variant: "flat" as const }
-                ]
-            }));
-
-        if (newTopics.length > 0) {
-            setSuggestedTopics(newTopics);
+        const matches = allTopics.filter(t => topicIds.includes(t.id));
+        const mapped = matches.map(t => ({
+            id: t.id,
+            title: t.title,
+            description: t.description,
+            compatibility: 70 + Math.floor(Math.random() * 25), // Mock scores
+            interestMatch: 70 + Math.floor(Math.random() * 25),
+            torFit: 70 + Math.floor(Math.random() * 25),
+            chips: [
+                { label: "AI recommendation", color: "primary" as const, variant: "flat" as const }
+            ]
+        }));
+        
+        if (mapped.length > 0) {
+            setSuggestedTopics(mapped);
         }
     };
 

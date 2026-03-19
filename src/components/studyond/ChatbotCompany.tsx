@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
     Avatar,
     Button,
@@ -8,265 +8,305 @@ import {
     CardBody,
     CardHeader,
     Chip,
-    Divider, useDisclosure,
+    Divider,
+    useDisclosure,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import { BookOpen, Building2, GraduationCap, User } from "lucide-react";
 
 import CircleChart from "@/components/charts/CircleChart";
 import Chatbot from "@/components/meta/Chatbot";
-import {BookOpen, Building2, GraduationCap, User} from "lucide-react";
 import CompanyModal from "@/components/studyond/CompanyModal";
+import { useTopics } from "@/context/TopicContext";
+import { getHydratedTopic, getAllCompanies, getAllSupervisors, getCompanyById, getSupervisorById } from "@/api/mockData";
 
-type Company = {
-    id: number;
+type Suggestion = {
+    id: string;
     name: string;
     description: string;
     compatibility: number;
-    location: string;
-    industry: string;
+    type: "company" | "supervisor";
+    location?: string;
+    industry?: string;
     logo?: string;
-    chips: Array<{
-        label: string;
-        color:
-            | "default"
-            | "primary"
-            | "secondary"
-            | "success"
-            | "warning"
-            | "danger";
-        variant?: "solid" | "bordered" | "light" | "flat" | "faded" | "shadow" | "dot";
-    }>;
+    title?: string; // for supervisors
+    university?: string; // for supervisors
 };
 
-const suggestedCompanies: Company[] = [
-    {
-        id: 1,
-        name: "InnovateX Labs",
-        description:
-            "A product-focused software company building modern learning and collaboration platforms for universities and businesses.",
-        compatibility: 92,
-        location: "Zurich, Switzerland",
-        industry: "EdTech / SaaS",
-        logo: "https://i.pravatar.cc/100?img=12",
-        chips: [
-            { label: "best overall fit", color: "success", variant: "flat" },
-            { label: "strong technical match", color: "primary", variant: "flat" },
-            { label: "high growth team", color: "secondary", variant: "flat" },
-        ],
-    },
-    {
-        id: 2,
-        name: "DataBridge Systems",
-        description:
-            "A data-driven company focused on analytics platforms, dashboards, and intelligent decision-support systems.",
-        compatibility: 87,
-        location: "Basel, Switzerland",
-        industry: "Data / Analytics",
-        logo: "https://i.pravatar.cc/100?img=22",
-        chips: [
-            { label: "best data fit", color: "secondary", variant: "flat" },
-            { label: "innovation potential", color: "warning", variant: "flat" },
-        ],
-    },
-    {
-        id: 3,
-        name: "CloudForge AG",
-        description:
-            "A cloud software company helping organizations build scalable internal tools and enterprise platforms.",
-        compatibility: 84,
-        location: "Bern, Switzerland",
-        industry: "Cloud / Enterprise Software",
-        logo: "https://i.pravatar.cc/100?img=31",
-        chips: [
-            { label: "balanced fit", color: "success", variant: "flat" },
-            { label: "practical projects", color: "warning", variant: "flat" },
-        ],
-    },
-    {
-        id: 4,
-        name: "NextWave Digital",
-        description:
-            "A digital solutions company creating interactive web products, user experiences, and business applications.",
-        compatibility: 79,
-        location: "Lucerne, Switzerland",
-        industry: "Web / Product Design",
-        logo: "https://i.pravatar.cc/100?img=45",
-        chips: [
-            { label: "strong UX alignment", color: "primary", variant: "flat" },
-            { label: "product-focused", color: "secondary", variant: "flat" },
-        ],
-    },
-];
-
-function scoreTone(score: number) {
-    if (score >= 85) {
-        return { label: "excellent fit", color: "success" as const };
-    }
-    if (score >= 70) {
-        return { label: "strong fit", color: "primary" as const };
-    }
-    if (score >= 55) {
-        return { label: "moderate fit", color: "warning" as const };
-    }
-    return { label: "lower fit", color: "danger" as const };
-}
-
-interface Props {
-    selectCompany?: () => void
-}
-
-export default function ChatbotCompany(props: Props) {
-    const [thesisTopic, setThesisTopic] = useState(
-        "Machine Learning Applications in Healthcare Diagnostics"
-    );
-
+export default function ChatbotCompany({ selectCompany, initialMessage }: { selectCompany?: () => void, initialMessage?: string }) {
+    const { lastAddedTopicId, topicSelections, setCompanyForTopic, setSupervisorForTopic } = useTopics();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [selectedIdForModal, setSelectedIdForModal] = useState<string | null>(null);
 
+    // Get the topic we are currently working on
+    const topicData = useMemo(() => {
+        if (!lastAddedTopicId) return null;
+        const base = getHydratedTopic(lastAddedTopicId);
+        if (!base) return null;
+
+        const selection = topicSelections[lastAddedTopicId];
+        if (!selection) return base;
+
+        // Create a copy to merge selections
+        const hydrated = { ...base };
+        if (selection.companyId) {
+            hydrated.companyId = selection.companyId;
+            hydrated.company = getCompanyById(selection.companyId) || null;
+        }
+        if (selection.supervisorId) {
+            const supervisor = getSupervisorById(selection.supervisorId);
+            if (supervisor) {
+                hydrated.supervisors = [supervisor];
+                hydrated.supervisorIds = [selection.supervisorId];
+            }
+        }
+        return hydrated;
+    }, [lastAddedTopicId, topicSelections]);
+
+    // Current selections for this topic (either from mock data or from context)
+    const currentCompany = topicSelections[lastAddedTopicId || ""]?.companyId || topicData?.companyId;
+    const currentSupervisor = topicSelections[lastAddedTopicId || ""]?.supervisorId || topicData?.supervisorIds?.[0];
+
+    // Decide what to suggest: If company is set, suggest supervisors. Else suggest companies.
+    const mode = currentCompany ? "supervisor" : "company";
+
+    const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+
+    const handleRecommendations = useCallback((ids: string[]) => {
+        if (mode === "company") {
+            const matches = getAllCompanies().filter(c => ids.includes(c.id));
+            const mapped = matches.map(c => ({
+                id: c.id,
+                name: c.name,
+                description: c.description,
+                compatibility: 70 + Math.floor(Math.random() * 25),
+                type: "company" as const,
+                location: "Switzerland",
+                industry: c.domains[0],
+            }));
+            if (mapped.length > 0) setSuggestions(mapped);
+        } else {
+            const matches = getAllSupervisors().filter(s => ids.includes(s.id));
+            const mapped = matches.map(s => ({
+                id: s.id,
+                name: `${s.title} ${s.firstName} ${s.lastName}`,
+                description: s.about || "Expert in your thesis field.",
+                compatibility: 70 + Math.floor(Math.random() * 25),
+                type: "supervisor" as const,
+                university: "Swiss University",
+            }));
+            if (mapped.length > 0) setSuggestions(mapped);
+        }
+    }, [mode]);
+
+    // Reset suggestions when mode changes
+    useEffect(() => {
+        setSuggestions([]);
+    }, [mode]);
+
+    // Provide initial suggestions based on topic
+    useEffect(() => {
+        if (!topicData || suggestions.length > 0) return;
+
+        if (mode === "company") {
+            const companyIds = [];
+            if (topicData.companyId) {
+                companyIds.push(topicData.companyId);
+            }
+            // Add some other companies
+            const others = getAllCompanies()
+                .filter(c => c.id !== topicData.companyId)
+                .slice(0, 3 - companyIds.length)
+                .map(c => c.id);
+            handleRecommendations([...companyIds, ...others]);
+        } else {
+            const supervisorIds = [...topicData.supervisorIds];
+            // Find supervisors with matching fields
+            const matched = getAllSupervisors()
+                .filter(s => !supervisorIds.includes(s.id) && s.fieldIds.some(fid => topicData.fieldIds.includes(fid)))
+                .slice(0, 3 - supervisorIds.length)
+                .map(s => s.id);
+            
+            // If still few, add some more
+            const finalIds = [...supervisorIds, ...matched];
+            if (finalIds.length < 2) {
+                const randoms = getAllSupervisors()
+                    .filter(s => !finalIds.includes(s.id))
+                    .slice(0, 2 - finalIds.length)
+                    .map(s => s.id);
+                finalIds.push(...randoms);
+            }
+            
+            handleRecommendations(finalIds);
+        }
+    }, [topicData?.id, mode, suggestions.length, handleRecommendations, topicData]);
+
+    const handleSelect = (id: string) => {
+        if (!lastAddedTopicId) return;
+        if (mode === "company") {
+            setCompanyForTopic(lastAddedTopicId, id);
+        } else {
+            setSupervisorForTopic(lastAddedTopicId, id);
+        }
+        selectCompany?.();
+    };
+
+    if (!topicData) {
+        return (
+            <div className="flex h-[60vh] items-center justify-center">
+                <p className="text-default-500">Please select a thesis topic first.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen">
             <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
 
             {/* Topic Banner */}
-           <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
-                <Card className=" from-primary-500  to-secondary-500">
+            <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
+                <Card className="bg-default-50 border border-default-200 shadow-sm">
                     <CardBody className="py-6">
                         <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/20 rounded-xl">
-                                <BookOpen className="w-8 h-8 "/>
+                            <div className="p-3 bg-primary-100 text-primary rounded-xl">
+                                <BookOpen className="w-8 h-8 " />
                             </div>
-                            <div>
-                                <p className=" text-sm font-medium opacity-50">Your chosen topic</p>
-                                <h1 className="text-2xl md:text-2xl font-bold">
-                                    {thesisTopic}
+                            <div className="flex-1">
+                                <p className="text-xs font-semibold text-primary uppercase tracking-wider">Active matching for</p>
+                                <h1 className="text-2xl font-bold">
+                                    {topicData.title}
                                 </h1>
-                                <div className="flex gap-4">
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <User className="w-5 h-5 "/>
-                                        Dr. Michael Müller</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <Building2 className="w-5 h-5 "/>
-                                        SBB Swiss Railways</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <GraduationCap className="w-5 h-5 "/>
-                                        MSc. in Artificial Intelligence</p>
+                                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3">
+                                    <div className="flex gap-2 items-center text-sm text-default-600">
+                                        <User className="w-4 h-4 text-primary" />
+                                        <span>{topicData.supervisors && topicData.supervisors[0] ? `${topicData.supervisors[0].title} ${topicData.supervisors[0].firstName} ${topicData.supervisors[0].lastName}` : "No supervisor assigned"}</span>
+                                    </div>
+                                    <div className="flex gap-2 items-center text-sm text-default-600">
+                                        <Building2 className="w-4 h-4 text-primary" />
+                                        <span>{topicData.company?.name || "No company assigned"}</span>
+                                    </div>
+                                    <div className="flex gap-2 items-center text-sm text-default-600">
+                                        <GraduationCap className="w-4 h-4 text-primary" />
+                                        <span>{(topicData.degrees?.[0] || "bsc").toUpperCase()} Thesis</span>
+                                    </div>
                                 </div>
-
                             </div>
+                            <Chip color={mode === "company" ? "primary" : "secondary"} variant="flat" className="hidden md:block">
+                                Seeking {mode === "company" ? "Industry Partner" : "Academic Supervisor"}
+                            </Chip>
                         </div>
                     </CardBody>
                 </Card>
-           </div>
+            </div>
 
-                <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 lg:px-6 ">
-                    <div className="flex min-w-0 flex-1 flex-col">
-                        <Chatbot/>
-                    </div>
+            <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 lg:px-6 ">
+                <div className="flex min-w-0 flex-1 flex-col">
+                    <Chatbot 
+                        title={`${mode === "company" ? "Company" : "Supervisor"} Matcher`}
+                        subtitle={`Finding the best ${mode}s for your topic`}
+                        onTopicsRecommended={handleRecommendations}
+                        initialMessage={initialMessage}
+                    />
+                </div>
 
-                    <aside className="hidden w-[390px] shrink-0 xl:block">
-                        <Card
-                            className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col overflow-hidden rounded-[2rem] border border-default-200 shadow-xl">
-                            <CardHeader className="flex shrink-0 flex-col items-start gap-2 px-5 py-5">
-                                <div className="flex w-full items-center justify-between gap-3">
-                                    <div>
-                                        <h2 className="text-lg font-semibold">Suggested companies</h2>
-                                        <p className="text-sm text-default-500">
-                                            Ranked from your profile, skills, and interests
-                                        </p>
-                                    </div>
-                                    <Chip color="secondary" variant="flat">
-                                        {suggestedCompanies.length} matches
-                                    </Chip>
+                <aside className="hidden w-[390px] shrink-0 xl:block">
+                    <Card className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col overflow-hidden rounded-[2rem] border border-default-200 shadow-xl">
+                        <CardHeader className="flex shrink-0 flex-col items-start gap-2 px-5 py-5">
+                            <div className="flex w-full items-center justify-between gap-3">
+                                <div>
+                                    <h2 className="text-lg font-semibold">Suggested {mode}s</h2>
+                                    <p className="text-sm text-default-500">
+                                        Top matches for this topic
+                                    </p>
                                 </div>
-                            </CardHeader>
+                                <Chip color="secondary" variant="flat">
+                                    {suggestions.length} matches
+                                </Chip>
+                            </div>
+                        </CardHeader>
 
-                            <Divider className="shrink-0"/>
+                        <Divider className="shrink-0" />
 
-                            <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
-                                <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-                                    <div className="space-y-4">
-                                        {suggestedCompanies.map((company, idx) => (
-                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm" key={idx}>
-                                                <CardBody className="h-auto overflow-visible p-4">
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-start gap-3">
-
-                                                            <div className="min-w-0 flex-1 space-y-2">
-                                                                <div className="flex items-start gap-3">
-                                                                    <div className="shrink-0 pt-0.5">
-                                                                        <div className="relative h-12 w-12 shrink-0">
-                                                                            {/* circle chart (background ring) */}
-                                                                            <CircleChart
-                                                                                pro={company.compatibility}
-                                                                                contra={Math.max(0, 100 - company.compatibility)}
-                                                                                size={48} // match container size
-                                                                            />
-
-                                                                            {/* avatar centered inside */}
-                                                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                                                <Avatar
-                                                                                    className="h-7 w-7"
-                                                                                    name={company.name}
-                                                                                    src={company.logo}
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className="min-w-0 flex-1">
-                                                                        <div className="flex items-start justify-between gap-2">
-                                                                            <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
-                                                                                {company.name}
-                                                                            </h3>
-                                                                        </div>
-
-                                                                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
-                                                                            <div className="flex items-center gap-1">
-                                                                                <Icon icon="solar:buildings-2-linear" width={14} />
-                                                                                <span>{company.industry}</span>
-                                                                            </div>
-                                                                            <div className="flex items-center gap-1">
-                                                                                <Icon icon="solar:map-point-linear" width={14} />
-                                                                                <span>{company.location}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                        <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
+                            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+                                <div className="space-y-4">
+                                    {suggestions.map((item) => (
+                                        <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm" key={item.id}>
+                                            <CardBody className="h-auto overflow-visible p-4">
+                                                <div className="space-y-4">
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="shrink-0 pt-0.5">
+                                                            <div className="relative h-12 w-12 shrink-0">
+                                                                <CircleChart
+                                                                    pro={item.compatibility}
+                                                                    contra={Math.max(0, 100 - item.compatibility)}
+                                                                    size={48}
+                                                                />
+                                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                                    <Avatar
+                                                                        className="h-7 w-7"
+                                                                        name={item.name}
+                                                                        src={item.logo}
+                                                                        icon={item.type === "supervisor" ? <User size={14}/> : <Building2 size={14}/>}
+                                                                    />
                                                                 </div>
-
-                                                                <p className="break-words text-xs leading-5 text-default-500 md:text-sm">
-                                                                    {company.description}
-                                                                </p>
                                                             </div>
                                                         </div>
 
+                                                        <div className="min-w-0 flex-1">
+                                                            <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
+                                                                {item.name}
+                                                            </h3>
+                                                            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
+                                                                <div className="flex items-center gap-1">
+                                                                    <Icon icon={item.type === "company" ? "solar:buildings-2-linear" : "solar:library-linear"} width={14} />
+                                                                    <span>{item.type === "company" ? item.industry : item.university}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <p className="break-words text-xs leading-5 text-default-500 md:text-sm line-clamp-3">
+                                                        {item.description}
+                                                    </p>
+
+                                                    <div className="flex gap-2">
                                                         <Button
-                                                            className="w-full justify-between rounded-2xl"
+                                                            className="flex-1 rounded-2xl"
                                                             color="default"
                                                             variant="flat"
                                                             onPress={onOpen}
+                                                            size="sm"
                                                         >
-                                                            View company
+                                                            View Profile
                                                         </Button>
 
                                                         <Button
-                                                            className="w-full justify-between rounded-2xl border-default border-2"
-                                                            color="default"
-                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                                            className="flex-1 rounded-2xl border-default border-2"
+                                                            color="primary"
                                                             variant="flat"
-                                                            onPress={props.selectCompany}
+                                                            size="sm"
+                                                            onPress={() => handleSelect(item.id)}
                                                         >
-                                                            Select company
+                                                            Select
                                                         </Button>
                                                     </div>
-                                                </CardBody>
-                                            </Card>
-                                        ))}
-                                    </div>
+                                                </div>
+                                            </CardBody>
+                                        </Card>
+                                    ))}
+                                    {suggestions.length === 0 && (
+                                        <div className="py-10 text-center text-default-400">
+                                            <Icon icon="solar:magic-stick-3-linear" className="mx-auto mb-2 opacity-20" width={48} />
+                                            <p className="text-sm">Ask the assistant to recommend {mode}s</p>
+                                        </div>
+                                    )}
                                 </div>
-                            </CardBody>
-                        </Card>
-                    </aside>
-                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </aside>
             </div>
-            );
-            }
+        </div>
+    );
+}

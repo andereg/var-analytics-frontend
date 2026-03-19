@@ -107,11 +107,11 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
             setMessages([
                 {
                     role: "assistant",
-                    content: "Hi! I'm your Studyond Thesis Assistant. Upload your **Transcript of Records (TOR)** to get personalized topic recommendations."
+                    content: props.initialMessage ? props.initialMessage : "Hi! I'm your Studyond Thesis Assistant. Upload your **Transcript of Records (TOR)** to get personalized topic recommendations."
                 }
             ]);
         }
-    }, [analysis]);
+    }, [analysis, props.initialMessage]);
 
     // Scroll to bottom when messages change
     React.useEffect(() => {
