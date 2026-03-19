@@ -35,6 +35,7 @@ import {
 import Chatbot from "@/components/meta/Chatbot";
 import DeadlineCountdown from "@/components/studyond/dashboard-components/DeadlineCountdown";
 import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSummary";
+import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
 
 // Types
 interface ThesisPlanItem {
@@ -173,37 +174,6 @@ export default function ExecutionDashboard() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-background to-default-100 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
-
-                {/* Topic Banner */}
-                <Card className="from-primary-500 to-secondary-500">
-                    <CardBody className="py-8">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/20 rounded-xl">
-                                <BookOpen className="w-8 h-8 "/>
-                            </div>
-                            <div>
-                                <p className=" text-sm font-medium opacity-50">Your chosen topic</p>
-                                <h1 className="text-2xl md:text-2xl font-bold">
-                                    {thesisTopic}
-                                </h1>
-                                <div className="flex gap-4 flex-wrap">
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <User className="w-5 h-5 "/>
-                                        Dr. Michael Müller</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <Building2 className="w-5 h-5 "/>
-                                        SBB Swiss Railways</p>
-                                    <p className="text-sm mt-2 flex gap-2 items-center">
-                                        <GraduationCap className="w-5 h-5 "/>
-                                        MSc. in Artificial Intelligence</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </CardBody>
-                </Card>
-
-
                 {/* Interview Banner */}
                 <Card className="bg-primary overflow-hidden p-2">
                     <CardBody className="py-6">
@@ -256,6 +226,7 @@ export default function ExecutionDashboard() {
 
                     {/* Thesis Plan */}
                     <div className="flex flex-col gap-6 lg:col-span-1">
+                        <ChosenTopic topic="put topic here"/>
                         <DeadlineCountdown deadline={deadline} title="Submission Deadline" />
 
                         <Card className="h-full p-2">
