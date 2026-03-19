@@ -1,7 +1,7 @@
 // components/ThesisDashboard.tsx
 "use client";
 
-import {useState} from "react";
+import {useState, useMemo} from "react";
 import {
     Avatar,
     Button,
@@ -36,6 +36,8 @@ import Chatbot from "@/components/meta/Chatbot";
 import DeadlineCountdown from "@/components/studyond/dashboard-components/DeadlineCountdown";
 import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSummary";
 import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
+import { useTopics } from "@/context/TopicContext";
+import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
 
 // Types
 interface ThesisPlanItem {
@@ -62,6 +64,39 @@ const thesisSteps = [
 ];
 
 export default function SubmissionDashboard() {
+    const { definiteTopicId, topicSelections } = useTopics();
+
+    // Get mock data for all selected topics and merge with user selections
+    const hydratedTopic = useMemo(() => {
+        if (!definiteTopicId) return null;
+        const base = getHydratedTopic(definiteTopicId);
+        if (!base) return null;
+
+        const selection = topicSelections[definiteTopicId];
+        if (!selection) return base;
+
+        const hydrated = { ...base };
+        if (selection.companyId) {
+            hydrated.companyId = selection.companyId;
+            hydrated.company = getCompanyById(selection.companyId) || null;
+        }
+        if (selection.supervisorId) {
+            const supervisor = getSupervisorById(selection.supervisorId);
+            if (supervisor) {
+                hydrated.supervisors = [supervisor];
+                hydrated.supervisorIds = [selection.supervisorId];
+            }
+        }
+        return hydrated;
+    }, [definiteTopicId, topicSelections]);
+
+    const displayTopic = hydratedTopic?.title || "Machine Learning Applications in Healthcare Diagnostics";
+    const displaySupervisor = hydratedTopic?.supervisors?.[0]
+        ? `${hydratedTopic.supervisors[0].title} ${hydratedTopic.supervisors[0].firstName} ${hydratedTopic.supervisors[0].lastName}`
+        : "Dr. Michael Müller";
+    const displayCompany = hydratedTopic?.company?.name || "SBB Swiss Railways";
+    const displayStudyProgram = "MSc. in Artificial Intelligence";
+
     // State
     const [currentStep, setCurrentStep] = useState(1); // 0: Planning, 1: Writing, 2: Submission
     const [thesisTopic, setThesisTopic] = useState(
@@ -76,6 +111,7 @@ export default function SubmissionDashboard() {
         topic: "Machine Learning Applications in Healthcare Diagnostics",
         supervisor: "Dr. Michael Müller",
         company: "SBB Swiss Railways",
+        studyProgram: "MSc. in Artificial Intelligence",
         startDate: new Date("2024-10-01"),
         endDate: new Date("2025-08-15"),
         methodology: "Quantitative Research",
@@ -233,10 +269,15 @@ export default function SubmissionDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <div className="flex flex-col gap-6 lg:col-span-1 ">
-                        <ChosenTopic topic="chosen topic here" />
+                    <div className="flex flex-col gap-6 lg:col-span-1">
+                        <ThesisSummary
+                            {...thesisSummary}
+                            topic={displayTopic}
+                            supervisor={displaySupervisor}
+                            company={displayCompany}
+                            studyProgram={displayStudyProgram}
+                        />
                         <DeadlineCountdown deadline={deadline} title="Submission Deadline"/>
-
                         <Card className="h-full p-2">
                             <CardHeader className="flex justify-between items-center">
                                 <h2 className="text-xl font-semibold">Finalization phase</h2>

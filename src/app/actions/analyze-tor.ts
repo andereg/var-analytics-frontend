@@ -8,7 +8,7 @@ export async function analyzeTORAction(fileContent: string) {
   const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
   // 1. Updated to the current active model
-  const model = "gemini-2.5-flash";
+  const model = "gemini-3.1-flash-lite-preview";
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const prompt = `
