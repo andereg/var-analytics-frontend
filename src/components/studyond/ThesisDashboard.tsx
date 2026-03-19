@@ -241,14 +241,6 @@ export default function ThesisDashboard() {
 
                     {/* Thesis Plan */}
                     <div className="flex flex-col gap-3 lg:col-span-1">
-                        <ThesisSummary
-                            {...thesisSummary}
-                            topic={displayTopic}
-                            supervisor={displaySupervisor}
-                            company={displayCompany}
-                            studyProgram={displayStudyProgram}
-                        />
-                        <DeadlineCountdown deadline={deadline} title="Submission Deadline"/>
                         <Card className="h-full p-2">
                             <CardHeader className="flex justify-between items-center">
                                 <h2 className="text-xl font-semibold">Planning phase</h2>
@@ -320,6 +312,16 @@ export default function ThesisDashboard() {
                                 ))}
                             </CardBody>
                         </Card>
+                        <DeadlineCountdown deadline={deadline} title="Submission Deadline"/>
+
+                        <ThesisSummary
+                            {...thesisSummary}
+                            topic={displayTopic}
+                            supervisor={displaySupervisor}
+                            company={displayCompany}
+                            studyProgram={displayStudyProgram}
+                        />
+
                     </div>
 
 

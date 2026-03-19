@@ -491,7 +491,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                     <div className="mx-auto max-w-7xl p-4 md:p-6 lg:p-8">
                         {/* Greeting */}
                         <div className="mb-12">
-                            <h1 className="text-3xl md:text-4xl font-bold">Good day, {userName}! 👋️</h1>
+                            <h1 className="text-3xl md:text-4xl font-bold">Hello {userName}! 👋️</h1>
                         </div>
 
                         {/* Action Cards Grid */}

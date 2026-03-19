@@ -8,7 +8,6 @@ import Sidebar from "@/components/studyond/Sidebar";
 import ChatbotCompany from "@/components/studyond/ChatbotCompany";
 import MyTopic from "@/components/studyond/MyTopic";
 import ExecutionDashboard from "@/components/studyond/ExecutionDashboard";
-import WritingDashboard from "@/components/studyond/WritingDashboard";
 import SubmissionDashboard from "@/components/studyond/SubmissionDashboard";
 import LandingPage from "@/components/studyond/LandingPage";
 
@@ -34,8 +33,7 @@ export default function Home() {
         />,
         <ThesisDashboard key="step-3" />,
         <ExecutionDashboard key="step-4" />,
-        <WritingDashboard key="step-5" />,
-        <SubmissionDashboard key="step-6" />,
+        <SubmissionDashboard key="step-5" />,
     ];
 
     // ✅ show landing page first
@@ -68,7 +66,6 @@ export default function Home() {
                                 { title: "Choose Company" },
                                 { title: "Planning" },
                                 { title: "Execution" },
-                                { title: "Writing" },
                                 { title: "Finalization" },
                             ]}
                         />
