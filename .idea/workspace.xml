@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/DeadlineCountdown.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/ThesisSummary.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/studyond/dashboard-components/UpcomingTasks.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ThesisDashboard.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,21 +59,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "studyond",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/components/studyond",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\rapha\\Documents\\GitHub\\var-analytics-frontend2\\src\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/home/yann/WebstormProjects/var-analytics-frontend/src/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\studyond" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -91,7 +87,7 @@
       <workItem from="1771884212535" duration="7000" />
       <workItem from="1772221910157" duration="11000" />
       <workItem from="1773865614802" duration="8060000" />
-      <workItem from="1773907155593" duration="9849000" />
+      <workItem from="1773907155593" duration="7621000" />
     </task>
     <servers />
   </component>

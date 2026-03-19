@@ -10,12 +10,10 @@ import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 import RecommendedExperts from "@/components/studyond/RecommendedExperts";
 import ProgressModal from "@/components/charts/ProgressModal";
 import ChatbotTheme from "@/components/studyond/ChatbotTheme";
-import ChatbotCompany from "@/components/studyond/ChatbotCompany";
 
 const stepsContent = [
     <ThesisForm/>,
     <ChatbotTheme/>,
-    <ChatbotCompany />,
     <TORAnalysis />,
     <RecommendedTopics />,
     <ThesisDashboard />,
