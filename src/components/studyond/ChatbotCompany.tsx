@@ -185,8 +185,8 @@ export default function ChatbotCompany(props: Props) {
                             <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
                                 <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                     <div className="space-y-4">
-                                        {suggestedCompanies.map((company) => (
-                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
+                                        {suggestedCompanies.map((company, idx) => (
+                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm" key={idx}>
                                                 <CardBody className="h-auto overflow-visible p-4">
                                                     <div className="space-y-4">
                                                         <div className="flex items-start gap-3">
