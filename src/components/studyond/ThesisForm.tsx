@@ -363,7 +363,7 @@ export default function ThesisForm() {
                                         <div className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
                                             <Github className="w-4 h-4 text-default-500" />
                                             <input
-                                                type="url"
+                                                type="text"
                                                 placeholder="github.com/username"
                                                 value={formData.githubUrl}
                                                 onChange={(e) => handleInputChange("githubUrl", e.target.value)}
@@ -374,7 +374,7 @@ export default function ThesisForm() {
                                         <div className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
                                             <Linkedin className="w-4 h-4 text-default-500" />
                                             <input
-                                                type="url"
+                                                type="text"
                                                 placeholder="linkedin.com/in/profile"
                                                 value={formData.linkedinUrl}
                                                 onChange={(e) => handleInputChange("linkedinUrl", e.target.value)}
