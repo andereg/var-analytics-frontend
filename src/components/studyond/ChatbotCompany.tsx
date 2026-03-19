@@ -39,10 +39,16 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdForModal, setSelectedIdForModal] = useState<string | null>(null);
 
-    const randomPeople = Array.from({ length: 50 }, (_, i) => ({
-        name: `Person ${i + 1}`,
-        src: `https://i.pravatar.cc/100?img=${i + 1}`,
-    }));
+    const randomPeople = [
+        { name: "Alice Johnson", src: "https://as1.ftcdn.net/jpg/02/94/62/14/1000_F_294621430_9dwIpCeY1LqefWCcU23pP9i11BgzOS0N.jpg" },
+        { name: "Bob Smith", src: "https://static.vecteezy.com/system/resources/thumbnails/072/596/987/small/confident-man-in-suit-stands-in-bright-modern-office-space-illuminated-by-natural-light-his-professional-demeanor-reflects-success-and-ambition-photo.jpeg" },
+        { name: "Charlie Brown", src: "https://blog-pixomatic.s3.appcnt.com/image/22/01/26/61f166e1e3b25/_orig/pixomatic_1572877090227.png" },
+        { name: "Diana Prince", src: "https://www.headshotphoto.io/images/linkedin/img-4.webp" },
+        { name: "Alice Johnson", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkGb0KXZff72_aNYCOMxSo3wBXLUugcSQItw&s" },
+        { name: "Bob Smith", src: "https://i0.wp.com/annemariesegal.com/wp-content/uploads/2017/04/adobestock_86346713-cropped-young-woman-in-suit.jpg?fit=1200%2C1118&ssl=1" },
+        { name: "Charlie Brown", src: "https://retratosbarcelona.com/wp-content/uploads/2022/09/Retratos-Barcelona-Linkedin-Photography-Alejandra.jpg" },
+        { name: "Diana Prince", src: "https://www.corporatephotographylondon.com/wp-content/uploads/2019/01/DSC0799-copy.jpg" },
+    ];
 
     function getRandomPerson() {
         return randomPeople[Math.floor(Math.random() * randomPeople.length)];
