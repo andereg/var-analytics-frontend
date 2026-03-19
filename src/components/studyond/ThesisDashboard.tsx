@@ -33,6 +33,8 @@ import {
     Users
 } from "lucide-react";
 import Chatbot from "@/components/meta/Chatbot";
+import DeadlineCountdown from "@/components/studyond/dashboard-components/DeadlineCountdown";
+import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSummary";
 
 // Types
 interface ThesisPlanItem {
@@ -67,19 +69,61 @@ export default function ThesisDashboard() {
     const [isEditingPlan, setIsEditingPlan] = useState(false);
     const [chatInput, setChatInput] = useState("");
 
+    const [deadline, setDeadline] = useState<Date>(new Date("2026-08-15"));
+
+    const [thesisSummary, setThesisSummary] = useState({
+        topic: "Machine Learning Applications in Healthcare Diagnostics",
+        supervisor: "Dr. Michael Müller",
+        company: "SBB Swiss Railways",
+        startDate: new Date("2024-10-01"),
+        endDate: new Date("2025-08-15"),
+        methodology: "Quantitative Research",
+        status: "writing" as "planning" | "writing" | "review" | "submitted",
+        keywords: [
+            "Machine Learning",
+            "Healthcare",
+            "Medical Diagnostics",
+            "Deep Learning",
+            "CNN",
+            "Image Classification",
+            "Patient Data",
+        ],
+    });
+
     const [thesisPlan, setThesisPlan] = useState<ThesisPlanItem[]>([
         {
-            id: "2",
+            id: "1",
             chapter: "Kickoff meeting",
             description: "First meeting with your supervisor and company",
-            deadline: "2025-03-01",
+            deadline: "2026-05-20",
             completed: true,
         },
         {
-            id: "1",
-            chapter: "Methodology",
-            description: "Choose a research methodology fitting to your thesis",
-            deadline: "2024-02-15",
+            id: "2",
+            chapter: "Choose methodology",
+            description: "Select research methodology (qualitative, quantitative, mixed methods)",
+            deadline: "2026-06-17",
+            completed: true,
+        },
+        {
+            id: "3",
+            chapter: "Literature review",
+            description: "Initial research on existing papers and identify research gaps",
+            deadline: "2026-06-10",
+            completed: false,
+        },
+        {
+            id: "5",
+            chapter: "Create thesis outline",
+            description: "Define chapter structure and main content for each section",
+            deadline: "2025-02-24",
+            completed: false,
+        },
+        {
+            id: "6",
+            chapter: "Set up tools & environment",
+            description: "Prepare writing tools, citation manager, and data collection setup",
+            deadline: "2025-03-03",
             completed: false,
         },
     ]);
@@ -163,6 +207,7 @@ export default function ThesisDashboard() {
                     </CardBody>
                 </Card>
 
+
                 {/* Interview Banner */}
                 <Card className="bg-primary overflow-hidden p-2">
                     <CardBody className="py-6">
@@ -172,20 +217,33 @@ export default function ThesisDashboard() {
                                     <Users className="w-10 h-10 text-white"/>
                                 </div>
                                 <div>
-                                    <h3 className="text-xl md:text-2xl font-bold text-white">
-                                        Interview-Partner finden
-                                    </h3>
+                                    <div className="flex gap-3 items-center">
+                                        <h3 className="text-xl md:text-2xl font-bold text-white">
+                                            Find the right interviewees
+                                        </h3>
+                                        <Chip
+                                            classNames={{
+                                                base: "bg-linear-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-500/30",
+                                                content: "shadow-black text-white",
+                                            }}
+                                            variant="shadow"
+                                        >
+                                            Next step
+                                        </Chip>
+                                    </div>
+
+
                                     <p className="text-white/80">
-                                        Finde Experten und Teilnehmer für deine Forschungsinterviews
+                                        Find experts for your interviews that match with your thesis
                                     </p>
                                 </div>
                             </div>
                             <Button
                                 size="lg"
-                                className="bg-white text-ai font-semibold"
+                                className="bg-white font-semibold"
                                 endContent={<ChevronRight className="w-5 h-5"/>}
                             >
-                                Interviews starten
+                                Match with interviewees
                             </Button>
                         </div>
                     </CardBody>
@@ -201,82 +259,88 @@ export default function ThesisDashboard() {
 
 
                     {/* Thesis Plan */}
-                    <Card className="h-fit lg:col-span-1">
-                        <CardHeader className="flex justify-between items-center">
-                            <h2 className="text-xl font-semibold">Planning phase</h2>
+                    <div className="flex flex-col gap-6 lg:col-span-1">
+                        <DeadlineCountdown deadline={deadline} title="Submission Deadline" />
 
-                        </CardHeader>
-                        <CardBody className="space-y-3">
-                            {thesisPlan.map((item, index) => (
-                                <div
-                                    key={item.id}
-                                    className={`
+                        <Card className="h-full p-2">
+                            <CardHeader className="flex justify-between items-center">
+                                <h2 className="text-xl font-semibold">Planning phase</h2>
+
+                            </CardHeader>
+                            <CardBody className="space-y-3">
+                                {thesisPlan.map((item, index) => (
+                                    <div
+                                        key={item.id}
+                                        className={`
                     p-4 rounded-xl border-2 transition-all
                     ${item.completed
-                                        ? "bg-success-50 border-success-200"
-                                        : "bg-default-50 border-default-200 hover:border-primary-200"
-                                    }
+                                            ? "border-success-200"
+                                            : "bg-default-50 border-default-200 hover:border-primary-200"
+                                        }
                   `}
-                                >
-                                    <div className="flex items-start gap-3">
-                                        <button
-                                            onClick={() => toggleChapterComplete(item.id)}
-                                            className={`
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            <button
+                                                onClick={() => toggleChapterComplete(item.id)}
+                                                className={`
                         mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center
                         transition-all cursor-pointer
                         ${item.completed
-                                                ? "bg-success border-success text-white"
-                                                : "border-default-300 hover:border-primary"
-                                            }
+                                                    ? "bg-success border-success text-white"
+                                                    : "border-default-300 hover:border-primary"
+                                                }
                       `}
-                                        >
-                                            {item.completed && <CheckCircle className="w-4 h-4"/>}
-                                        </button>
+                                            >
+                                                {item.completed && <CheckCircle className="w-4 h-4"/>}
+                                            </button>
 
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2">
                         <span className="font-semibold">
                           {index + 1}. {item.chapter}
                         </span>
-                                                {item.completed && (
-                                                    <Chip size="sm" color="success" variant="flat">
-                                                        Done
-                                                    </Chip>
+                                                    {item.completed && (
+                                                        <Chip size="sm" color="success" variant="flat">
+                                                            Done
+                                                        </Chip>
+                                                    )}
+                                                </div>
+
+                                                {isEditingPlan ? (
+                                                    <Textarea
+                                                        size="sm"
+                                                        variant="bordered"
+                                                        value={item.description}
+                                                        className="mt-2"
+                                                        onChange={(e) => {
+                                                            setThesisPlan((plan) =>
+                                                                plan.map((p) =>
+                                                                    p.id === item.id
+                                                                        ? {...p, description: e.target.value}
+                                                                        : p
+                                                                )
+                                                            );
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <p className="text-sm text-default-500 mt-1">
+                                                        {item.description}
+                                                    </p>
                                                 )}
-                                            </div>
 
-                                            {isEditingPlan ? (
-                                                <Textarea
-                                                    size="sm"
-                                                    variant="bordered"
-                                                    value={item.description}
-                                                    className="mt-2"
-                                                    onChange={(e) => {
-                                                        setThesisPlan((plan) =>
-                                                            plan.map((p) =>
-                                                                p.id === item.id
-                                                                    ? {...p, description: e.target.value}
-                                                                    : p
-                                                            )
-                                                        );
-                                                    }}
-                                                />
-                                            ) : (
-                                                <p className="text-sm text-default-500 mt-1">
-                                                    {item.description}
-                                                </p>
-                                            )}
-
-                                            <div className="flex items-center gap-2 mt-2 text-xs text-default-400">
-                                                <Calendar className="w-3 h-3"/>
-                                                <span>Deadline: {new Date(item.deadline).toLocaleDateString("de-DE")}</span>
+                                                <div className="flex items-center gap-2 mt-2 text-xs text-default-400">
+                                                    <Calendar className="w-3 h-3"/>
+                                                    <span>Deadline: {new Date(item.deadline).toLocaleDateString("de-DE")}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </CardBody>
-                    </Card>
+                                ))}
+                            </CardBody>
+                        </Card>
+                    </div>
+
+
                 </div>
             </div>
         </div>
