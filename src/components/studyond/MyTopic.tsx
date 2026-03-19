@@ -1,19 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, Card, CardBody } from "@heroui/react";
-import { Plus, Search, Sparkles } from "lucide-react";
-import { TopicCard, Topic } from "./TopicCard";
-
-const SAVED_TOPIC: Topic = {
-    id: "topic-01",
-    title: "AI-Driven Demand Forecasting for Perishable Goods",
-    description: "Develop a machine learning model to predict demand for short-shelf-life products across Nestle's European distribution network. The thesis should explore how weather, seasonal trends, and promotional calendars can be integrated into a unified forecasting pipeline.",
-    type: "topic",
-    degrees: ["msc"],
-    companyName: "Nestlé",
-    compatibility: 94
-};
+import { Plus, Sparkles } from "lucide-react";
+import { TopicCard } from "./TopicCard";
+import { getHydratedTopic } from "@/api/mockData";
 
 interface MyTopicProps {
     onFindTopic?: () => void;
@@ -21,6 +12,13 @@ interface MyTopicProps {
 
 export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
     const [hasTopic, setHasTopic] = useState(false);
+
+    // Get mock data for a specific topic (e.g., 'topic-01')
+    const savedTopicData = useMemo(() => {
+        return getHydratedTopic("topic-01");
+    }, []);
+
+    const companyName = savedTopicData?.company?.name || "Partner Company";
 
     return (
         <div className="mx-auto w-full max-w-4xl px-4 py-12 md:py-24">
@@ -37,7 +35,7 @@ export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
                 </Button>
             </div>
 
-            {!hasTopic ? (
+            {!hasTopic || !savedTopicData ? (
                 /* Empty State: Pretty Blank */
                 <div className="flex flex-col items-center justify-center text-center">
                     <div className="mb-8 flex h-17 w-17 items-center justify-center rounded-[2rem] bg-primary-50 text-primary shadow-sm">
@@ -68,7 +66,7 @@ export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
                                 My Topic
                             </h2>
                             <p className="text-lg text-default-500">
-                                You're collaborating with {SAVED_TOPIC.companyName}.
+                                You're collaborating with {companyName}.
                             </p>
                         </div>
                         
@@ -84,7 +82,7 @@ export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
                         </Button>
                     </div>
 
-                    <TopicCard topic={SAVED_TOPIC} />
+                    <TopicCard topic={savedTopicData} companyName={companyName} />
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <Card className="rounded-[2rem] border border-default-100 bg-default-50/50 shadow-none">
@@ -99,7 +97,7 @@ export default function MyTopic({ onFindTopic = () => {} }: MyTopicProps) {
                             <CardBody className="p-6">
                                 <h3 className="font-bold">Resources</h3>
                                 <p className="text-sm text-default-500 mt-1">
-                                    Review the collaboration guidelines for Nestlé.
+                                    Review the collaboration guidelines for {companyName}.
                                 </p>
                             </CardBody>
                         </Card>

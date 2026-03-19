@@ -24,7 +24,7 @@ export default function DeadlineCountdown({
             <CardBody className="flex flex-row items-center gap-4 p-4 overflow-hidden">
                 <div className={`
                     p-3 rounded-xl shrink-0
-                    ${isUrgent ? "bg-warning-100 text-warning-600" : "bg-primary-100 text-primary-600"}
+                    ${isUrgent ? "bg-warning-100 text-warning-600" : "bg-primary text-white"}
                 `}>
                     {isUrgent ? <AlertTriangle className="w-6 h-6" /> : <Clock className="w-6 h-6" />}
                 </div>
