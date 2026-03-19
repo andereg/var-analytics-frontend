@@ -38,6 +38,7 @@ import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSumm
 import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
+import {ResearchBoxesWithDescription} from "@/components/studyond/ResearchBoxes";
 
 // Types
 interface ThesisPlanItem {
@@ -257,6 +258,8 @@ export default function ExecutionDashboard() {
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hey! 👋 You're making progress - the execution phase is where things get exciting! How are your interviews and data collection going? If you need guidance on participant recruitment, interview techniques, or handling unexpected challenges - just ask. How can I help you today?"/>
+
+                        <ResearchBoxesWithDescription/>
                     </div>
 
 

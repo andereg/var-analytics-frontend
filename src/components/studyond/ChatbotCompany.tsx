@@ -20,6 +20,7 @@ import CompanyModal from "@/components/studyond/CompanyModal";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getAllCompanies, getAllSupervisors, getCompanyById, getSupervisorById } from "@/api/mockData";
 import PersonModal from "@/components/studyond/PersonModal";
+import {ResearchBoxesMinimal} from "@/components/studyond/ResearchBoxes";
 
 type Suggestion = {
     id: string;

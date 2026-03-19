@@ -38,6 +38,7 @@ import ThesisSummary from "@/components/studyond/dashboard-components/ThesisSumm
 import ChosenTopic from "@/components/studyond/dashboard-components/ChosenTopic";
 import { useTopics } from "@/context/TopicContext";
 import { getHydratedTopic, getCompanyById, getSupervisorById } from "@/api/mockData";
+import {ResearchBoxesWithDescription} from "@/components/studyond/ResearchBoxes";
 
 // Types
 interface ThesisPlanItem {
@@ -265,6 +266,7 @@ export default function SubmissionDashboard() {
 
                     <div className="lg:col-span-2 ">
                         <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 🎓 You're almost there - the finish line is in sight! How's the final review going? If you need help with proofreading, formatting, citations, or preparing for submission - I've got your back. Any last questions or concerns?"/>
+                        <ResearchBoxesWithDescription />
                     </div>
 
 
