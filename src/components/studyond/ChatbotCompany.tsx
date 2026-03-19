@@ -160,153 +160,166 @@ export default function ChatbotCompany({ selectCompany, initialMessage }: { sele
     }
 
     return (
-        <div className="min-h-screen">
-            <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
+        <div className="min-h-screen ">
 
-            {/* Topic Banner */}
-            <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
-                <Card className="bg-default-50 border border-default-200 shadow-sm">
-                    <CardBody className="py-6">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-primary-100 text-primary rounded-xl">
-                                <BookOpen className="w-8 h-8 " />
-                            </div>
-                            <div className="flex-1">
-                                <p className="text-xs font-semibold text-primary uppercase tracking-wider">Active matching for</p>
-                                <h1 className="text-2xl font-bold">
-                                    {topicData.title}
-                                </h1>
-                                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3">
-                                    <div className="flex gap-2 items-center text-sm text-default-600">
-                                        <User className="w-4 h-4 text-primary" />
-                                        <span>{topicData.supervisors && topicData.supervisors[0] ? `${topicData.supervisors[0].title} ${topicData.supervisors[0].firstName} ${topicData.supervisors[0].lastName}` : "No supervisor assigned"}</span>
-                                    </div>
-                                    <div className="flex gap-2 items-center text-sm text-default-600">
-                                        <Building2 className="w-4 h-4 text-primary" />
-                                        <span>{topicData.company?.name || "No company assigned"}</span>
-                                    </div>
-                                    <div className="flex gap-2 items-center text-sm text-default-600">
-                                        <GraduationCap className="w-4 h-4 text-primary" />
-                                        <span>{(topicData.degrees?.[0] || "bsc").toUpperCase()} Thesis</span>
-                                    </div>
+                <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange}/>
+
+                {/* Topic Banner */}
+                <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
+                    <Card className="bg-default-50 border border-default-200 shadow-sm">
+                        <CardBody className="py-6">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-primary-100 text-primary rounded-xl">
+                                    <BookOpen className="w-8 h-8 "/>
                                 </div>
-                            </div>
-                            <Chip color={mode === "company" ? "primary" : "secondary"} variant="flat" className="hidden md:block">
-                                Seeking {mode === "company" ? "Industry Partner" : "Academic Supervisor"}
-                            </Chip>
-                        </div>
-                    </CardBody>
-                </Card>
-            </div>
-
-            <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 lg:px-6 ">
-                <div className="flex min-w-0 flex-1 flex-col">
-                    <Chatbot 
-                        title={`${mode === "company" ? "Company" : "Supervisor"} Matcher`}
-                        subtitle={`Finding the best ${mode}s for your topic`}
-                        onTopicsRecommended={handleRecommendations}
-                        initialMessage={initialMessage}
-                    />
-                </div>
-
-                <aside className="hidden w-[390px] shrink-0 xl:block">
-                    <Card className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col overflow-hidden rounded-[2rem] border border-default-200 shadow-xl">
-                        <CardHeader className="flex shrink-0 flex-col items-start gap-2 px-5 py-5">
-                            <div className="flex w-full items-center justify-between gap-3">
-                                <div>
-                                    <h2 className="text-lg font-semibold">Suggested {mode}s</h2>
-                                    <p className="text-sm text-default-500">
-                                        Top matches for this topic
-                                    </p>
-                                </div>
-                                <Chip color="secondary" variant="flat">
-                                    {suggestions.length} matches
-                                </Chip>
-                            </div>
-                        </CardHeader>
-
-                        <Divider className="shrink-0" />
-
-                        <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
-                            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-                                <div className="space-y-4">
-                                    {suggestions.map((item) => (
-                                        <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm" key={item.id}>
-                                            <CardBody className="h-auto overflow-visible p-4">
-                                                <div className="space-y-4">
-                                                    <div className="flex items-start gap-3">
-                                                        <div className="shrink-0 pt-0.5">
-                                                            <div className="relative h-12 w-12 shrink-0">
-                                                                <CircleChart
-                                                                    pro={item.compatibility}
-                                                                    contra={Math.max(0, 100 - item.compatibility)}
-                                                                    size={48}
-                                                                />
-                                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                                    <Avatar
-                                                                        className="h-7 w-7"
-                                                                        name={item.name}
-                                                                        src={item.logo}
-                                                                        icon={item.type === "supervisor" ? <User size={14}/> : <Building2 size={14}/>}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="min-w-0 flex-1">
-                                                            <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
-                                                                {item.name}
-                                                            </h3>
-                                                            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
-                                                                <div className="flex items-center gap-1">
-                                                                    <Icon icon={item.type === "company" ? "solar:buildings-2-linear" : "solar:library-linear"} width={14} />
-                                                                    <span>{item.type === "company" ? item.industry : item.university}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <p className="break-words text-xs leading-5 text-default-500 md:text-sm line-clamp-3">
-                                                        {item.description}
-                                                    </p>
-
-                                                    <div className="flex gap-2">
-                                                        <Button
-                                                            className="flex-1 rounded-2xl"
-                                                            color="default"
-                                                            variant="flat"
-                                                            onPress={onOpen}
-                                                            size="sm"
-                                                        >
-                                                            View Profile
-                                                        </Button>
-
-                                                        <Button
-                                                            className="flex-1 rounded-2xl border-default border-2"
-                                                            color="primary"
-                                                            variant="flat"
-                                                            size="sm"
-                                                            onPress={() => handleSelect(item.id)}
-                                                        >
-                                                            Select
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            </CardBody>
-                                        </Card>
-                                    ))}
-                                    {suggestions.length === 0 && (
-                                        <div className="py-10 text-center text-default-400">
-                                            <Icon icon="solar:magic-stick-3-linear" className="mx-auto mb-2 opacity-20" width={48} />
-                                            <p className="text-sm">Ask the assistant to recommend {mode}s</p>
+                                <div className="flex-1">
+                                    <p className="text-xs font-semibold text-primary uppercase tracking-wider">Active
+                                        matching for</p>
+                                    <h1 className="text-2xl font-bold">
+                                        {topicData.title}
+                                    </h1>
+                                    <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3">
+                                        <div className="flex gap-2 items-center text-sm text-default-600">
+                                            <User className="w-4 h-4 text-primary"/>
+                                            <span>{topicData.supervisors && topicData.supervisors[0] ? `${topicData.supervisors[0].title} ${topicData.supervisors[0].firstName} ${topicData.supervisors[0].lastName}` : "No supervisor assigned"}</span>
                                         </div>
-                                    )}
+                                        <div className="flex gap-2 items-center text-sm text-default-600">
+                                            <Building2 className="w-4 h-4 text-primary"/>
+                                            <span>{topicData.company?.name || "No company assigned"}</span>
+                                        </div>
+                                        <div className="flex gap-2 items-center text-sm text-default-600">
+                                            <GraduationCap className="w-4 h-4 text-primary"/>
+                                            <span>{(topicData.degrees?.[0] || "bsc").toUpperCase()} Thesis</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <Chip color={mode === "company" ? "primary" : "secondary"} variant="flat"
+                                      className="hidden md:block">
+                                    Seeking {mode === "company" ? "Industry Partner" : "Academic Supervisor"}
+                                </Chip>
                             </div>
                         </CardBody>
                     </Card>
-                </aside>
+                </div>
+
+                <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 lg:px-6 ">
+                    <div className="flex min-w-0 flex-1 flex-col">
+                        <Chatbot
+                            title={`${mode === "company" ? "Company" : "Supervisor"} Matcher`}
+                            subtitle={`Finding the best ${mode}s for your topic`}
+                            onTopicsRecommended={handleRecommendations}
+                            initialMessage={initialMessage}
+                        />
+                    </div>
+
+                    <aside className="hidden w-[390px] shrink-0 xl:block">
+                        <Card
+                            className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col overflow-hidden rounded-[2rem] border border-default-200 shadow-xl">
+                            <CardHeader className="flex shrink-0 flex-col items-start gap-2 px-5 py-5">
+                                <div className="flex w-full items-center justify-between gap-3">
+                                    <div>
+                                        <h2 className="text-lg font-semibold">Suggested {mode}s</h2>
+                                        <p className="text-sm text-default-500">
+                                            Top matches for this topic
+                                        </p>
+                                    </div>
+                                    <Chip color="secondary" variant="flat">
+                                        {suggestions.length} matches
+                                    </Chip>
+                                </div>
+                            </CardHeader>
+
+                            <Divider className="shrink-0"/>
+
+                            <CardBody className="min-h-0 flex-1 overflow-hidden p-0">
+                                <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+                                    <div className="space-y-4">
+                                        {suggestions.map((item) => (
+                                            <Card
+                                                className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm"
+                                                key={item.id}>
+                                                <CardBody className="h-auto overflow-visible p-4">
+                                                    <div className="space-y-4">
+                                                        <div className="flex items-start gap-3">
+                                                            <div className="shrink-0 pt-0.5">
+                                                                <div className="relative h-12 w-12 shrink-0">
+                                                                    <CircleChart
+                                                                        pro={item.compatibility}
+                                                                        contra={Math.max(0, 100 - item.compatibility)}
+                                                                        size={48}
+                                                                    />
+                                                                    <div
+                                                                        className="absolute inset-0 flex items-center justify-center">
+                                                                        <Avatar
+                                                                            className="h-7 w-7"
+                                                                            name={item.name}
+                                                                            src={item.logo}
+                                                                            icon={item.type === "supervisor" ?
+                                                                                <User size={14}/> :
+                                                                                <Building2 size={14}/>}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="min-w-0 flex-1">
+                                                                <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
+                                                                    {item.name}
+                                                                </h3>
+                                                                <div
+                                                                    className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
+                                                                    <div className="flex items-center gap-1">
+                                                                        <Icon
+                                                                            icon={item.type === "company" ? "solar:buildings-2-linear" : "solar:library-linear"}
+                                                                            width={14}/>
+                                                                        <span>{item.type === "company" ? item.industry : item.university}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <p className="break-words text-xs leading-5 text-default-500 md:text-sm line-clamp-3">
+                                                            {item.description}
+                                                        </p>
+
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                className="flex-1 rounded-2xl"
+                                                                color="default"
+                                                                variant="flat"
+                                                                onPress={onOpen}
+                                                                size="sm"
+                                                            >
+                                                                View Profile
+                                                            </Button>
+
+                                                            <Button
+                                                                className="flex-1 rounded-2xl border-default border-2"
+                                                                color="primary"
+                                                                variant="flat"
+                                                                size="sm"
+                                                                onPress={() => handleSelect(item.id)}
+                                                            >
+                                                                Select
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                        ))}
+                                        {suggestions.length === 0 && (
+                                            <div className="py-10 text-center text-default-400">
+                                                <Icon icon="solar:magic-stick-3-linear"
+                                                      className="mx-auto mb-2 opacity-20" width={48}/>
+                                                <p className="text-sm">Ask the assistant to recommend {mode}s</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </aside>
+                </div>
             </div>
-        </div>
-    );
-}
+            );
+            }
