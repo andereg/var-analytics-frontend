@@ -1,15 +1,14 @@
 "use client";
-import FeaturesCards from "@/components/meta/features-cards";
+
 import React from "react";
 import RowSteps from "@/components/steppers/row-steps";
 import ThesisForm from "@/components/studyond/ThesisForm";
 import ThesisDashboard from "@/components/studyond/ThesisDashboard";
-import HomeClient from "@/components/meta/HomeClient";
 import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
 import RecommendedExperts from "@/components/studyond/RecommendedExperts";
-import ProgressModal from "@/components/charts/ProgressModal";
 import ChatbotTheme from "@/components/studyond/ChatbotTheme";
+import ChatbotCompany from "@/components/studyond/ChatbotCompany";
 
 const stepsContent = [
     <ThesisForm/>,
@@ -18,6 +17,7 @@ const stepsContent = [
     <RecommendedTopics />,
     <ThesisDashboard />,
     <RecommendedExperts />,
+    <ChatbotCompany/>
 ];
 
 
