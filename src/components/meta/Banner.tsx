@@ -37,7 +37,7 @@ export default function Banner() {
                 }}
                 variant="bordered"
             >
-                start now
+                Start Now
             </Button>
 
             <div className="flex flex-1 justify-end">

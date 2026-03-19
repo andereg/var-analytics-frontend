@@ -271,7 +271,7 @@ export default function ExecutionDashboard() {
                     p-4 rounded-xl border-2 transition-all
                     ${item.completed
                                             ? "border-default-100"
-                                            : "bg-default-50 border-default-200 hover:border-primary-200"
+                                            : "bg-default-50 border-default-200 hover:border-primary"
                                         }
                   `}
                                     >
