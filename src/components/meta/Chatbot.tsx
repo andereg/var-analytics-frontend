@@ -75,8 +75,15 @@ function ChatMessage({ role, content }: { role: "user" | "assistant"; content: s
     );
 }
 
+interface Props {
+    title?: string;
+    subtitle?: string;
+    showChips?: boolean;
+    showTopics?: boolean;
+}
 
-export default function Chatbot() {
+
+export default function Chatbot(props: Props) {
     const [prompt, setPrompt] = React.useState<string>("");
 
     return (
@@ -88,25 +95,31 @@ export default function Chatbot() {
                             <Icon icon="solar:stars-outline" width={18} />
                         </div>
                         <div>
-                            <h1 className="text-base font-semibold md:text-lg">Thesis Topic Assistant</h1>
+                            <h1 className="text-base font-semibold md:text-lg">
+                                {props.title ? props.title : 'Thesis Topic Assistant'}
+                            </h1>
                             <p className="text-xs text-default-500 md:text-sm">
-                                Transcript-aware topic recommendations
+                                {props.subtitle ? props.subtitle : 'Transcript - aware topic recommendations'}
                             </p>
                         </div>
                     </div>
                 </div>
+                {props.showChips ?
+                    <div className="hidden items-center gap-2 md:flex">
+                        <Chip variant="flat">Bachelor thesis</Chip>
+                        <Chip color="primary" className="text-ai" variant="bordered" >AI-assisted matching</Chip>
+                    </div>
+                    : ''
+                }
 
-                <div className="hidden items-center gap-2 md:flex">
-                    <Chip variant="flat">Bachelor thesis</Chip>
-                    <Chip color="primary" className="text-ai" variant="bordered" >AI-assisted matching</Chip>
-                </div>
+
             </CardHeader>
 
-            <div className="flex-1 overflow-hidden">
-                <div className="mx-auto flex h-full w-full max-w-4xl flex-col px-4 py-4 md:px-6 md:py-6">
-                    <ScrollShadow className="flex-1 pr-2" hideScrollBar>
+                <div className="mx-auto flex h-full w-full max-w-4xl flex-col px-4 py-4 md:px-6 md:py-6 flex-1 min-h-0 flex-1">
+                    <ScrollShadow className="flex-1 pr-2 h-full" hideScrollBar>
                         <div className="flex flex-col gap-6 pb-6">
-                            <div className="flex w-full flex-col gap-3">
+
+                            {props.showChips ? <div className="flex w-full flex-col gap-3">
                                 <ScrollShadow hideScrollBar className="flex flex-nowrap gap-2" orientation="horizontal">
                                     <div className="flex gap-2 pb-1">
                                         {promptIdeas.map(({ title, description }, index) => (
@@ -122,7 +135,9 @@ export default function Chatbot() {
                                         ))}
                                     </div>
                                 </ScrollShadow>
-                            </div>
+                            </div> : ''}
+
+
 
                             {initialMessages.map((message, index) => (
                                 <ChatMessage
@@ -199,7 +214,6 @@ export default function Chatbot() {
                         </div>
                     </form>
                 </div>
-            </div>
         </Card>
 
     )

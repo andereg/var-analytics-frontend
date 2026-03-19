@@ -155,7 +155,7 @@ export default function ChatbotTheme() {
         <div className="min-h-screen">
             <div className="mx-auto flex min-h-screen w-full max-w-[1600px] gap-6 px-4 py-4 lg:px-6 lg:py-6">
                 <div className="flex min-w-0 flex-1 flex-col">
-                    <Chatbot/>
+                    <Chatbot showChips={true} showTopics={true}/>
                 </div>
 
                 <aside className="hidden w-[390px] shrink-0 xl:block">

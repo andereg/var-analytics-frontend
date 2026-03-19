@@ -190,7 +190,7 @@ export default function ThesisDashboard() {
                                 <h1 className="text-2xl md:text-2xl font-bold">
                                     {thesisTopic}
                                 </h1>
-                                <div className="flex gap-4">
+                                <div className="flex gap-4 flex-wrap">
                                     <p className="text-sm mt-2 flex gap-2 items-center">
                                         <User className="w-5 h-5 "/>
                                         Dr. Michael Müller</p>
@@ -254,7 +254,7 @@ export default function ThesisDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <div className="lg:col-span-2 ">
-                        <Chatbot  />
+                        <Chatbot title="Thesis assistant" subtitle=" "/>
                     </div>
 
 
