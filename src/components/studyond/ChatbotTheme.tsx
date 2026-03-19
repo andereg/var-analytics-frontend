@@ -128,7 +128,11 @@ function TopicCard({ topic, selectTopic = () => {} }: MyTopicProps) {
         </Card>
     );
 }
-export default function ChatbotTheme() {
+interface ChatbotThemeProps {
+    selectTopic?: () => void;
+}
+
+export default function ChatbotTheme(props: ChatbotThemeProps) {
     const [suggestedTopics, setSuggestedTopics] = useState<Topic[]>(INITIAL_TOPICS);
 
     const handleTopicsRecommended = (topicIds: string[]) => {
@@ -184,7 +188,7 @@ export default function ChatbotTheme() {
                             <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                 <div className="space-y-4">
                                     {suggestedTopics.map((topic) => (
-                                        <TopicCard key={topic.id} topic={topic} selectTopic={selectTopic}/>
+                                        <TopicCard key={topic.id} topic={topic} selectTopic={props.selectTopic}/>
                                     ))}
                                 </div>
                             </div>

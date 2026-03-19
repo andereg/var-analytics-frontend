@@ -14,6 +14,7 @@ import {
 import ProgressModal from "@/components/charts/ProgressModal";
 import TorUpload from "@/components/meta/TorUpload";
 import { getStudentById } from "@/api/mockData";
+import { StudentObjective } from "@/types/studyond";
 
 const degreePrograms = [
     "Computer Science",
@@ -68,12 +69,12 @@ const availableSkills = [
     "cloud computing",
 ];
 
-const availableObjectives = [
+const availableObjectives: StudentObjective[] = [
     "topic",
+    "supervision",
     "career_start",
-    "research",
-    "internship",
-    "networking",
+    "industry_access",
+    "project_guidance",
 ];
 
 const availableFieldIds = [
