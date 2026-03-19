@@ -7,6 +7,9 @@ import ChatbotTheme from "@/components/studyond/ChatbotTheme";
 import Sidebar from "@/components/studyond/Sidebar";
 import ChatbotCompany from "@/components/studyond/ChatbotCompany";
 import MyTopic from "@/components/studyond/MyTopic";
+import ExecutionDashboard from "@/components/studyond/ExecutionDashboard";
+import WritingDashboard from "@/components/studyond/WritingDashboard";
+import SubmissionDashboard from "@/components/studyond/SubmissionDashboard";
 
 
 export default function Home() {
@@ -25,6 +28,9 @@ export default function Home() {
         }}/>,
         <ChatbotCompany selectCompany={() => setTopicDashboard(true)}/>,
         <ThesisDashboard/>,
+        <ExecutionDashboard/>,
+        <WritingDashboard/>,
+        <SubmissionDashboard/>,
     ];
 
     return (
@@ -59,7 +65,7 @@ export default function Home() {
                                 title: "Choose Topic",
                             },
                             {
-                                title: "Choose Supervisor",
+                                title: "Choose Company",
                             },
                             {
                                 title: "Planning",
@@ -71,7 +77,7 @@ export default function Home() {
                                 title: "Writing",
                             },
                             {
-                                title: "Submission",
+                                title: "Finalization",
                             }
                         ]}
                     />

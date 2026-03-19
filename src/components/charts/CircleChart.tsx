@@ -57,18 +57,20 @@ const CircleChartCard = React.forwardRef<
                         animationEasing="ease"
                         data={chartData}
                         dataKey="value"
-                        innerRadius="87%"
+                        innerRadius="70%"
                         outerRadius="100%"
                         nameKey="name"
                         paddingAngle={0}
                         strokeWidth={0}
+                        startAngle={90}
+                        endAngle={-270}
                     >
                         {chartData.map((_, index) => (
                             <Cell
                                 key={`cell-${index}`}
                                 fill={
                                     index === 0
-                                        ? `hsl(var(--heroui-${color}-500))`
+                                        ? `black`
                                         : "#ffffff"
                                 }
                             />

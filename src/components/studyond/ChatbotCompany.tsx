@@ -205,7 +205,7 @@ export default function ChatbotCompany(props: Props) {
                                                                             {/* avatar centered inside */}
                                                                             <div className="absolute inset-0 flex items-center justify-center">
                                                                                 <Avatar
-                                                                                    className="h-9 w-9"
+                                                                                    className="h-7 w-7"
                                                                                     name={company.name}
                                                                                     src={company.logo}
                                                                                 />
