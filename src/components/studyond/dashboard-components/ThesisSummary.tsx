@@ -8,13 +8,15 @@ import {
     Building2,
     Calendar,
     Target,
-    BookOpen
+    BookOpen,
+    GraduationCap
 } from "lucide-react";
 
 interface ThesisSummaryProps {
     topic: string;
     supervisor: string;
     company: string;
+    studyProgram: string;
     startDate: Date;
     endDate: Date;
     methodology: string;
@@ -26,6 +28,7 @@ export default function ThesisSummary({
                                           topic,
                                           supervisor,
                                           company,
+                                          studyProgram,
                                           startDate,
                                           endDate,
                                           methodology,
@@ -86,6 +89,14 @@ export default function ThesisSummary({
                     </div>
 
                     <div className="flex items-start gap-2">
+                        <GraduationCap className="w-4 h-4 text-default-400 mt-0.5" />
+                        <div>
+                            <p className="text-xs text-default-400">Study Program</p>
+                            <p className="text-sm font-medium">{studyProgram}</p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start gap-2">
                         <Calendar className="w-4 h-4 text-default-400 mt-0.5" />
                         <div>
                             <p className="text-xs text-default-400">Duration</p>
@@ -101,20 +112,6 @@ export default function ThesisSummary({
                             <p className="text-xs text-default-400">Methodology</p>
                             <p className="text-sm font-medium">{methodology}</p>
                         </div>
-                    </div>
-                </div>
-
-                <Divider />
-
-                {/* Keywords */}
-                <div>
-                    <p className="text-xs text-default-400 uppercase tracking-wide mb-2">Keywords</p>
-                    <div className="flex flex-wrap gap-2">
-                        {keywords.map((keyword, index) => (
-                            <Chip key={index} size="sm" variant="flat">
-                                {keyword}
-                            </Chip>
-                        ))}
                     </div>
                 </div>
             </CardBody>

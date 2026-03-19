@@ -9,7 +9,7 @@ import path from 'path';
  */
 export async function chatAction(messages: { role: string; content: string }[], torData?: any) {
   const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  const model = "gemini-2.5-flash";
+  const model = "gemini-3-flash";
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   // Read knowledge bases

@@ -4,13 +4,19 @@
 import { Card, CardBody } from "@heroui/react";
 import {Clock, AlertTriangle, BookOpen, User, Building2, GraduationCap} from "lucide-react";
 
-interface DeadlineCountdownProps {
-    topic: string
+interface ChosenTopicProps {
+    topic: string;
+    supervisor: string;
+    company: string;
+    studyProgram: string;
 }
 
 export default function ChosenTopic({
-                                              topic = "Machine Learning Applications in Healthcare Diagnostics"
-                                          }: DeadlineCountdownProps) {
+                                              topic,
+                                              supervisor,
+                                              company,
+                                              studyProgram
+                                          }: ChosenTopicProps) {
 
     return (
         <Card className="from-primary-500 to-secondary-500 overflow-hidden h-56 pb-0">
@@ -29,13 +35,13 @@ export default function ChosenTopic({
                 <div className="flex flex-wrap px-4 pt-1">
                     <p className="text-sm mt-2 flex gap-3 mr-4 items-center">
                         <User className="w-5 h-5 "/>
-                        Dr. Michael Müller</p>
+                        {supervisor}</p>
                     <p className="text-sm mt-2 flex gap-2 items-center">
                         <Building2 className="w-5 h-5 "/>
-                        SBB Swiss Railways</p>
+                        {company}</p>
                     <p className="text-sm mt-2 flex gap-2 items-center">
                         <GraduationCap className="w-5 h-5 "/>
-                        MSc. in Artificial Intelligence</p>
+                        {studyProgram}</p>
                 </div>
             </CardBody>
         </Card>

@@ -22,7 +22,7 @@ export default function MyTopic({
     onDefiniteTopicSelect = () => {},
     hasSupervisor = false
 }: MyTopicProps) {
-    const { selectedTopicIds, topicSelections, addTopic } = useTopics();
+    const { selectedTopicIds, topicSelections, addTopic, setDefiniteTopicId } = useTopics();
     const [hasTopic, setHasTopic] = useState(false);
 
     // Get mock data for all selected topics and merge with user selections
@@ -120,7 +120,7 @@ export default function MyTopic({
 
                     <div className="space-y-6">
                         {savedTopics.map((topic) => {
-                            const isDefiniteReady = hasSupervisor && (topic.supervisors?.length ?? 0) > 0;
+                            const isDefiniteReady = hasSupervisor && (topic?.supervisors?.length ?? 0) > 0;
                             
                             return (
                                 <TopicCard 
@@ -130,6 +130,7 @@ export default function MyTopic({
                                     onSelect={() => {
                                         addTopic(topic!.id);
                                         if (isDefiniteReady) {
+                                            setDefiniteTopicId(topic!.id);
                                             onDefiniteTopicSelect();
                                         } else {
                                             selectSupervisor();
