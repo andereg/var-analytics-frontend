@@ -13,8 +13,9 @@ import {
 } from "@heroui/react";
 import ProgressModal from "@/components/charts/ProgressModal";
 import TorUpload from "@/components/meta/TorUpload";
-import { getStudentById } from "@/api/mockData";
+import { getStudentById, getAllFields, getAllUniversities, getAllStudyPrograms } from "@/api/mockData";
 import { StudentObjective } from "@/types/studyond";
+import { Github, Linkedin } from "lucide-react";
 
 const degreePrograms = [
     "Computer Science",
@@ -24,10 +25,6 @@ const degreePrograms = [
     "Business Informatics",
     "Other",
 ];
-import {getStudentById, getAllFields, getAllUniversities, getAllStudyPrograms} from "@/api/mockData";
-
-import { Github, Linkedin } from "lucide-react";
-
 
 const availableSkills = [
     "Python",
