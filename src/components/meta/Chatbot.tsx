@@ -162,13 +162,7 @@ Your strongest category is **${analysis.bestCategory}**. I can help you find sui
                         </div>
                     </div>
                 </div>
-                {props.showChips ?
-                    <div className="hidden items-center gap-2 md:flex">
-                        <Chip variant="flat">Bachelor thesis</Chip>
-                        <Chip color="primary" className="text-ai" variant="bordered" >AI-assisted matching</Chip>
-                    </div>
-                    : ''
-                }
+
 
 
             </CardHeader>
