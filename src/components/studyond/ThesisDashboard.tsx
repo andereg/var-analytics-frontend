@@ -274,7 +274,7 @@ export default function ThesisDashboard() {
                                         className={`
                     p-4 rounded-xl border-2 transition-all
                     ${item.completed
-                                            ? "border-success-200"
+                                            ? "border-default-100"
                                             : "bg-default-50 border-default-200 hover:border-primary-200"
                                         }
                   `}
@@ -286,7 +286,7 @@ export default function ThesisDashboard() {
                         mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center
                         transition-all cursor-pointer
                         ${item.completed
-                                                    ? "bg-success border-success text-white"
+                                                    ? "bg-primary border-primary text-white"
                                                     : "border-default-300 hover:border-primary"
                                                 }
                       `}
@@ -299,11 +299,6 @@ export default function ThesisDashboard() {
                         <span className="font-semibold">
                           {index + 1}. {item.chapter}
                         </span>
-                                                    {item.completed && (
-                                                        <Chip size="sm" color="success" variant="flat">
-                                                            Done
-                                                        </Chip>
-                                                    )}
                                                 </div>
 
                                                 {isEditingPlan ? (
