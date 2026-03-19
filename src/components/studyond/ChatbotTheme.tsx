@@ -19,6 +19,7 @@ import CircleChart from "@/components/charts/CircleChart";
 import PromptInput from "@/components/meta/PromptInput";
 import Chatbot from "@/components/meta/Chatbot";
 import allTopics from "@/mock-data/topics.json";
+import { useTopics } from "@/context/TopicContext";
 
 type Topic = {
     id: string;
@@ -134,6 +135,7 @@ interface ChatbotThemeProps {
 
 export default function ChatbotTheme(props: ChatbotThemeProps) {
     const [suggestedTopics, setSuggestedTopics] = useState<Topic[]>(INITIAL_TOPICS);
+    const { addTopic } = useTopics();
 
     const handleTopicsRecommended = (topicIds: string[]) => {
         // Filter allTopics by IDs and map to our UI Topic format
@@ -188,7 +190,10 @@ export default function ChatbotTheme(props: ChatbotThemeProps) {
                             <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                 <div className="space-y-4">
                                     {suggestedTopics.map((topic) => (
-                                        <TopicCard key={topic.id} topic={topic} selectTopic={props.selectTopic}/>
+                                        <TopicCard key={topic.id} topic={topic} selectTopic={() => {
+                                            addTopic(topic.id);
+                                            props.selectTopic?.();
+                                        }}/>
                                     ))}
                                 </div>
                             </div>

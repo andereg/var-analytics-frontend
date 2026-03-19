@@ -4,6 +4,7 @@ import {Inter} from "next/font/google";
 import Banner from "@/components/meta/Banner";
 import React from "react";
 import { TORProvider } from "@/context/TORContext";
+import { TopicProvider } from "@/context/TopicContext";
 
 
 const inter = Inter({
@@ -22,12 +23,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body
             className={`${inter.className} antialiased light min-h-screen overflow-x-hidden`}
         >
-        <TORProvider>
-            <Banner/>
-            <main className="min-h-screen">
-                {children}
-            </main>
-        </TORProvider>
+        <TopicProvider>
+            <TORProvider>
+                <Banner/>
+                <main className="min-h-screen">
+                    {children}
+                </main>
+            </TORProvider>
+        </TopicProvider>
         </body>
         </html>
     );

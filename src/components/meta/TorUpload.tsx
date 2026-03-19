@@ -19,26 +19,26 @@ export default function TorUpload() {
         setIsComplete(false);
 
         try {
-            // For a hackathon, we'll simulate text extraction from PDF/DOC
-            // In a real app, you'd use a library like pdf-parse on the server
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                const text = event.target?.result as string;
-                
-                // Call the AI Server Action
-                const result = await analyzeTORAction(text || "Sample TOR Content: Advanced Math 6.0, ML 5.5, DB 4.0");
-                
-                if (result.success && result.data) {
-                    setAnalysis(result.data as TORAnalysisData);
-                    setIsComplete(true);
-                } else {
-                    console.error("Analysis failed:", result.error);
-                }
-                setIsAnalyzing(false);
-            };
-            reader.readAsText(file);
+            const text = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (event) => resolve(event.target?.result as string || "");
+                reader.onerror = (error) => reject(error);
+                reader.readAsText(file);
+            });
+            
+            // Call the AI Server Action
+            const result = await analyzeTORAction(text || "Sample TOR Content: Advanced Math 6.0, ML 5.5, DB 4.0");
+            
+            if (result.success && result.data) {
+                setAnalysis(result.data as TORAnalysisData);
+                setIsComplete(true);
+            } else {
+                console.error("Analysis failed:", result.error);
+                // Optionally show a toast or error message to the user here
+            }
         } catch (error) {
             console.error("Upload error:", error);
+        } finally {
             setIsAnalyzing(false);
         }
     };
