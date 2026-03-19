@@ -1,49 +1,32 @@
 import React from "react";
 import { Card, CardBody, Chip, Button } from "@heroui/react";
 import { ArrowRight, Building2, GraduationCap } from "lucide-react";
-import CircleChart from "@/components/charts/CircleChart";
-
-export interface Topic {
-    id: string;
-    title: string;
-    description: string;
-    type: "topic" | "job";
-    degrees: string[];
-    companyName?: string;
-    compatibility?: number;
-    employmentType?: string;
-    workplaceType?: string;
-}
+import { Topic } from "@/types/studyond";
 
 interface TopicCardProps {
     topic: Topic;
+    companyName?: string;
     onSelect?: () => void;
 }
 
-export const TopicCard = ({ topic, onSelect }: TopicCardProps) => {
-    const compatibility = topic.compatibility ?? 85;
-
+export const TopicCard = ({ topic, companyName, onSelect }: TopicCardProps) => {
     return (
         <Card className="rounded-[2.5rem] border border-default-200 bg-white shadow-sm transition-all hover:shadow-md">
             <CardBody className="p-8">
                 <div className="flex flex-col gap-6 md:flex-row md:items-center">
-                    <div className="flex shrink-0 justify-center">
-                        <CircleChart
-                            pro={compatibility}
-                            contra={100 - compatibility}
-                            size={80}
-                        />
-                    </div>
-
                     <div className="flex-1 space-y-4">
                         <div className="space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
-                                {topic.companyName && (
+                                {companyName && (
                                     <div className="flex items-center gap-1.5 text-sm font-medium text-default-500">
                                         <Building2 size={14} />
-                                        {topic.companyName}
+                                        {companyName}
                                     </div>
                                 )}
+                                <div className="flex items-center gap-1.5 text-sm font-medium text-default-500">
+                                    <ProjectIcon type={topic.type} />
+                                    <span className="uppercase">{topic.type}</span>
+                                </div>
                                 <div className="flex items-center gap-1.5 text-sm font-medium text-default-500">
                                     <GraduationCap size={14} />
                                     {topic.degrees.join(", ").toUpperCase()}
@@ -59,11 +42,13 @@ export const TopicCard = ({ topic, onSelect }: TopicCardProps) => {
                         </p>
 
                         <div className="flex flex-wrap gap-2">
+                            {topic.employment !== "no" && (
+                                <Chip size="sm" variant="flat" color="success" className="capitalize">
+                                    {topic.employmentType?.replace("_", " ") || "Employment Opportunity"}
+                                </Chip>
+                            )}
                             <Chip size="sm" variant="flat" color="primary" className="capitalize">
-                                {topic.type}
-                            </Chip>
-                            <Chip size="sm" variant="flat" color="secondary">
-                                {compatibility}% Match
+                                {topic.workplaceType || "Flexible"}
                             </Chip>
                         </div>
                     </div>
@@ -85,4 +70,8 @@ export const TopicCard = ({ topic, onSelect }: TopicCardProps) => {
             </CardBody>
         </Card>
     );
+};
+
+const ProjectIcon = ({ type }: { type: string }) => {
+    return <div className="h-1.5 w-1.5 rounded-full bg-primary" />;
 };

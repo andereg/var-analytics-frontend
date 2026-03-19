@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="dashboard slop 4">
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/studyond/Sidebar.tsx" afterDir="false" />
+    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="dashboard slop 2">
+      <change afterPath="$PROJECT_DIR$/src/components/studyond/CompanyModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +64,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/yann/WebstormProjects/var-analytics-frontend/src/node_modules/typescript/lib",
+    "ts.external.directory.path": "C:\\Users\\rapha\\Documents\\GitHub\\var-analytics-frontend2\\src\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -96,23 +97,7 @@
       <option name="project" value="LOCAL" />
       <updated>1773919897301</updated>
     </task>
-    <task id="LOCAL-00002" summary="dashboard slop 3">
-      <option name="closed" value="true" />
-      <created>1773920241442</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1773920241442</updated>
-    </task>
-    <task id="LOCAL-00003" summary="dashboard slop 4">
-      <option name="closed" value="true" />
-      <created>1773921503539</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1773921503539</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,9 +116,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="dashboard slop 2" />
-    <MESSAGE value="dashboard slop 3" />
-    <MESSAGE value="dashboard slop 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="dashboard slop 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="dashboard slop 2" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -8,13 +8,14 @@ import {
     CardBody,
     CardHeader,
     Chip,
-    Divider,
+    Divider, useDisclosure,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
 import CircleChart from "@/components/charts/CircleChart";
 import Chatbot from "@/components/meta/Chatbot";
 import {BookOpen, Building2, GraduationCap, User} from "lucide-react";
+import CompanyModal from "@/components/studyond/CompanyModal";
 
 type Company = {
     id: number;
@@ -110,85 +111,19 @@ function scoreTone(score: number) {
     return { label: "lower fit", color: "danger" as const };
 }
 
-function CompanyCard({ company }: { company: Company }) {
-    const tone = scoreTone(company.compatibility);
 
-
-    return (
-          <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
-            <CardBody className="h-auto overflow-visible p-4">
-                <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-
-                        <div className="min-w-0 flex-1 space-y-2">
-                            <div className="flex items-start gap-3">
-                                <div className="shrink-0 pt-0.5">
-                                    <div className="relative h-12 w-12 shrink-0">
-                                        {/* circle chart (background ring) */}
-                                        <CircleChart
-                                            pro={company.compatibility}
-                                            contra={Math.max(0, 100 - company.compatibility)}
-                                            size={48} // match container size
-                                        />
-
-                                        {/* avatar centered inside */}
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <Avatar
-                                                className="h-9 w-9"
-                                                name={company.name}
-                                                src={company.logo}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="min-w-0 flex-1">
-                                    <div className="flex items-start justify-between gap-2">
-                                        <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
-                                            {company.name}
-                                        </h3>
-                                    </div>
-
-                                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
-                                        <div className="flex items-center gap-1">
-                                            <Icon icon="solar:buildings-2-linear" width={14} />
-                                            <span>{company.industry}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <Icon icon="solar:map-point-linear" width={14} />
-                                            <span>{company.location}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p className="break-words text-xs leading-5 text-default-500 md:text-sm">
-                                {company.description}
-                            </p>
-                        </div>
-                    </div>
-
-                    <Button
-                        className="w-full justify-between rounded-2xl"
-                        color="default"
-                        endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
-                        variant="flat"
-                    >
-                        View company
-                    </Button>
-                </div>
-            </CardBody>
-        </Card>
-    );
-}
 
 export default function ChatbotCompany() {
     const [thesisTopic, setThesisTopic] = useState(
         "Machine Learning Applications in Healthcare Diagnostics"
     );
 
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+
     return (
         <div className="min-h-screen">
+            <CompanyModal isOpen={isOpen} onOpenChange={onOpenChange} />
 
             {/* Topic Banner */}
            <div className="px-4 py-4 lg:px-6 lg:py-6 w-full max-w-[1600px]">
@@ -249,7 +184,71 @@ export default function ChatbotCompany() {
                                 <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                                     <div className="space-y-4">
                                         {suggestedCompanies.map((company) => (
-                                            <CompanyCard key={company.id} company={company}/>
+                                            <Card className="h-auto overflow-visible rounded-3xl border border-default-200 shadow-sm">
+                                                <CardBody className="h-auto overflow-visible p-4">
+                                                    <div className="space-y-4">
+                                                        <div className="flex items-start gap-3">
+
+                                                            <div className="min-w-0 flex-1 space-y-2">
+                                                                <div className="flex items-start gap-3">
+                                                                    <div className="shrink-0 pt-0.5">
+                                                                        <div className="relative h-12 w-12 shrink-0">
+                                                                            {/* circle chart (background ring) */}
+                                                                            <CircleChart
+                                                                                pro={company.compatibility}
+                                                                                contra={Math.max(0, 100 - company.compatibility)}
+                                                                                size={48} // match container size
+                                                                            />
+
+                                                                            {/* avatar centered inside */}
+                                                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                                                <Avatar
+                                                                                    className="h-9 w-9"
+                                                                                    name={company.name}
+                                                                                    src={company.logo}
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <div className="flex items-start justify-between gap-2">
+                                                                            <h3 className="min-w-0 text-sm font-semibold leading-5 md:text-base">
+                                                                                {company.name}
+                                                                            </h3>
+                                                                        </div>
+
+                                                                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-default-500">
+                                                                            <div className="flex items-center gap-1">
+                                                                                <Icon icon="solar:buildings-2-linear" width={14} />
+                                                                                <span>{company.industry}</span>
+                                                                            </div>
+                                                                            <div className="flex items-center gap-1">
+                                                                                <Icon icon="solar:map-point-linear" width={14} />
+                                                                                <span>{company.location}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <p className="break-words text-xs leading-5 text-default-500 md:text-sm">
+                                                                    {company.description}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <Button
+                                                            className="w-full justify-between rounded-2xl"
+                                                            color="default"
+                                                            endContent={<Icon icon="solar:arrow-right-linear" width={16} />}
+                                                            variant="flat"
+                                                            onPress={onOpen}
+                                                        >
+                                                            View company
+                                                        </Button>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
                                         ))}
                                     </div>
                                 </div>
