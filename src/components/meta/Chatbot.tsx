@@ -80,6 +80,7 @@ interface Props {
     subtitle?: string;
     showChips?: boolean;
     showTopics?: boolean;
+    initialMessage?: string;
     onTopicsRecommended?: (topicIds: string[]) => void;
 }
 
@@ -97,7 +98,7 @@ export default function Chatbot(props: Props) {
             setMessages([
                 {
                     role: "assistant",
-                    content: `Hi! I've analyzed your **${analysis.degree.toUpperCase()}** transcript. 
+                    content: props.initialMessage ? props.initialMessage : `Hi! I've analyzed your **${analysis.degree.toUpperCase()}** transcript. 
                     
 Your strongest category is **${analysis.bestCategory}**. I can help you find suitable thesis topics or recommend partners like **${analysis.recommendedFields[0]}** experts.`
                 }

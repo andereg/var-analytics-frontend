@@ -257,7 +257,7 @@ export default function SubmissionDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <div className="lg:col-span-2 ">
-                        <Chatbot title="Thesis assistant" subtitle=" "/>
+                        <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 🎓 You're almost there - the finish line is in sight! How's the final review going? If you need help with proofreading, formatting, citations, or preparing for submission - I've got your back. Any last questions or concerns?"/>
                     </div>
 
 
