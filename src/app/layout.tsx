@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Studyond Thesis Lifecycle",
+    title: "Studyond",
     description: "Your interactive helper for your thesis"
 };
 
