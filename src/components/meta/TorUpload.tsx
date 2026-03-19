@@ -77,7 +77,7 @@ export default function TorUpload() {
                 </div>
 
                 <h3 className="text-sm font-semibold">
-                    {isAnalyzing ? "AI analyzing your transcript..." : isComplete ? "Analysis complete!" : "Drop Transcripts of Records (TOR) here"}
+                    {isAnalyzing ? "AI analyzing your transcript..." : isComplete ? "Analysis complete!" : "Drop TOR here"}
                 </h3>
                 <p className="mt-2 text-sm text-default-500">
                     {isAnalyzing ? "We're mapping your skills to thesis topics." : "or click to browse files"}

@@ -13,46 +13,10 @@ import {
 } from "@heroui/react";
 import ProgressModal from "@/components/charts/ProgressModal";
 import TorUpload from "@/components/meta/TorUpload";
-import { getStudentById } from "@/api/mockData";
+import {getStudentById, getAllFields, getAllUniversities, getAllStudyPrograms} from "@/api/mockData";
 
-const degreePrograms = [
-    "Computer Science",
-    "Software Engineering",
-    "Data Science",
-    "Information Systems",
-    "Business Informatics",
-    "Other",
-];
+import { Github, Linkedin } from "lucide-react";
 
-const thesisTypes = [
-    "Bachelor Thesis",
-    "Master Thesis",
-    "PhD Thesis",
-    "Project Thesis",
-    "Research Proposal",
-];
-
-const timelines = [
-    "As soon as possible",
-    "Within 1 month",
-    "Within 3 months",
-    "Next semester",
-    "Flexible",
-];
-
-const supervisionAreas = [
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Web Development",
-    "Cybersecurity",
-    "Databases",
-    "Distributed Systems",
-    "Mobile Apps",
-    "Human-Computer Interaction",
-    "Computer Graphics",
-    "Networking",
-    "Other",
-];
 
 const availableSkills = [
     "Python",
@@ -68,26 +32,7 @@ const availableSkills = [
     "cloud computing",
 ];
 
-const availableObjectives = [
-    "topic",
-    "career_start",
-    "research",
-    "internship",
-    "networking",
-];
 
-const availableFieldIds = [
-    "field-01",
-    "field-02",
-    "field-03",
-    "field-04",
-    "field-05",
-    "field-06",
-    "field-07",
-    "field-08",
-    "field-09",
-    "field-10",
-];
 
 const degreeMap: Record<string, string> = {
     bsc: "Bachelor Thesis",
@@ -120,6 +65,25 @@ export default function ThesisForm() {
     const progress = 72;
     const student = getStudentById("student-01");
 
+    const allFields = getAllFields();
+
+    const fieldMap = Object.fromEntries(
+        allFields.map((f) => [f.id, f])
+    );
+    const availableFieldIds = allFields.map((f) => f.id);
+
+    const allUniversities = getAllUniversities();
+
+    const universityMap = Object.fromEntries(
+        allUniversities.map((u) => [u.id, u])
+    );
+
+    const allStudyPrograms = getAllStudyPrograms();
+
+    const studyProgramMap = Object.fromEntries(
+        allStudyPrograms.map((sp) => [sp.id, sp])
+    );
+
     const initialResearchAreas = useMemo(
         () =>
             (student?.fieldIds ?? [])
@@ -138,7 +102,6 @@ export default function ThesisForm() {
         universityId: student?.universityId ?? "",
         skillsArray: student?.skills ?? [],
         about: student?.about ?? "",
-        objectives: student?.objectives ?? [],
         fieldIds: student?.fieldIds ?? [],
 
         degreeProgram:
@@ -152,7 +115,7 @@ export default function ThesisForm() {
         technicalSkills: (student?.skills ?? []).join(", "),
         previousProjects: "",
         researchAreas: initialResearchAreas,
-        researchInterests: student?.about ?? "",
+        researchInterests: "",
         thesisIdeas: "",
         preferredSupervisor: "",
         availability: "",
@@ -166,31 +129,8 @@ export default function ThesisForm() {
         }));
     };
 
-    const handleSingleSelectChange = (
-        field: string,
-        keys: "all" | Set<React.Key>
-    ) => {
-        if (keys === "all") return;
-        const value = Array.from(keys)[0]?.toString() ?? "";
-        setFormData((prev) => ({
-            ...prev,
-            [field]: value,
-        }));
-    };
-
-    const handleMultiSelectChange = (
-        field: string,
-        keys: "all" | Set<React.Key>
-    ) => {
-        if (keys === "all") return;
-        setFormData((prev) => ({
-            ...prev,
-            [field]: Array.from(keys).map(String),
-        }));
-    };
-
     const addChip = (
-        field: "skillsArray" | "objectives" | "fieldIds",
+        field: "skillsArray" | "fieldIds",
         value: string
     ) => {
         if (!value) return;
@@ -207,7 +147,7 @@ export default function ThesisForm() {
     };
 
     const removeChip = (
-        field: "skillsArray" | "objectives" | "fieldIds",
+        field: "skillsArray" | "fieldIds",
         value: string
     ) => {
         setFormData((prev) => ({
@@ -230,7 +170,6 @@ export default function ThesisForm() {
                 universityId: formData.universityId,
                 skills: formData.skillsArray,
                 about: formData.about,
-                objectives: formData.objectives,
                 fieldIds: formData.fieldIds,
             },
             thesisApplication: {
@@ -299,18 +238,17 @@ export default function ThesisForm() {
                                         </div>
 
                                         <div className="space-y-1">
-                                            <p className="text-sm font-medium text-default-700">Degree</p>
-                                            <p className="text-sm text-default-500">{formData.degree}</p>
-                                        </div>
-
-                                        <div className="space-y-1">
                                             <p className="text-sm font-medium text-default-700">Study Program</p>
-                                            <p className="text-sm text-default-500">{formData.studyProgramId}</p>
+                                            <p className="text-sm text-default-500">
+                                                {studyProgramMap[formData.studyProgramId]?.name || formData.studyProgramId}
+                                            </p>
                                         </div>
 
                                         <div className="space-y-1">
                                             <p className="text-sm font-medium text-default-700">University</p>
-                                            <p className="text-sm text-default-500">{formData.universityId}</p>
+                                            <p className="text-sm text-default-500">
+                                                {universityMap[formData.universityId]?.name || formData.universityId}
+                                            </p>
                                         </div>
                                     </div>
 
@@ -355,44 +293,6 @@ export default function ThesisForm() {
                                     </div>
 
                                     <div className="mt-2 mb-1">
-                                        <h3 className="text-sm font-semibold text-default-700">Objectives</h3>
-                                    </div>
-                                    <div className="rounded-2xl shadow-md p-4">
-                                        <div className="space-y-3">
-                                            <div className="flex flex-wrap gap-2">
-                                                {formData.objectives.map((objective) => (
-                                                    <Chip
-                                                        key={objective}
-                                                        variant="bordered"
-                                                        size="sm"
-                                                        onClose={() => removeChip("objectives", objective)}
-                                                    >
-                                                        <div className="mx-1">{objective}</div>
-                                                    </Chip>
-                                                ))}
-                                            </div>
-
-                                            <Select
-                                                label="Add Objective"
-                                                placeholder="Choose an objective"
-                                                variant="bordered"
-                                                selectedKeys={new Set()}
-                                                onSelectionChange={(keys) => {
-                                                    if (keys === "all") return;
-                                                    const value = Array.from(keys)[0]?.toString();
-                                                    if (value) addChip("objectives", value);
-                                                }}
-                                            >
-                                                {availableObjectives
-                                                    .filter((objective) => !formData.objectives.includes(objective))
-                                                    .map((objective) => (
-                                                        <SelectItem key={objective}>{objective}</SelectItem>
-                                                    ))}
-                                            </Select>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-2 mb-1">
                                         <h3 className="text-sm font-semibold text-default-700">Fields</h3>
                                     </div>
                                     <div className="rounded-2xl shadow-md p-4">
@@ -405,7 +305,9 @@ export default function ThesisForm() {
                                                         size="sm"
                                                         onClose={() => removeChip("fieldIds", fieldId)}
                                                     >
-                                                        <div className="mx-1">{fieldId}</div>
+                                                        <div className="mx-1">
+                                                            {fieldMap[fieldId]?.name || fieldId}
+                                                        </div>
                                                     </Chip>
                                                 ))}
                                             </div>
@@ -424,13 +326,15 @@ export default function ThesisForm() {
                                                 {availableFieldIds
                                                     .filter((fieldId) => !formData.fieldIds.includes(fieldId))
                                                     .map((fieldId) => (
-                                                        <SelectItem key={fieldId}>{fieldId}</SelectItem>
+                                                        <SelectItem key={fieldId}>
+                                                            {fieldMap[fieldId]?.name || fieldId}
+                                                        </SelectItem>
                                                     ))}
                                             </Select>
                                         </div>
                                     </div>
                                     <Textarea
-                                        label="About"
+                                        label="Tell us about you"
                                         placeholder="Student description / background"
                                         variant="bordered"
                                         minRows={4}
@@ -443,252 +347,50 @@ export default function ThesisForm() {
 
                                 <section className="space-y-4">
                                     <div>
-                                    <h2 className="text-lg font-semibold">University Information</h2>
-                                        <p className="text-sm text-default-500">
-                                            Tell us about your degree program and academic context.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        <Select
-                                            label="Degree Program"
-                                            placeholder="Select your degree program"
-                                            variant="bordered"
-                                            isRequired
-                                            selectedKeys={
-                                                formData.degreeProgram
-                                                    ? new Set([formData.degreeProgram])
-                                                    : new Set()
-                                            }
-                                            onSelectionChange={(keys) =>
-                                                handleSingleSelectChange("degreeProgram", keys)
-                                            }
-                                        >
-                                            {degreePrograms.map((program) => (
-                                                <SelectItem key={program}>{program}</SelectItem>
-                                            ))}
-                                        </Select>
-
-                                        <Select
-                                            label="Application Type"
-                                            placeholder="Select application type"
-                                            variant="bordered"
-                                            isRequired
-                                            selectedKeys={
-                                                formData.applicationType
-                                                    ? new Set([formData.applicationType])
-                                                    : new Set()
-                                            }
-                                            onSelectionChange={(keys) =>
-                                                handleSingleSelectChange("applicationType", keys)
-                                            }
-                                        >
-                                            {thesisTypes.map((type) => (
-                                                <SelectItem key={type}>{type}</SelectItem>
-                                            ))}
-                                        </Select>
-
-                                        <Input
-                                            label="Major / Specialization"
-                                            placeholder="e.g. Software Systems"
-                                            variant="bordered"
-                                            value={formData.major}
-                                            onChange={(e) => handleInputChange("major", e.target.value)}
-                                        />
-
-                                        <Input
-                                            label="Expected Graduation Date"
-                                            type="month"
-                                            variant="bordered"
-                                            value={formData.graduationDate}
-                                            onChange={(e) =>
-                                                handleInputChange("graduationDate", e.target.value)
-                                            }
-                                        />
-                                    </div>
-                                </section>
-
-                                <Divider />
-
-                                <section className="space-y-4">
-                                    <div>
-                                        <h2 className="text-lg font-semibold">Academic Background</h2>
-                                        <p className="text-sm text-default-500">
-                                            Share relevant courses, grades, and prior experience.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        <Input
-                                            label="Current GPA / Average Grade"
-                                            placeholder="e.g. 5.2 / 6.0 or 3.7 / 4.0"
-                                            variant="bordered"
-                                            value={formData.gpa}
-                                            onChange={(e) => handleInputChange("gpa", e.target.value)}
-                                        />
-
-                                        <Select
-                                            label="Preferred Start Timeline"
-                                            placeholder="Select a timeline"
-                                            variant="bordered"
-                                            selectedKeys={
-                                                formData.timeline
-                                                    ? new Set([formData.timeline])
-                                                    : new Set()
-                                            }
-                                            onSelectionChange={(keys) =>
-                                                handleSingleSelectChange("timeline", keys)
-                                            }
-                                        >
-                                            {timelines.map((timeline) => (
-                                                <SelectItem key={timeline}>{timeline}</SelectItem>
-                                            ))}
-                                        </Select>
-                                    </div>
-
-                                    <Textarea
-                                        label="Relevant Courses"
-                                        placeholder="List courses related to your intended thesis area"
-                                        variant="bordered"
-                                        minRows={3}
-                                        value={formData.relevantCourses}
-                                        onChange={(e) =>
-                                            handleInputChange("relevantCourses", e.target.value)
-                                        }
-                                    />
-
-                                    <Textarea
-                                        label="Technical Skills"
-                                        placeholder="e.g. Java, Python, React, SQL, data analysis, machine learning"
-                                        variant="bordered"
-                                        minRows={3}
-                                        value={formData.technicalSkills}
-                                        onChange={(e) =>
-                                            handleInputChange("technicalSkills", e.target.value)
-                                        }
-                                    />
-
-                                    <Textarea
-                                        label="Previous Projects or Research Experience"
-                                        placeholder="Describe academic, industry, or personal projects relevant to your thesis"
-                                        variant="bordered"
-                                        minRows={4}
-                                        value={formData.previousProjects}
-                                        onChange={(e) =>
-                                            handleInputChange("previousProjects", e.target.value)
-                                        }
-                                    />
-                                </section>
-
-                                <Divider />
-
-                                <section className="space-y-4">
-                                    <div>
-                                        <h2 className="text-lg font-semibold">Thesis Interests</h2>
-                                        <p className="text-sm text-default-500">
-                                            Describe the topics and research areas you are most interested in.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        <Select
-                                            label="Preferred Research Area"
-                                            placeholder="Choose an area"
-                                            variant="bordered"
-                                            selectionMode="multiple"
-                                            className="md:col-span-2"
-                                            selectedKeys={new Set(formData.researchAreas)}
-                                            onSelectionChange={(keys) =>
-                                                handleMultiSelectChange("researchAreas", keys)
-                                            }
-                                        >
-                                            {supervisionAreas.map((area) => (
-                                                <SelectItem key={area}>{area}</SelectItem>
-                                            ))}
-                                        </Select>
-                                    </div>
-
-                                    <Textarea
-                                        label="Research Interests"
-                                        placeholder="Explain what topics interest you and why"
-                                        variant="bordered"
-                                        minRows={4}
-                                        isRequired
-                                        value={formData.researchInterests}
-                                        onChange={(e) =>
-                                            handleInputChange("researchInterests", e.target.value)
-                                        }
-                                    />
-
-                                    <Textarea
-                                        label="Possible Thesis Ideas"
-                                        placeholder="Optional: propose one or more thesis ideas or problem statements"
-                                        variant="bordered"
-                                        minRows={4}
-                                        value={formData.thesisIdeas}
-                                        onChange={(e) =>
-                                            handleInputChange("thesisIdeas", e.target.value)
-                                        }
-                                    />
-
-                                    <Textarea
-                                        label="Preferred Supervisor / Chair"
-                                        placeholder="Optional: mention a preferred professor, research group, or lab"
-                                        variant="bordered"
-                                        minRows={2}
-                                        value={formData.preferredSupervisor}
-                                        onChange={(e) =>
-                                            handleInputChange("preferredSupervisor", e.target.value)
-                                        }
-                                    />
-                                </section>
-
-                                <Divider />
-
-                                <section className="space-y-4">
-                                    <div>
                                         <h2 className="text-sm font-semibold">Required Documents</h2>
                                         <p className="text-sm text-default-500">
-                                            Upload your academic documents and supporting files.
+                                            Upload your Transcript of Records (TOR).
                                         </p>
                                     </div>
 
                                     <div className="rounded-3xl border border-default-200 bg-background p-4 shadow-sm">
-                                        <TorUpload />
+                                        <TorUpload/>
                                     </div>
                                 </section>
 
-                                <Divider />
-
                                 <section className="space-y-4">
                                     <div>
-                                        <h2 className="text-lg font-semibold">Availability & Notes</h2>
+                                        <h2 className="text-sm font-semibold">Professional Profiles</h2>
                                         <p className="text-sm text-default-500">
-                                            Add any constraints or additional details.
+                                            Share your GitHub and LinkedIn profiles to showcase your work and
+                                            experience.
                                         </p>
                                     </div>
 
-                                    <Textarea
-                                        label="Availability / Constraints"
-                                        placeholder="Mention internship plans, part-time work, exchange semester, or deadlines"
-                                        variant="bordered"
-                                        minRows={3}
-                                        value={formData.availability}
-                                        onChange={(e) =>
-                                            handleInputChange("availability", e.target.value)
-                                        }
-                                    />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-                                    <Textarea
-                                        label="Additional Notes"
-                                        placeholder="Anything else the supervisor should know"
-                                        variant="bordered"
-                                        minRows={3}
-                                        value={formData.additionalNotes}
-                                        onChange={(e) =>
-                                            handleInputChange("additionalNotes", e.target.value)
-                                        }
-                                    />
+                                        {/* GitHub */}
+                                        <div
+                                            className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
+                                            <Github className="w-4 h-4 text-default-500"/>
+                                            <input
+                                                type="url"
+                                                placeholder="github.com/username"
+                                                className="w-full bg-transparent text-sm outline-none"
+                                            />
+                                        </div>
+
+                                        {/* LinkedIn */}
+                                        <div
+                                            className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
+                                            <Linkedin className="w-4 h-4 text-default-500"/>
+                                            <input
+                                                type="url"
+                                                placeholder="linkedin.com/in/profile"
+                                                className="w-full bg-transparent text-sm outline-none"
+                                            />
+                                        </div>
+                                    </div>
                                 </section>
 
                                 <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
