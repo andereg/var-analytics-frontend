@@ -254,7 +254,7 @@ export default function ThesisDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <div className="lg:col-span-2 ">
-                        <Chatbot title="Thesis assistant" subtitle=" "/>
+                        <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hi! 👋 I see you're in the planning phase of your thesis. How's it going so far? Whether you need help with your research questions, methodology selection, or structuring your outline - I'm here to assist. Any questions or changes to your plan?"/>
                     </div>
 
 

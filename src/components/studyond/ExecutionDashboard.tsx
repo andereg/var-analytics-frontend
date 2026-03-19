@@ -250,7 +250,7 @@ export default function ExecutionDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <div className="lg:col-span-2 ">
-                        <Chatbot title="Thesis assistant" subtitle=" "/>
+                        <Chatbot title="Thesis assistant" subtitle=" " initialMessage="Hey! 👋 You're making progress - the execution phase is where things get exciting! How are your interviews and data collection going? If you need guidance on participant recruitment, interview techniques, or handling unexpected challenges - just ask. How can I help you today?"/>
                     </div>
 
 
