@@ -44,7 +44,12 @@ const degreeMap: Record<string, string> = {
     phd: "PhD Thesis",
 };
 
-export default function ThesisForm() {
+type ThesisFormProps = {
+    onContinue?: () => void;
+};
+
+
+export default function ThesisForm({ onContinue }: ThesisFormProps) {
     const student = getStudentById("student-01");
 
     const allFields = getAllFields();
@@ -56,6 +61,7 @@ export default function ThesisForm() {
 
     const allStudyPrograms = getAllStudyPrograms();
     const studyProgramMap = Object.fromEntries(allStudyPrograms.map((sp) => [sp.id, sp]));
+
 
     const initialResearchAreas = useMemo(
         () =>
@@ -184,15 +190,17 @@ export default function ThesisForm() {
                 additionalNotes: formData.additionalNotes,
             },
         };
+        e.preventDefault();
 
         console.log("submitted payload", payload);
+        onContinue?.();
     };
 
     return (
         <div>
             <ProgressModal progress={progress} />
 
-            <div className="min-h-screen px-4 py-8 md:px-8">
+            <div className="min-h-screen px-4 py-4 md:px-8">
                 <div className="mx-auto max-w-5xl">
                     <Card className="rounded-3xl border border-default-200 shadow-lg">
                         <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">
@@ -245,7 +253,7 @@ export default function ThesisForm() {
                                         </div>
                                     </div>
 
-                                    <div className="mt-2 mb-1">
+                                    <div className="mt-2 mb-2">
                                         <h3 className="text-sm font-semibold text-default-700">Skills</h3>
                                     </div>
                                     <div className="rounded-2xl shadow-md p-4">
@@ -283,7 +291,7 @@ export default function ThesisForm() {
                                         </div>
                                     </div>
 
-                                    <div className="mt-2 mb-1">
+                                    <div className="mt-2 mb-2">
                                         <h3 className="text-sm font-semibold text-default-700">Fields</h3>
                                     </div>
                                     <div className="rounded-2xl shadow-md p-4">

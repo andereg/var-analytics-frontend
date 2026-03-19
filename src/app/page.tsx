@@ -13,7 +13,7 @@ import SubmissionDashboard from "@/components/studyond/SubmissionDashboard";
 
 
 export default function Home() {
-    const [step, setStep] = React.useState<number>(1);
+    const [step, setStep] = React.useState<number>(0);
     const [topicDashboard, setTopicDashboard] = useState(true)
 
 
@@ -26,8 +26,8 @@ export default function Home() {
             setTopicDashboard(true)
             setHasTopic(true)
         }}/>,
-        <ChatbotCompany 
-            key={`step-2-${topicDashboard}`} 
+        <ChatbotCompany
+            key={`step-2-${topicDashboard}`}
             selectCompany={() => setTopicDashboard(true)}
             initialMessage="I've analyzed your selected topic. Let's find the best industry partner and academic supervisor for it!"
         />,
@@ -47,11 +47,10 @@ export default function Home() {
 
             <div className="flex flex-col  items-center flex-1 p-6">
 
-
+                { step != 0 &&
                 <div className="flex items-center justify-center">
 
                     <RowSteps
-                        defaultStep={0}
                         currentStep={step}
                         onStepChange={setStep}
                         className="
@@ -86,6 +85,7 @@ export default function Home() {
                         ]}
                     />
                 </div>
+                }
 
 
                 {
@@ -93,7 +93,7 @@ export default function Home() {
                         <MyTopic onFindTopic={() => {
                                      setStep(1);
                                      setTopicDashboard(false);
-                                 }} 
+                                 }}
                                  hasFoundTopic={hasTopic}
                                  selectSupervisor={() => {
                                      if (step === 1) setStep(2);
