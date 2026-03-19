@@ -77,18 +77,18 @@ export default function MyTopic({
                     <div className="mb-8 flex h-17 w-17 items-center justify-center rounded-[2rem] bg-primary-50 text-primary shadow-sm">
                         <Sparkles size={48} />
                     </div>
-                    <h1 className="mb-4 text-3xl font-black tracking-tight md:text-5xl">
+                    <h1 className="mb-4 text-3xl font-black tracking-tight md:text-2xl">
                         Start your journey.
                     </h1>
-                    <p className="mb-12 max-w-md text-lg text-default-500">
+                    <p className="mb-12 max-w-md text-md text-default-500">
                         Find the perfect industry-backed topic matched to your academic profile.
                     </p>
                     <Button 
                         color="primary" 
-                        size="lg"
+                        size="md"
                         radius="full"
                         onPress={onFindTopic}
-                        className="h-16 px-12 text-xl font-bold shadow-xl shadow-primary/20"
+                        className="h-12 px-12 text-md font-bold shadow-xl shadow-primary/20"
                     >
                         Find My Topic
                     </Button>

@@ -252,25 +252,30 @@ const EmptyState: React.FC<{
     </div>
 );
 
+type LandingPageProps = {
+    onStart: () => void;
+};
+
+export default function LandingPage({ onStart }: LandingPageProps) {
+
 // Main Dashboard Component
-export default function LandingPage() {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    const userName = "Yann";
-    const userEmail = "herry2@bfh.ch";
-    const userFullName = "Yann Herren";
+    const userName = "Luca";
+    const userEmail = "luca.meier@student.ethz.ch";
+    const userFullName = "Luca Meier";
 
     return (
-        <div className="flex min-h-screen w-full bg-background">
+        <div className="flex min-h-screen w-full bg-white">
             {/* Sidebar */}
             <aside
-                className={`hidden md:flex flex-col border-r border-default-200 bg-background transition-all duration-200 relative ${
+                className={`hidden md:flex flex-col border-r border-default-200 bg-white transition-all duration-200 relative ${
                     sidebarCollapsed ? "w-16" : "w-64"
                 }`}
             >
                 {/* Sidebar Header */}
-                <div className="flex h-14 items-center px-4 border-b border-default-200">
+                <div className="flex h-14 bg-white items-center px-4 ">
                     <Link href="/" className="flex items-center">
                         {sidebarCollapsed ? (
                             <div className="w-8 h-8 flex items-center justify-center">
@@ -287,7 +292,7 @@ export default function LandingPage() {
                     {/* Personal Section */}
                     <div className="mb-4">
                         {!sidebarCollapsed && (
-                            <p className="px-2 py-2 text-xs font-medium text-default-400">Persönlich</p>
+                            <p className="px-2 py-2 text-xs font-medium text-default-400">Personal</p>
                         )}
                         <nav className="space-y-1">
                             <SidebarItem
@@ -299,13 +304,13 @@ export default function LandingPage() {
                             />
                             <SidebarItem
                                 icon={<MessageSquare size={16} />}
-                                label="Nachrichten"
+                                label="Messages"
                                 href="/messages"
                                 isCollapsed={sidebarCollapsed}
                             />
                             <SidebarItem
                                 icon={<Folder size={16} />}
-                                label="Meine Projekte"
+                                label="My Projects"
                                 href="/user/thesis-projects"
                                 isCollapsed={sidebarCollapsed}
                             />
@@ -320,7 +325,7 @@ export default function LandingPage() {
                         <nav className="space-y-1">
                             <SidebarItem
                                 icon={<Files size={16} />}
-                                label="Themen"
+                                label="Topics"
                                 href="/topics"
                                 isCollapsed={sidebarCollapsed}
                             />
@@ -332,36 +337,36 @@ export default function LandingPage() {
                             />
                             <CollapsibleMenuItem
                                 icon={<Users size={16} />}
-                                label="Personen"
+                                label="People"
                                 isCollapsed={sidebarCollapsed}
                             >
                                 <SidebarItem
                                     icon={<User size={16} />}
-                                    label="Experten"
+                                    label="Experts"
                                     href="/people/experts"
                                     isCollapsed={sidebarCollapsed}
                                 />
                                 <SidebarItem
                                     icon={<User size={16} />}
-                                    label="Studierende"
+                                    label="Students"
                                     href="/people/students"
                                     isCollapsed={sidebarCollapsed}
                                 />
                             </CollapsibleMenuItem>
                             <CollapsibleMenuItem
                                 icon={<Network size={16} />}
-                                label="Organisationen"
+                                label="Organizations"
                                 isCollapsed={sidebarCollapsed}
                             >
                                 <SidebarItem
                                     icon={<Briefcase size={16} />}
-                                    label="Unternehmen"
+                                    label="Companies"
                                     href="/organizations/companies"
                                     isCollapsed={sidebarCollapsed}
                                 />
                                 <SidebarItem
                                     icon={<Network size={16} />}
-                                    label="Universitäten"
+                                    label="Universities"
                                     href="/organizations/universities"
                                     isCollapsed={sidebarCollapsed}
                                 />
@@ -374,7 +379,7 @@ export default function LandingPage() {
                 <div className="border-t border-default-200 p-2">
                     <SidebarItem
                         icon={<Settings size={16} />}
-                        label="Meine Einstellungen"
+                        label="My Settings"
                         href="/user/settings"
                         isCollapsed={sidebarCollapsed}
                     />
@@ -405,10 +410,10 @@ export default function LandingPage() {
                             </button>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="User menu">
-                            <DropdownItem key="profile">Profil</DropdownItem>
-                            <DropdownItem key="settings">Einstellungen</DropdownItem>
+                            <DropdownItem key="profile">Profile</DropdownItem>
+                            <DropdownItem key="settings">Settings</DropdownItem>
                             <DropdownItem key="logout" color="danger">
-                                Abmelden
+                                Log out
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -429,7 +434,7 @@ export default function LandingPage() {
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0">
                 {/* Header */}
-                <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-default-200 bg-background/80 backdrop-blur-md px-4">
+                <header className="sticky top-0 z-40 flex h-14 items-center justify-between  bg-background/80 bg-white px-4">
                     <div className="flex items-center gap-2">
                         {/* Mobile Logo */}
                         <Link href="/" className="md:hidden">
@@ -450,7 +455,7 @@ export default function LandingPage() {
 
                     <div className="flex items-center gap-2">
                         {/* Notifications */}
-                        <Tooltip content="Benachrichtigungen">
+                        <Tooltip content="Notifications">
                             <Button isIconOnly variant="light" size="sm">
                                 <Bell size={18} />
                             </Button>
@@ -458,11 +463,11 @@ export default function LandingPage() {
 
                         {/* Invite Button */}
                         <Button variant="bordered" size="sm" startContent={<UserPlus size={16} />}>
-                            <span className="hidden sm:inline">Einladen</span>
+                            <span className="hidden sm:inline">Invite</span>
                         </Button>
 
                         {/* AI Chat Button */}
-                        <Tooltip content="KI Assistent">
+                        <Tooltip content="AI Assistant">
                             <Button isIconOnly variant="bordered" size="sm">
                                 <AiChatIcon size={18} />
                             </Button>
@@ -486,7 +491,7 @@ export default function LandingPage() {
                     <div className="mx-auto max-w-7xl p-4 md:p-6 lg:p-8">
                         {/* Greeting */}
                         <div className="mb-12">
-                            <h1 className="text-3xl md:text-4xl font-bold">Guten Tag, {userName}! 👋️</h1>
+                            <h1 className="text-3xl md:text-4xl font-bold">Good day, {userName}! 👋️</h1>
                         </div>
 
                         {/* Action Cards Grid */}
@@ -500,20 +505,20 @@ export default function LandingPage() {
                                         <>
                       <span className="bg-gradient-to-r from-purple-500 via-blue-700 to-blue-500 bg-clip-text text-transparent">
 
-                      </span>{" "}Starte deine Thesis hier mit
+                      </span>{" "}Start your thesis here with
                                             {" "}
                                             <span className="bg-gradient-to-r from-purple-600 via-blue-700 to-purple-600 bg-clip-text text-transparent">
 
 
-                                                AI Unterstützung</span><span> für den</span>
+                                                AI Support</span><span> for </span>
 
                                             <span className="bg-gradient-to-r from-purple-600 via-blue-700 to-purple-600 bg-clip-text text-transparent">
-                                            {" "} garantierten Erfolg
+                                            {" "} guaranteed success
                       </span>
                                         </>
                                     }
-                                    description="Werde Schritt für Schritt durch deine Thesis geführt und schliesse sie mühelos ab."
-                                    onClick={() => console.log("AI clicked")}
+                                    description="Be guided step by step through your thesis and complete it effortlessly."
+                                    onClick={onStart}
                                 />
                             </div>
 
@@ -525,32 +530,30 @@ export default function LandingPage() {
                                 {/* Experts Card */}
                                 <ActionCard
                                     icon={<Users size={20} />}
-                                    title="Finde Experten für Interviews"
-                                    description="Vernetze dich mit Industrie-Expert:innen für Interviews und neue Einblicke."
+                                    title="Find experts for interviews"
+                                    description="Connect with industry experts for interviews and new insights."
                                     href="/people/experts"
                                 />
 
                                 {/* Topics Card */}
                                 <ActionCard
                                     icon={<Search size={20} />}
-                                    title="Alle relevanten Themen für dich"
-                                    description="Finde alle publizierten Themen deiner Uni und unserer Partnerunternehmen."
-                                    href="/topics"
+                                    title="All relevant topics for you"
+                                    description="Find all job postings from your university and our partner companies."                                    href="/topics"
                                 />
 
                                 {/* Propose Topic Card */}
                                 <ActionCard
                                     icon={<FolderPlus size={20} />}
-                                    title="Schlage selbst ein Thema vor"
-                                    description="Finde Praxispartner, die offen sind für deinen Themenvorschlag."
-                                    onClick={() => console.log("Propose topic clicked")}
+                                    title="Propose your own topic"
+                                    description="Find practice partners who are open to your topic suggestion."                                    onClick={() => console.log("Propose topic clicked")}
                                 />
 
                                 {/* Videos Card */}
                                 <ActionCard
                                     icon={<Youtube size={20} className="text-red-600" />}
                                     title="Videos: Thesis Writing 101"
-                                    description="Tipps von unseren PhDs zum Thema Abschlussarbeiten in Sozialwissenschaften."
+                                    description="Tips from our PhD students on writing theses in the social sciences."
                                     onClick={() => console.log("Videos clicked")}
                                 />
                             </div>
@@ -559,13 +562,13 @@ export default function LandingPage() {
                         {/* Favorited Topics Section */}
                         <div className="mb-12">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-medium">Meine favorisierten Themen</h2>
+                                <h2 className="text-2xl font-medium">My favorite topics</h2>
                             </div>
 
                             <EmptyState
                                 icon={<Bookmark size={24} />}
-                                title="Keine Elemente"
-                                actionLabel="Geh zu Themen"
+                                title="No items"
+                                actionLabel="Go to topics"
                                 onAction={() => (window.location.href = "/topics")}
                             />
                         </div>
