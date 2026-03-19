@@ -50,7 +50,7 @@ export default function ThesisSummary({
     };
 
     return (
-        <Card>
+        <Card className="h-150">
             <CardHeader className="flex justify-between items-center">
                 <h3 className="font-semibold flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
@@ -61,7 +61,7 @@ export default function ThesisSummary({
                 </Chip>
             </CardHeader>
             <Divider />
-            <CardBody className="space-y-4">
+            <CardBody className="space-y-4 p-4">
                 {/* Topic */}
                 <div>
                     <p className="text-xs text-default-400 uppercase tracking-wide">Topic</p>
