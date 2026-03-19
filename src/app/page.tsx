@@ -3,6 +3,7 @@ import FeaturesCards from "@/components/meta/features-cards";
 import React from "react";
 import RowSteps from "@/components/steppers/row-steps";
 import ThesisForm from "@/components/studyond/ThesisForm";
+import ThesisDashboard from "@/components/studyond/ThesisDashboard";
 import HomeClient from "@/components/meta/HomeClient";
 import TORAnalysis from "@/components/studyond/TORAnalysis";
 import RecommendedTopics from "@/components/studyond/RecommendedThemes";
@@ -15,12 +16,13 @@ const stepsContent = [
     <ChatbotTheme/>,
     <TORAnalysis />,
     <RecommendedTopics />,
-    <RecommendedExperts />
+    <ThesisDashboard />,
+    <RecommendedExperts />,
 ];
 
 
 export default function Home() {
-    const [step, setStep] = React.useState(0);
+    const [step, setStep] = React.useState(4);
 
     return (
 
