@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
-import {Button, Link} from "@heroui/react";
-import {Icon} from "@iconify/react";
+import React, { useState } from "react";
+import { Button, Link } from "@heroui/react";
+import { Icon } from "@iconify/react";
 
 export default function Banner() {
+    const [isVisible, setIsVisible] = useState(true);
+
+    if (!isVisible) return null;
+
     return (
         <div className="border-divider bg-background/15 flex w-full items-center gap-x-3 border-b-1 px-6 py-2 backdrop-blur-xl sm:px-3.5 sm:before:flex-1">
             <p className="text-small text-foreground">
@@ -12,6 +16,7 @@ export default function Banner() {
                     Find Your Thesis Topic - Backed by Your Academic Profile
                 </Link>
             </p>
+
             <Button
                 as={Link}
                 className="group text-small relative h-9 overflow-hidden bg-transparent font-normal"
@@ -34,8 +39,15 @@ export default function Banner() {
             >
                 start now
             </Button>
+
             <div className="flex flex-1 justify-end">
-                <Button isIconOnly className="-m-1" size="sm" variant="light">
+                <Button
+                    isIconOnly
+                    className="-m-1"
+                    size="sm"
+                    variant="light"
+                    onPress={() => setIsVisible(false)}
+                >
                     <span className="sr-only">Close Banner</span>
                     <Icon className="text-default-500" icon="lucide:x" width={20} />
                 </Button>
