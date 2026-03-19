@@ -31,6 +31,13 @@ export default function Home() {
                     defaultStep={0}
                     currentStep={step}
                     onStepChange={setStep}
+                    className="
+                        [--active-color:black]
+                        [--active-border-color:black]
+                        [--active-fg-color:white]
+                        [--complete-background-color:black]
+                        [--complete-border-color:black]
+                      "
                     steps={[
                         {
                             title: "Start",
