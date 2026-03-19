@@ -3,7 +3,6 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Input,
     Textarea,
     Select,
     SelectItem,
@@ -13,18 +12,17 @@ import {
 } from "@heroui/react";
 import ProgressModal from "@/components/charts/ProgressModal";
 import TorUpload from "@/components/meta/TorUpload";
-import { getStudentById, getAllFields, getAllUniversities, getAllStudyPrograms } from "@/api/mockData";
+import {
+    getStudentById,
+    getAllFields,
+    getAllUniversities,
+    getAllStudyPrograms,
+} from "@/api/mockData";
+
 import { StudentObjective } from "@/types/studyond";
 import { Github, Linkedin } from "lucide-react";
 
-const degreePrograms = [
-    "Computer Science",
-    "Software Engineering",
-    "Data Science",
-    "Information Systems",
-    "Business Informatics",
-    "Other",
-];
+
 
 const availableSkills = [
     "Python",
@@ -40,64 +38,31 @@ const availableSkills = [
     "cloud computing",
 ];
 
-
-
 const degreeMap: Record<string, string> = {
     bsc: "Bachelor Thesis",
     msc: "Master Thesis",
     phd: "PhD Thesis",
 };
 
-const studyProgramMap: Record<string, string> = {
-    "program-01": "Computer Science",
-    "program-02": "Software Engineering",
-    "program-03": "Data Science",
-    "program-04": "Information Systems",
-    "program-05": "Business Informatics",
-};
-
-const fieldMap: Record<string, string> = {
-    "field-01": "Artificial Intelligence",
-    "field-02": "Web Development",
-    "field-03": "Machine Learning",
-    "field-04": "Cybersecurity",
-    "field-05": "Databases",
-    "field-06": "Distributed Systems",
-    "field-07": "Mobile Apps",
-    "field-08": "Human-Computer Interaction",
-    "field-09": "Computer Graphics",
-    "field-10": "Networking",
-};
-
 export default function ThesisForm() {
-    const progress = 72;
     const student = getStudentById("student-01");
 
     const allFields = getAllFields();
-
-    const fieldMap = Object.fromEntries(
-        allFields.map((f) => [f.id, f])
-    );
+    const fieldMap = Object.fromEntries(allFields.map((f) => [f.id, f]));
     const availableFieldIds = allFields.map((f) => f.id);
 
     const allUniversities = getAllUniversities();
-
-    const universityMap = Object.fromEntries(
-        allUniversities.map((u) => [u.id, u])
-    );
+    const universityMap = Object.fromEntries(allUniversities.map((u) => [u.id, u]));
 
     const allStudyPrograms = getAllStudyPrograms();
-
-    const studyProgramMap = Object.fromEntries(
-        allStudyPrograms.map((sp) => [sp.id, sp])
-    );
+    const studyProgramMap = Object.fromEntries(allStudyPrograms.map((sp) => [sp.id, sp]));
 
     const initialResearchAreas = useMemo(
         () =>
             (student?.fieldIds ?? [])
                 .map((id: string) => fieldMap[id])
                 .filter(Boolean),
-        [student]
+        [student, fieldMap]
     );
 
     const [formData, setFormData] = useState({
@@ -112,8 +77,11 @@ export default function ThesisForm() {
         about: student?.about ?? "",
         fieldIds: student?.fieldIds ?? [],
 
+        githubUrl: "",
+        linkedinUrl: "",
+
         degreeProgram:
-            studyProgramMap[student?.studyProgramId as string] ?? "Computer Science",
+            studyProgramMap[student?.studyProgramId as string]?.name ?? "Computer Science",
         applicationType: degreeMap[student?.degree as string] ?? "Master Thesis",
         major: "",
         graduationDate: "",
@@ -137,10 +105,7 @@ export default function ThesisForm() {
         }));
     };
 
-    const addChip = (
-        field: "skillsArray" | "fieldIds",
-        value: string
-    ) => {
+    const addChip = (field: "skillsArray" | "fieldIds", value: string) => {
         if (!value) return;
 
         setFormData((prev) => {
@@ -154,15 +119,34 @@ export default function ThesisForm() {
         });
     };
 
-    const removeChip = (
-        field: "skillsArray" | "fieldIds",
-        value: string
-    ) => {
+    const removeChip = (field: "skillsArray" | "fieldIds", value: string) => {
         setFormData((prev) => ({
             ...prev,
             [field]: (prev[field] as string[]).filter((item) => item !== value),
         }));
     };
+
+    const progress = useMemo(() => {
+        const fieldsToCheck = [
+            formData.firstName,
+            formData.lastName,
+            formData.email,
+            formData.studyProgramId,
+            formData.universityId,
+            formData.about,
+            formData.githubUrl,
+            formData.linkedinUrl,
+            formData.skillsArray,
+            formData.fieldIds,
+        ];
+
+        const completedCount = fieldsToCheck.filter((field) => {
+            if (Array.isArray(field)) return field.length > 0;
+            return String(field).trim() !== "";
+        }).length;
+
+        return Math.round((completedCount / fieldsToCheck.length) * 100);
+    }, [formData]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -179,6 +163,8 @@ export default function ThesisForm() {
                 skills: formData.skillsArray,
                 about: formData.about,
                 fieldIds: formData.fieldIds,
+                githubUrl: formData.githubUrl,
+                linkedinUrl: formData.linkedinUrl,
             },
             thesisApplication: {
                 degreeProgram: formData.degreeProgram,
@@ -211,13 +197,12 @@ export default function ThesisForm() {
                     <Card className="rounded-3xl border border-default-200 shadow-lg">
                         <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">
                             <div className="space-y-1">
-                                <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-                                    Thesis Startform
+                                <h1 className="text-3xl font-bold tracking-tight md:text-3xl">
+                                    Start Your Thesis Journey
                                 </h1>
-                                <p className="max-w-3xl text-sm text-default-500 md:text-base">
-                                    Fill out this form if you are interested in writing your thesis.
-                                    Please provide your academic background, topic interests,
-                                    and upload the required supporting documents.
+                                <p className="max-w-3xl text-sm text-default-500 text-sm">
+                                    Tell us about your background, skills, and interests so we can help you find the
+                                    right thesis topic and supervisor.
                                 </p>
                             </div>
                         </CardHeader>
@@ -226,7 +211,7 @@ export default function ThesisForm() {
                             <form className="space-y-8" onSubmit={handleSubmit}>
                                 <section className="space-y-4">
                                     <div>
-                                        <h3 className="text-lg font-semibold">Student Profile</h3>
+                                        <h3 className="text-md font-semibold">Student Profile</h3>
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -273,9 +258,7 @@ export default function ThesisForm() {
                                                         size="sm"
                                                         onClose={() => removeChip("skillsArray", skill)}
                                                     >
-                                                        <div className="mx-1">
-                                                            {skill}
-                                                        </div>
+                                                        <div className="mx-1">{skill}</div>
                                                     </Chip>
                                                 ))}
                                             </div>
@@ -341,6 +324,7 @@ export default function ThesisForm() {
                                             </Select>
                                         </div>
                                     </div>
+
                                     <Textarea
                                         label="Tell us about you"
                                         placeholder="Student description / background"
@@ -351,7 +335,7 @@ export default function ThesisForm() {
                                     />
                                 </section>
 
-                                <Divider/>
+                                <Divider />
 
                                 <section className="space-y-4">
                                     <div>
@@ -362,7 +346,7 @@ export default function ThesisForm() {
                                     </div>
 
                                     <div className="rounded-3xl border border-default-200 bg-background p-4 shadow-sm">
-                                        <TorUpload/>
+                                        <TorUpload />
                                     </div>
                                 </section>
 
@@ -376,25 +360,24 @@ export default function ThesisForm() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-
-                                        {/* GitHub */}
-                                        <div
-                                            className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
-                                            <Github className="w-4 h-4 text-default-500"/>
+                                        <div className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
+                                            <Github className="w-4 h-4 text-default-500" />
                                             <input
-                                                type="url"
+                                                type="text"
                                                 placeholder="github.com/username"
+                                                value={formData.githubUrl}
+                                                onChange={(e) => handleInputChange("githubUrl", e.target.value)}
                                                 className="w-full bg-transparent text-sm outline-none"
                                             />
                                         </div>
 
-                                        {/* LinkedIn */}
-                                        <div
-                                            className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
-                                            <Linkedin className="w-4 h-4 text-default-500"/>
+                                        <div className="flex items-center gap-2 rounded-xl border border-default-200 px-3 py-2 focus-within:ring-2 focus-within:ring-primary">
+                                            <Linkedin className="w-4 h-4 text-default-500" />
                                             <input
-                                                type="url"
+                                                type="text"
                                                 placeholder="linkedin.com/in/profile"
+                                                value={formData.linkedinUrl}
+                                                onChange={(e) => handleInputChange("linkedinUrl", e.target.value)}
                                                 className="w-full bg-transparent text-sm outline-none"
                                             />
                                         </div>
