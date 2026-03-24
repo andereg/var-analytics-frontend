@@ -62,9 +62,11 @@ export async function chatAction(messages: { role: string; content: string }[], 
     JSON object:
     {
       "message": "Response text",
-      "recommendedTopicIds": ["id-1", "id-2"],
+      "recommendedIds": ["id-1", "id-2"],
       "fullUpdatedNarrative": "The complete, revised version of ONLY the 'Narrative Profile' section."
-    }`;
+    }
+    
+    IMPORTANT: If you recommend specific supervisors, companies, or topics in your message, you MUST include their IDs in the "recommendedIds" array.`;
 
   const contents = [
     {
@@ -73,11 +75,11 @@ export async function chatAction(messages: { role: string; content: string }[], 
     },
     {
       role: "model",
-      parts: [{ text: "{\"message\": \"Understood. I have access to the full student memory and transcript. How can I help?\", \"recommendedTopicIds\": [], \"fullUpdatedNarrative\": \"\"}" }]
+      parts: [{ text: "{\"message\": \"Understood. I have access to the full student memory and transcript. I will provide recommendations with their IDs in the JSON response. How can I help?\", \"recommendedIds\": [], \"fullUpdatedNarrative\": \"\"}" }]
     },
     ...messages.map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.role === 'assistant' ? JSON.stringify({ message: m.content, recommendedTopicIds: [], fullUpdatedNarrative: "" }) : m.content }]
+      parts: [{ text: m.role === 'assistant' ? JSON.stringify({ message: m.content, recommendedIds: [], fullUpdatedNarrative: "" }) : m.content }]
     }))
   ];
 
@@ -114,7 +116,7 @@ export async function chatAction(messages: { role: string; content: string }[], 
         }
     }
     
-    return { success: true, content: data.message, recommendedTopicIds: data.recommendedTopicIds || [] };
+    return { success: true, content: data.message, recommendedIds: data.recommendedIds || [] };
 
   } catch (error: any) {
     console.error("Chat Error:", error.message);
