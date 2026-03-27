@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Studyond",
+    title: "Steuererklärung Kanton Alpengrün",
     description: "Your interactive helper for your thesis"
 };
 

@@ -10,7 +10,7 @@ export default function ProgressModal({ progress = 50 }) {
 
                 {/* header */}
                 <div className="mb-2 flex items-center justify-between text-sm">
-                    <span className="text-default-600">{progress < 100 ? "Form completion" : "Form completed" }</span>
+                    <span className="text-default-600">{progress < 100 ? "Formular ausgefüllt in Prozent" : "Formular ausgefüllt" }</span>
                     <span className="font-semibold text-default-600">{progress}%</span>
                 </div>
 

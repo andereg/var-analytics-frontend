@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="slop flow">
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/DeductionsForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/FinalSummaryPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/FinalizationForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/IncomeForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/SpecialCasesForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/WealthForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/studyond/PersonModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/PersonModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/charts/ProgressModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/charts/ProgressModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/meta/Banner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/meta/Banner.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/Sidebar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +49,12 @@
     &quot;assignee&quot;: &quot;andereg&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/andereg/var-analytics-frontend&quot;,
-    &quot;accountId&quot;: &quot;06913dba-7e7e-4a29-bfb5-d25f663bb3f8&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/andereg/var-analytics-frontend.git",
+    "accountId": "d6a57bab-a08c-44ed-a2a9-b097bb8b195c"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -58,10 +70,10 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "studyond",
+    "git-widget-placeholder": "steuererklärung-alpengrün",
     "javascript.preferred.runtime.type.id": "node",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/components/studyond/dashboard-components",
+    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/components/taxme",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -73,6 +85,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\taxme" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\studyond\dashboard-components" />
       <recent name="$PROJECT_DIR$/src/components/studyond" />
     </key>
@@ -80,7 +93,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.31033.133" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -98,6 +112,7 @@
       <workItem from="1773907155593" duration="7621000" />
       <workItem from="1773933121649" duration="2017000" />
       <workItem from="1773949378705" duration="1527000" />
+      <workItem from="1774636543037" duration="6244000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard slop 2">
       <option name="closed" value="true" />
