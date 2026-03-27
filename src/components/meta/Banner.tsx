@@ -13,7 +13,7 @@ export default function Banner() {
         <div className="border-divider bg-white flex w-full items-center gap-x-3 border-b-1 px-6 py-2 backdrop-blur-xl sm:px-3.5 sm:before:flex-1">
             <p className="text-small text-foreground">
                 <Link className="text-inherit" href="#">
-                    Fülle jetzt deine Steuererklärung mit dem KI-Assistant aus
+                    Fülle jetzt deine Steuererklärung mit dem KI-Assistenten aus
                 </Link>
             </p>
 

@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="slop flow">
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/DeductionsForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/FinalSummaryPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/FinalizationForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/IncomeForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/SpecialCasesForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/WealthForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/charts/ProgressModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/charts/ProgressModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/meta/Banner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/meta/Banner.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/studyond/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +64,7 @@
     "git-widget-placeholder": "steuererklärung-alpengrün",
     "javascript.preferred.runtime.type.id": "node",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/components/taxme",
+    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +76,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\app" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\taxme" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\studyond\dashboard-components" />
       <recent name="$PROJECT_DIR$/src/components/studyond" />
@@ -112,7 +104,7 @@
       <workItem from="1773907155593" duration="7621000" />
       <workItem from="1773933121649" duration="2017000" />
       <workItem from="1773949378705" duration="1527000" />
-      <workItem from="1774636543037" duration="6244000" />
+      <workItem from="1774636543037" duration="7351000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard slop 2">
       <option name="closed" value="true" />

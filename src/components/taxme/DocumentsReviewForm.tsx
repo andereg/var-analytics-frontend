@@ -136,11 +136,7 @@ export default function DocumentsReviewForm({
             formData.checkedDeductions,
             formData.checkedWealth,
             formData.checkedSpecialCases,
-            formData.checkedAttachments,
-            formData.confirmedNumbersCorrect,
-            formData.confirmedNothingForgotten,
-            formData.confirmedPlausible,
-            formData.confirmedReadyToSubmit,
+            formData.checkedAttachments
         ].filter(Boolean).length;
     }, [formData]);
 
@@ -153,11 +149,7 @@ export default function DocumentsReviewForm({
             formData.municipality,
             formData.receiptsRequired,
             formData.submissionMode,
-            formData.documentationComplete,
-            formData.confirmedNumbersCorrect ? "ok" : "",
-            formData.confirmedNothingForgotten ? "ok" : "",
-            formData.confirmedPlausible ? "ok" : "",
-            formData.confirmedReadyToSubmit ? "ok" : "",
+            formData.documentationComplete
         ];
 
         const completedCount = fieldsToCheck.filter(
@@ -187,7 +179,7 @@ export default function DocumentsReviewForm({
     ].filter(Boolean) as string[];
 
     const reviewStatus = useMemo(() => {
-        if (formData.confirmedReadyToSubmit && checklistCompletedCount === totalChecklistItems) {
+        if (checklistCompletedCount === totalChecklistItems) {
             return "bereit";
         }
 
@@ -196,7 +188,7 @@ export default function DocumentsReviewForm({
         }
 
         return "offen";
-    }, [formData.confirmedReadyToSubmit, checklistCompletedCount]);
+    }, [checklistCompletedCount]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -220,11 +212,7 @@ export default function DocumentsReviewForm({
                 checkedDeductions: formData.checkedDeductions,
                 checkedWealth: formData.checkedWealth,
                 checkedSpecialCases: formData.checkedSpecialCases,
-                checkedAttachments: formData.checkedAttachments,
-                confirmedNumbersCorrect: formData.confirmedNumbersCorrect,
-                confirmedNothingForgotten: formData.confirmedNothingForgotten,
-                confirmedPlausible: formData.confirmedPlausible,
-                confirmedReadyToSubmit: formData.confirmedReadyToSubmit,
+                checkedAttachments: formData.checkedAttachments
             },
             review: {
                 checklistCompletedCount,

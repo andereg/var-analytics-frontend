@@ -318,7 +318,7 @@ export default function PersonalDataForm({
                                         <Input
                                             type="email"
                                             label="E-Mail-Adresse"
-                                            placeholder="max.mustermann@email.de"
+                                            placeholder="max.mustermann@email.ch"
                                             variant="bordered"
                                             value={formData.email}
                                             onChange={(e) =>
@@ -328,7 +328,7 @@ export default function PersonalDataForm({
 
                                         <Input
                                             label="Telefonnummer"
-                                            placeholder="+49 123 456789"
+                                            placeholder="+41 076 123 4567"
                                             variant="bordered"
                                             value={formData.phone}
                                             onChange={(e) =>
@@ -381,7 +381,7 @@ export default function PersonalDataForm({
 
                                         <Input
                                             label="Ort"
-                                            placeholder="Berlin"
+                                            placeholder="Bern"
                                             variant="bordered"
                                             value={formData.city}
                                             onChange={(e) =>
