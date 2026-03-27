@@ -11,11 +11,8 @@ import SpecialCasesForm from "@/components/taxme/SpecialCasesForm";
 import DocumentsReviewForm from "@/components/taxme/DocumentsReviewForm";
 import FinalSummaryPage from "@/components/taxme/FinalSummaryPage";
 
-export default function Home() {
-    return <div>home works live</div>;
-}
 
-export  function Home2() {
+export default function Home() {
     const [step, setStep] = useState<number>(99);
 
     const stepsContent = [
