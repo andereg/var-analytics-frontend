@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import RowSteps from "@/components/steppers/row-steps";
+import RowSteps, {RowStepsProps} from "@/components/steppers/row-steps";
 import Sidebar from "@/components/studyond/Sidebar";
 import LandingPage from "@/components/studyond/LandingPage";
 import PersonalDataForm from "@/components/taxme/PersonalDataForm";
@@ -22,7 +22,7 @@ export default function Home() {
         <DeductionsForm onContinue={() => setStep(4)} />,
         <SpecialCasesForm onContinue={() => setStep(5)} />,
         <DocumentsReviewForm onContinue={() => setStep(6)} />,
-        <FinalSummaryPage />,
+        <FinalSummaryPage onSubmit={() => setStep(7)}  />,
     ];
 
     // ✅ show landing page first
@@ -59,7 +59,7 @@ export default function Home() {
                             ]}
                         />
                     </div>
-                {stepsContent[step]}
+                {step === 7 ? <h2> Steuerformular abgeschlossen</h2> : stepsContent[step]}
             </div>
         </div>
     );
