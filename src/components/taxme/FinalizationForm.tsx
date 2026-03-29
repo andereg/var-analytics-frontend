@@ -224,7 +224,7 @@ export default function FinalizationForm({ onContinue }: DeductionsFormProps) {
                         </CardHeader>
 
                         <CardBody className="px-6 pb-8 pt-2 md:px-8">
-                            <form className="space-y-8" onSubmit={handleSubmit}>
+                            <form name="taxformAlpengrun" className="space-y-8" onSubmit={handleSubmit}>
                                 <section className="space-y-4">
                                     <div className="rounded-3xl border border-primary/20 bg-primary/5 p-5">
                                         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
