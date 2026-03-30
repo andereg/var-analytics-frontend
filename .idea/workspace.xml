@@ -5,12 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="slop flow">
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/deductions/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/documents-review/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/final-summary/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/income/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/personal-data/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/special-cases/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/submission-success/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/taxform/wealth/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/taxme/SubmissionSuccess.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/meta/Banner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/meta/Banner.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/studyond/ChatbotCompany.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/DocumentsReviewForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/PersonalDataForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/studyond/LandingPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +37,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="TypeScript JSX File" />
       </list>
     </option>
@@ -40,12 +51,12 @@
     &quot;assignee&quot;: &quot;andereg&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/andereg/var-analytics-frontend.git",
-    "accountId": "d6a57bab-a08c-44ed-a2a9-b097bb8b195c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/andereg/var-analytics-frontend.git&quot;,
+    &quot;accountId&quot;: &quot;d6a57bab-a08c-44ed-a2a9-b097bb8b195c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -64,22 +75,28 @@
     "git-widget-placeholder": "steuererklärung-alpengrün",
     "javascript.preferred.runtime.type.id": "node",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app",
+    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app/taxform",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "C:\\Users\\rapha\\Documents\\GitHub\\var-analytics-frontend2\\src\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\app\taxform" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\app" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\taxme" />
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\components\studyond\dashboard-components" />
       <recent name="$PROJECT_DIR$/src/components/studyond" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\app\taxform\personal-data" />
+      <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\node_modules\next" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -104,7 +121,11 @@
       <workItem from="1773907155593" duration="7621000" />
       <workItem from="1773933121649" duration="2017000" />
       <workItem from="1773949378705" duration="1527000" />
-      <workItem from="1774636543037" duration="7351000" />
+      <workItem from="1774636543037" duration="11982000" />
+      <workItem from="1774703693314" duration="3686000" />
+      <workItem from="1774785450720" duration="746000" />
+      <workItem from="1774877849127" duration="1376000" />
+      <workItem from="1774892766364" duration="2607000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard slop 2">
       <option name="closed" value="true" />

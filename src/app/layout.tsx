@@ -42,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <TopicProvider>
             <TORProvider>
-                <Banner/>
                 <main className="min-h-screen">
                     {children}
                 </main>
