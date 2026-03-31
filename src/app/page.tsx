@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import LandingPage from "@/components/studyond/LandingPage";
+import LandingPage from "@/components/taxme/LandingPage";
 
 
 import { useRouter } from 'next/navigation'
