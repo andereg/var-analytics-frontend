@@ -168,8 +168,7 @@ export default function ArticlesOverviewPage() {
                                 <ArticleOverviewCard
                                     key={article.title}
                                     article={article}
-                                    href={article.ref}
-                                />
+                                    href={`${article.ref}`}                                />
                             ))}
                         </div>
                     </CardBody>
