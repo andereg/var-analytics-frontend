@@ -20,6 +20,7 @@ import {
     AlertTriangle,
 } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import posthog from 'posthog-js'
 
 type FinalSummaryPageProps = {
     onBack?: () => void;
@@ -154,6 +155,9 @@ export default function FinalSummaryPage({
 
         // Submit Matomo Conversion
         (window as any)._paq?.push(['FormAnalytics::trackFormConversion', 'taxformAlpengrun']);
+
+        // Try posthog capture
+        posthog.capture('purchase_completed', { amount: 99 })
 
         onSubmit?.();
     };
