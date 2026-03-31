@@ -81,6 +81,20 @@ const articles: ArticleData[] = [
         ),
         ref: "/start/mobility",
     },
+    {
+        title: "Kommunikation Kanton Alpengrün",
+        subtitle: "Aktuelle Informationen und Dienstleistungen",
+        author: "Kanton Alpengrün",
+        date: "18. März 2026",
+        content: (
+            <>
+                <p>
+                    Internationale und nationale Beziehungen, Medienarbeit, Öffentlichkeitsarbeit sowie die Pflege der digitalen Kanäle.
+                </p>
+            </>
+        ),
+        ref: "/start/communication",
+    },
 ];
 
 interface ArticleOverviewCardProps {
