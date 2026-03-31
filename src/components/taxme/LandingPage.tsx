@@ -466,13 +466,13 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                     <Link href="/" className="flex items-center">
                         {sidebarCollapsed ? (
                             <div className="w-8 h-8 flex items-center justify-center">
-                                <CantonLogo />
+                                <CantonLogo/>
                             </div>
                         ) : (
-                            <div className="flex items-center " >
-                                <CantonLogo /> <h2 className="font-serif" >Kanton Alpengrün</h2>
+                            <div className="flex items-center ">
+                                <CantonLogo/> <h2 className="font-serif">Kanton Alpengrün</h2>
                             </div>
-                            )}
+                        )}
                     </Link>
                 </div>
 
@@ -485,20 +485,20 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                         )}
                         <nav className="space-y-1">
                             <SidebarItem
-                                icon={<Home size={16} />}
+                                icon={<Home size={16}/>}
                                 label="Übersicht"
                                 href="/"
                                 isActive
                                 isCollapsed={sidebarCollapsed}
                             />
                             <SidebarItem
-                                icon={<MessageSquare size={16} />}
+                                icon={<MessageSquare size={16}/>}
                                 label="Mitteilungen"
                                 href="/messages"
                                 isCollapsed={sidebarCollapsed}
                             />
                             <SidebarItem
-                                icon={<Folder size={16} />}
+                                icon={<Folder size={16}/>}
                                 label="Meine Steuerfälle"
                                 href="/user/tax-cases"
                                 isCollapsed={sidebarCollapsed}
@@ -513,48 +513,48 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                         )}
                         <nav className="space-y-1">
                             <SidebarItem
-                                icon={<Files size={16} />}
+                                icon={<Files size={16}/>}
                                 label="Formulare"
                                 href="/forms"
                                 isCollapsed={sidebarCollapsed}
                             />
                             <SidebarItem
-                                icon={<Briefcase size={16} />}
+                                icon={<Briefcase size={16}/>}
                                 label="Einreichungen"
                                 href="/submissions"
                                 isCollapsed={sidebarCollapsed}
                             />
                             <CollapsibleMenuItem
-                                icon={<Users size={16} />}
+                                icon={<Users size={16}/>}
                                 label="Beratung"
                                 isCollapsed={sidebarCollapsed}
                             >
                                 <SidebarItem
-                                    icon={<User size={16} />}
+                                    icon={<User size={16}/>}
                                     label="Steuerberater"
                                     href="/advisors"
                                     isCollapsed={sidebarCollapsed}
                                 />
                                 <SidebarItem
-                                    icon={<User size={16} />}
+                                    icon={<User size={16}/>}
                                     label="Kontaktstellen"
                                     href="/contact-offices"
                                     isCollapsed={sidebarCollapsed}
                                 />
                             </CollapsibleMenuItem>
                             <CollapsibleMenuItem
-                                icon={<Network size={16} />}
+                                icon={<Network size={16}/>}
                                 label="Behörden"
                                 isCollapsed={sidebarCollapsed}
                             >
                                 <SidebarItem
-                                    icon={<Briefcase size={16} />}
+                                    icon={<Briefcase size={16}/>}
                                     label="Kantonale Steuerverwaltung"
                                     href="/authorities/cantonal"
                                     isCollapsed={sidebarCollapsed}
                                 />
                                 <SidebarItem
-                                    icon={<Network size={16} />}
+                                    icon={<Network size={16}/>}
                                     label="Gemeindesteuerämter"
                                     href="/authorities/municipal"
                                     isCollapsed={sidebarCollapsed}
@@ -567,7 +567,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 {/* Sidebar Footer */}
                 <div className="border-t border-default-200 p-2">
                     <SidebarItem
-                        icon={<Settings size={16} />}
+                        icon={<Settings size={16}/>}
                         label="Einstellungen"
                         href="/user/settings"
                         isCollapsed={sidebarCollapsed}
@@ -583,7 +583,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                                 <Avatar
                                     size="sm"
                                     showFallback
-                                    fallback={<User size={20} className="text-default-500" />}
+                                    fallback={<User size={20} className="text-default-500"/>}
                                     className="flex-shrink-0"
                                 />
                                 {!sidebarCollapsed && (
@@ -592,7 +592,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                                             <p className="font-medium truncate">{userFullName}</p>
                                             <p className="text-xs text-default-500 truncate">{userEmail}</p>
                                         </div>
-                                        <ChevronsUpDown size={16} className="text-default-400 flex-shrink-0" />
+                                        <ChevronsUpDown size={16} className="text-default-400 flex-shrink-0"/>
                                     </>
                                 )}
                             </button>
@@ -618,8 +618,63 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 </button>
             </aside>
 
-            <Homepage/>
+
             {/* Main Content */}
+            <div className="flex-1 flex flex-col min-w-0">
+                {/* Header */}
+                <header
+                    className="sticky top-0 z-40 flex h-14 items-center justify-between bg-background/80 bg-white px-4">
+                    <div className="flex items-center gap-2">
+                        <Link href="/" className="md:hidden">
+                            <CantonLogo/>
+                        </Link>
+
+                        <Button
+                            isIconOnly
+                            variant="light"
+                            size="sm"
+                            className="hidden lg:flex"
+                            onPress={() => setSidebarCollapsed(!sidebarCollapsed)}
+                        >
+                            <PanelLeft size={18}/>
+                        </Button>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Tooltip content="Benachrichtigungen">
+                            <Button isIconOnly variant="light" size="sm">
+                                <Bell size={18}/>
+                            </Button>
+                        </Tooltip>
+
+                        <Button variant="bordered" size="sm" startContent={<UserPlus size={16}/>}>
+                            <span className="hidden sm:inline">Vertretung hinzufügen</span>
+                        </Button>
+
+                        <Tooltip content="Steuer-Assistent">
+                            <Button isIconOnly variant="bordered" size="sm">
+                                <AiChatIcon size={18}/>
+                            </Button>
+                        </Tooltip>
+
+                        <Button
+                            isIconOnly
+                            variant="light"
+                            size="sm"
+                            className="md:hidden"
+                            onPress={() => setMobileMenuOpen(true)}
+                        >
+                            <Menu size={18}/>
+                        </Button>
+                    </div>
+                </header>
+
+                {/* Page Content */}
+                <main className="flex-1 overflow-y-auto">
+                    <Homepage/>
+                </main>
+            </div>
+
 
             {/* Mobile Sidebar Overlay */}
             {mobileMenuOpen && (
@@ -632,14 +687,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex justify-between items-center p-4 border-b border-default-200">
-                            <CantonLogo />
+                            <CantonLogo/>
                             <Button
                                 isIconOnly
                                 variant="light"
                                 size="sm"
                                 onPress={() => setMobileMenuOpen(false)}
                             >
-                                <X size={18} />
+                                <X size={18}/>
                             </Button>
                         </div>
 
@@ -648,14 +703,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                                 <div>
                                     <p className="px-2 py-2 text-xs font-medium text-default-400">Persönlich</p>
                                     <div className="space-y-1">
-                                        <SidebarItem icon={<Home size={16} />} label="Übersicht" href="/" isActive />
+                                        <SidebarItem icon={<Home size={16}/>} label="Übersicht" href="/" isActive/>
                                         <SidebarItem
-                                            icon={<MessageSquare size={16} />}
+                                            icon={<MessageSquare size={16}/>}
                                             label="Mitteilungen"
                                             href="/messages"
                                         />
                                         <SidebarItem
-                                            icon={<Folder size={16} />}
+                                            icon={<Folder size={16}/>}
                                             label="Meine Steuerfälle"
                                             href="/user/tax-cases"
                                         />
@@ -665,24 +720,26 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                                 <div>
                                     <p className="px-2 py-2 text-xs font-medium text-default-400">Steuerportal</p>
                                     <div className="space-y-1">
-                                        <SidebarItem icon={<Files size={16} />} label="Formulare" href="/forms" />
-                                        <SidebarItem icon={<Briefcase size={16} />} label="Einreichungen" href="/submissions" />
-                                        <CollapsibleMenuItem icon={<Users size={16} />} label="Beratung">
-                                            <SidebarItem icon={<User size={16} />} label="Steuerberater" href="/advisors" />
+                                        <SidebarItem icon={<Files size={16}/>} label="Formulare" href="/forms"/>
+                                        <SidebarItem icon={<Briefcase size={16}/>} label="Einreichungen"
+                                                     href="/submissions"/>
+                                        <CollapsibleMenuItem icon={<Users size={16}/>} label="Beratung">
+                                            <SidebarItem icon={<User size={16}/>} label="Steuerberater"
+                                                         href="/advisors"/>
                                             <SidebarItem
-                                                icon={<User size={16} />}
+                                                icon={<User size={16}/>}
                                                 label="Kontaktstellen"
                                                 href="/contact-offices"
                                             />
                                         </CollapsibleMenuItem>
-                                        <CollapsibleMenuItem icon={<Network size={16} />} label="Behörden">
+                                        <CollapsibleMenuItem icon={<Network size={16}/>} label="Behörden">
                                             <SidebarItem
-                                                icon={<Briefcase size={16} />}
+                                                icon={<Briefcase size={16}/>}
                                                 label="Kantonale Steuerverwaltung"
                                                 href="/authorities/cantonal"
                                             />
                                             <SidebarItem
-                                                icon={<Network size={16} />}
+                                                icon={<Network size={16}/>}
                                                 label="Gemeindesteuerämter"
                                                 href="/authorities/municipal"
                                             />
@@ -690,21 +747,21 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                                     </div>
                                 </div>
 
-                                <Divider />
+                                <Divider/>
 
                                 <SidebarItem
-                                    icon={<Settings size={16} />}
+                                    icon={<Settings size={16}/>}
                                     label="Einstellungen"
                                     href="/user/settings"
                                 />
 
-                                <Divider />
+                                <Divider/>
 
                                 <div className="flex items-center gap-3 p-2">
                                     <Avatar
                                         size="sm"
                                         showFallback
-                                        fallback={<User size={20} className="text-default-500" />}
+                                        fallback={<User size={20} className="text-default-500"/>}
                                     />
                                     <div className="flex-1 min-w-0">
                                         <p className="font-medium truncate">{userFullName}</p>

@@ -49,37 +49,37 @@ const heroItems: HeroItem[] = [
     {
         title: "News",
         label: "Aktuelles aus dem Kanton Alpengrün",
-        href: "/de/start/dienstleistungen/medien/medienmitteilungen.html",
+        href: "/start/news",
     },
     {
         title: "in Leichter Sprache",
         label: "Der Kanton Alpengrün",
-        href: "https://www.be.ch/de/start/leichte-sprache.html",
+        href: "/start/easy-language",
     },
     {
         title: "Richtlinien der Regierungspolitik",
         label: "Engagement 2030",
-        href: "https://www.rr.be.ch/de/start/engagement-2030-regierungsrichtlinien.html",
+        href: "/start/government-politics",
     },
     {
         title: "E-Services",
         label: "Digitale Angebote",
-        href: "https://direc.to/joQj",
+        href: "/start/e-services",
     },
     {
         title: "Verwaltung und Behörden",
         label: "Auf einen Blick",
-        href: "/de/start/ueber-uns.html",
+        href: "/start/administration",
     },
     {
         title: "Häufig gesucht",
         label: "Meistgefragte Dienstleistungen",
-        href: "/de/start/dienstleistungen/haeufig-gesucht.html",
+        href: "/start",
     },
     {
         title: "Belex",
         label: "Gesetzessammlungen online",
-        href: "/de/start/dienstleistungen/gesetze.html",
+        href: "/start/belex",
     },
 ];
 
@@ -318,15 +318,7 @@ export default function Homepage() {
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
                 <header className="space-y-8">
                     <div className="rounded-[24px] bg-gray-50 border px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
-                        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                            <div className="space-y-3">
-                                <div>
-                                    <h1 className="text-xl font-semibold tracking-tight text-foreground md:text-3xl">
-                                        Startseite
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <SearchBar/>
                     </div>
