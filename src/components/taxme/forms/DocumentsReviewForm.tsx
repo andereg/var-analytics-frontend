@@ -20,6 +20,7 @@ import {
     CheckCircle2,
 } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import {useFormTracking} from "@/components/posthog/useFormTracking";
 
 type DocumentsReviewFormProps = {
     onContinue?: () => void;
@@ -62,6 +63,8 @@ const documentCategories = [
 export default function DocumentsReviewForm({
                                                 onContinue,
                                             }: DocumentsReviewFormProps) {
+    const { posthogCaptureStepCompleted } = useFormTracking(6, 'documents_review');
+
     const [formData, setFormData] = useState({
         taxYear: "",
         canton: "",
@@ -221,7 +224,7 @@ export default function DocumentsReviewForm({
                 reviewNotes: formData.reviewNotes,
             },
         };
-
+        posthogCaptureStepCompleted();
         console.log("submitted payload", payload);
         onContinue?.();
     };

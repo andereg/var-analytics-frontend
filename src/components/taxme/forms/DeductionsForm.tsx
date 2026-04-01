@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import { Briefcase, HeartPulse, GraduationCap, Landmark, PiggyBank } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import { useFormTracking } from '@/components/posthog/useFormTracking'
 
 type DeductionsFormProps = {
     onContinue?: () => void;
@@ -28,6 +29,8 @@ const STANDARD_DEDUCTIONS = {
 };
 
 export default function DeductionsForm({ onContinue }: DeductionsFormProps) {
+    const { posthogCaptureStepCompleted } = useFormTracking(4, 'deductions_form');
+
     const [formData, setFormData] = useState({
         taxYear: "",
         canton: "",
@@ -197,7 +200,7 @@ export default function DeductionsForm({ onContinue }: DeductionsFormProps) {
             },
             notes: formData.notes,
         };
-
+        posthogCaptureStepCompleted(); // PostHog-Event for Form Tracking
         console.log("submitted payload", payload);
         onContinue?.();
     };

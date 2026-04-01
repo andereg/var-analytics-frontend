@@ -1,6 +1,7 @@
-import React from "react";
-import {Card, CardBody, CardFooter, CardHeader, Link} from "@heroui/react";
+import React, {useEffect} from "react";
+import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 import {ArticleData} from "@/components/taxme/ArticleData";
+import { usePostHog } from 'posthog-js/react'
 
 interface ArticleProps {
     data: ArticleData;
@@ -8,8 +9,25 @@ interface ArticleProps {
 
 
 export const Article: React.FC<ArticleProps> = ({ data }) => {
+    const posthog = usePostHog()
+
+    useEffect(() => {
+        const startTime = Date.now()
+
+        const timer = setTimeout(() => {
+            posthog.capture('article_engaged', {
+                article_id: data.ref,
+                article_title: data.title,
+                time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
+            })
+        }, 30_000) // 30 seconds
+
+        return () => clearTimeout(timer) // user left before 30s – cancel
+    }, [data.ref])
+
+
     return (
-        <div className="min-h-screen animate-in fade-in slide-in-from-bottom-4 px-4 py-4 duration-700 md:px-8">
+        <div className="min-h-screen  px-4 py-4 md:px-8">
             <div className="mx-auto max-w-6xl">
                 <Card className="rounded-3xl border border-default-200 shadow-lg min-w-200 min-h-200">
                     <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">

@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { Plus, Trash2, Landmark, Building2, Car, Coins, Wallet } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import {useFormTracking} from "@/components/posthog/useFormTracking";
 
 type WealthFormProps = {
     onContinue?: () => void;
@@ -127,6 +128,8 @@ const debtTypes = [
 const createId = () => Math.random().toString(36).slice(2, 10);
 
 export default function WealthForm({ onContinue }: WealthFormProps) {
+    const { posthogCaptureStepCompleted } = useFormTracking(3, 'wealth_declaration');
+
     const [formData, setFormData] = useState({
         taxYear: "",
         canton: "",
@@ -382,6 +385,7 @@ export default function WealthForm({ onContinue }: WealthFormProps) {
             },
             notes: formData.notes,
         };
+        posthogCaptureStepCompleted()
 
         console.log("submitted payload", payload);
         onContinue?.();

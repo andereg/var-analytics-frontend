@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import SpecialCasesForm from "@/components/taxme/SpecialCasesForm";
+import SpecialCasesForm from "@/components/taxme/forms/SpecialCasesForm";
 
 export default function Page() {
     const router = useRouter();

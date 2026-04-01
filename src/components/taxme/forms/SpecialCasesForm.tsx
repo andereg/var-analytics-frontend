@@ -19,6 +19,7 @@ import {
     Info,
 } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import {useFormTracking} from "@/components/posthog/useFormTracking";
 
 type SpecialCasesFormProps = {
     onContinue?: () => void;
@@ -48,6 +49,8 @@ const foreignIncomeTypeOptions = [
 export default function SpecialCasesForm({
                                              onContinue,
                                          }: SpecialCasesFormProps) {
+    const { posthogCaptureStepCompleted } = useFormTracking(5, 'special_cases');
+
     const [formData, setFormData] = useState({
         taxYear: "",
         canton: "",
@@ -231,6 +234,8 @@ export default function SpecialCasesForm({
                     : null,
             notes: formData.notes,
         };
+
+        posthogCaptureStepCompleted();
 
         console.log("submitted payload", payload);
         onContinue?.();

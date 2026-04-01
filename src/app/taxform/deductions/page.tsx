@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import DeductionsForm from "@/components/taxme/DeductionsForm";
+import DeductionsForm from "@/components/taxme/forms/DeductionsForm";
 
 export default function Page() {
     const router = useRouter();

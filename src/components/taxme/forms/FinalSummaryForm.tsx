@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, {useMemo, useRef, useState} from "react";
 import {
     Card,
     CardBody,
@@ -21,13 +21,14 @@ import {
 } from "lucide-react";
 import ProgressModal from "@/components/charts/ProgressModal";
 import posthog from 'posthog-js'
+import {useFormTracking} from "@/components/posthog/useFormTracking";
 
 type FinalSummaryPageProps = {
     onBack?: () => void;
     onSubmit?: () => void;
 };
 
-export default function FinalSummaryPage({
+export default function FinalSummaryForm({
                                              onBack,
                                              onSubmit,
                                          }: FinalSummaryPageProps) {
@@ -37,6 +38,8 @@ export default function FinalSummaryPage({
         confirmReadyToSubmit: false,
         finalNotes: "",
     });
+
+    const startTime = useRef(Date.now())
 
     const summaryData = {
         personal: {
@@ -151,13 +154,11 @@ export default function FinalSummaryPage({
 
         console.log("submitted payload", payload);
 
-
-
-        // Submit Matomo Conversion
-        (window as any)._paq?.push(['FormAnalytics::trackFormConversion', 'taxformAlpengrun']);
-
-        // Try posthog capture
-        posthog.capture('purchase_completed', { amount: 99 })
+        posthog.capture('form_completed', {
+            step_number: 7,
+            step_name: 'final_summary',
+            time_spent_seconds: Math.round((Date.now() - startTime.current) / 1000),
+        })
 
         onSubmit?.();
     };

@@ -11,6 +11,7 @@ import {
     Chip,
 } from "@heroui/react";
 import ProgressModal from "@/components/charts/ProgressModal";
+import {useFormTracking} from "@/components/posthog/useFormTracking";
 
 type IncomeFormProps = {
     onContinue?: () => void;
@@ -22,6 +23,8 @@ const yesNoOptions = [
 ];
 
 export default function IncomeForm({ onContinue }: IncomeFormProps) {
+    const { posthogCaptureStepCompleted } = useFormTracking(2, 'income_form');
+
     const [formData, setFormData] = useState({
         employerName: "",
         annualGrossSalary: "",
@@ -104,7 +107,7 @@ export default function IncomeForm({ onContinue }: IncomeFormProps) {
                 amount: formData.scholarshipAmount,
             },
         };
-
+        posthogCaptureStepCompleted();
         console.log("submitted payload", payload);
         onContinue?.();
     };

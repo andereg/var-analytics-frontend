@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import DocumentsReviewForm from "@/components/taxme/DocumentsReviewForm";
+import DocumentsReviewForm from "@/components/taxme/forms/DocumentsReviewForm";
 
 export default function Page() {
     const router = useRouter();

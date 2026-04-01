@@ -1,14 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import DocumentsReviewForm from "@/components/taxme/DocumentsReviewForm";
-import FinalSummaryPage from "@/components/taxme/FinalSummaryPage";
+import DocumentsReviewForm from "@/components/taxme/forms/DocumentsReviewForm";
+import FinalSummaryForm from "@/components/taxme/forms/FinalSummaryForm";
 
 export default function Page() {
     const router = useRouter();
 
     return (
-        <FinalSummaryPage
+        <FinalSummaryForm
             onSubmit={() => router.push("/taxform/submission-success")}
         />
     );

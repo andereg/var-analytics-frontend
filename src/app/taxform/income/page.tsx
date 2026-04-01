@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import IncomeForm from "@/components/taxme/IncomeForm";
+import IncomeForm from "@/components/taxme/forms/IncomeForm";
 
 export default function Page() {
     const router = useRouter();

@@ -1,6 +1,6 @@
 "use client";
 
-import PersonalDataForm from "@/components/taxme/PersonalDataForm";
+import PersonalDataForm from "@/components/taxme/forms/PersonalDataForm";
 import { useRouter } from "next/navigation";
 
 export default function Page() {

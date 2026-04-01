@@ -42,10 +42,19 @@ export default function SearchBar() {
         }).slice(0, 8);
     }, [query]);
 
+    // Helper used in both submit and click to capture posthog article_search
+    const captureSearch = (destination: string) => {
+        posthog.capture('article_search', {
+            query: query.trim(),
+            result_count: suggestions.length,
+            destination, // which page the user ended up navigating to
+        })
+    }
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         if (suggestions.length > 0) {
+            captureSearch(suggestions[0].href) // ✅ fire on form submit
             router.push(suggestions[0].href);
         }
     };
@@ -100,6 +109,7 @@ export default function SearchBar() {
                                 <Link
                                     key={suggestion.href}
                                     href={suggestion.href}
+                                    onClick={() => captureSearch(suggestion.href)} // ✅ fire on suggestion click
                                     className="block rounded-2xl px-4 py-3 text-foreground transition-colors hover:bg-default-100"
                                 >
                                     <div className="flex items-center justify-between gap-4">
@@ -107,9 +117,7 @@ export default function SearchBar() {
                                             <p className="truncate text-sm font-medium">
                                                 {suggestion.label}
                                             </p>
-
                                         </div>
-
                                         <ArrowRight className="h-4 w-4 flex-shrink-0 text-default-400" />
                                     </div>
                                 </Link>
@@ -120,4 +128,4 @@ export default function SearchBar() {
             </div>
         </form>
     );
-}
+}  
