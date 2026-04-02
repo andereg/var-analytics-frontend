@@ -51,9 +51,9 @@ const heroItems: HeroItem[] = [
         featured: true,
     },
     {
-        title: "News",
-        label: "Aktuelles aus dem Kanton Alpengrün",
-        href: "/start/news",
+        title: "Übersicht",
+        label: "Übersicht wichtigster Beiträge zum Kanton Alpengrün",
+        href: "/start",
     },
     {
         title: "in Leichter Sprache",

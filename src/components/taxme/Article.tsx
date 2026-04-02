@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 import {ArticleData} from "@/components/taxme/ArticleData";
 import { usePostHog } from 'posthog-js/react'
+import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 interface ArticleProps {
     data: ArticleData;
@@ -31,6 +32,7 @@ export const Article: React.FC<ArticleProps> = ({ data }) => {
             <div className="mx-auto max-w-6xl">
                 <Card className="rounded-3xl border border-default-200 shadow-lg min-w-200 min-h-200">
                     <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">
+                        <Breadcrumb/>
                         <div className="space-y-2">
                             <h1 className="text-3xl font-bold tracking-tight">
                                 {data.title}

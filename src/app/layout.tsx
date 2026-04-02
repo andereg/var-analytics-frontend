@@ -3,6 +3,7 @@ import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
 import Script from "next/script";
+import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 
 const inter = Inter({

@@ -4,6 +4,7 @@ import React from "react";
 import Sidebar from "@/components/studyond/Sidebar";
 import {Button, Link, Tooltip} from "@heroui/react";
 import {Bell, Menu, PanelLeft, UserPlus} from "lucide-react";
+import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 const AiChatIcon = ({ size = 18 }: { size?: number }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">

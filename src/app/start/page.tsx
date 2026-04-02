@@ -4,6 +4,7 @@ import React from "react";
 import { Card, CardBody, CardHeader, Link } from "@heroui/react";
 import { ChevronRight } from "lucide-react";
 import type { ArticleData } from "@/components/taxme/ArticleData";
+import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 const articles: ArticleData[] = [
     {
@@ -146,10 +147,11 @@ const ArticleOverviewCard: React.FC<ArticleOverviewCardProps> = ({ article, href
 
 export default function ArticlesOverviewPage() {
     return (
-        <div className="min-h-screen animate-in fade-in slide-in-from-bottom-4 px-4 py-4 duration-700 md:px-8">
+        <div className="min-h-screen  px-4 py-4 md:px-8">
             <div className="mx-auto max-w-6xl">
                 <Card className="rounded-3xl border border-default-200 shadow-lg">
                     <CardHeader className="flex flex-col items-start gap-3 px-6 py-6 md:px-8">
+                        <Breadcrumb/>
                         <div className="space-y-2">
                             <h1 className="text-3xl font-bold tracking-tight">
                                 Häufig gesuchte Informationen und Dienstleistungen
