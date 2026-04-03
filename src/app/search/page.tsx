@@ -454,7 +454,7 @@ export default function SearchPage() {
                                     <ArticleOverviewCard
                                         key={article.title}
                                         article={article}
-                                        href={article.ref}
+                                        href={`${article.ref}`}
                                     />
                                 ))}
                             </div>
