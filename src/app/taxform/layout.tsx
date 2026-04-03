@@ -5,6 +5,7 @@ import React from "react";
 import Sidebar from "@/components/studyond/Sidebar";
 import RowSteps from "@/components/steppers/row-steps";
 import { usePathname, useRouter } from "next/navigation";
+import AlpengrunHeader from "@/components/taxme/alpengrün-header";
 
 const stepRoutes = [
     "/taxform/personal-data",
@@ -29,10 +30,9 @@ export default function TaxmeLayout({
 
     return (
         <div className="min-h-screen flex bg-white">
-            <Sidebar />
-
-            <div className="flex flex-col items-center flex-1 p-6">
-                <div className="flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center flex-1">
+                <AlpengrunHeader />
+                <div className="flex items-center justify-center mb-2 pt-4">
                     <RowSteps
                         currentStep={Math.max(currentStep, 0)}
                         onStepChange={(index) => router.push(stepRoutes[index])}

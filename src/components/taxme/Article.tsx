@@ -13,6 +13,11 @@ export const Article: React.FC<ArticleProps> = ({ data }) => {
     const posthog = usePostHog()
 
     useEffect(() => {
+        posthog.capture('article_viewed', {
+            article_id: data.ref,
+            article_title: data.title,
+        })
+        
         const startTime = Date.now()
 
         const timer = setTimeout(() => {

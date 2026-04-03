@@ -2,8 +2,6 @@ import type {Metadata} from "next";
 import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
-import Script from "next/script";
-import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 
 const inter = Inter({
@@ -21,21 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body
             className={`${inter.className} antialiased light min-h-screen overflow-x-hidden`}
         >
-        <Script id="matomo-init" strategy="beforeInteractive">
-            {`
-            var _paq = window._paq = window._paq || [];
-              /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-              _paq.push(['trackPageView']);
-              _paq.push(['enableLinkTracking']);
-              (function() {
-                var u="//46.225.49.241:8082/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '4']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-              })();
-          `}
-        </Script>
             <main className="min-h-screen">
                 {children}
             </main>
