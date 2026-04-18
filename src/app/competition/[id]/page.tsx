@@ -136,7 +136,7 @@ export default function ClubPage() {
                                                 content: "drop-shadow-xs shadow-white text-white",
                                             }}
                                         >
-                                            {competition.description}
+                                            {competition.abbreviation}
                                         </Chip>
                                     </div>
 

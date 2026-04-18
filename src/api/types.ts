@@ -3,7 +3,7 @@ export interface Competition {
     name: string;
     description: string;
     logo: string;
-
+    abbreviation: string;
     controversies: Controversy[];
 }
 
@@ -44,6 +44,24 @@ export interface Controversy {
     varReferee: RefereeBase;
     firstAssistantReferee: RefereeBase;
     secondAssistantReferee: RefereeBase;
+}
+
+export interface ControversyDto {
+    date: string;
+    description: string;
+    referenceLink: string;
+
+    beneficiaryId: number;
+    victimId: number;
+
+    competitionId: number;
+    seasonId: number;
+    controversyTypeId: number;
+
+    mainRefereeId: number;
+    varRefereeId: number;
+    firstAssistantRefereeId: number;
+    secondAssistantRefereeId: number;
 }
 
 export interface RefereeBase {
