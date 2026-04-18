@@ -44,8 +44,8 @@ export function ListBoxControversies({controversies}: { controversies: any }) {
                                             />
                                         </Link>
                                     </Button>
-                                    <span className="text-sm text-gray-800 font-semibold mx-1">
-                                        3 - 2
+                                    <span className="text-sm text-gray-800 font-semibold mx-1 tracking-widest">
+                                        {c.result}
                                     </span>
                                     <Button variant="bordered" radius="full" className="px-3 bg-transparent hover:border-gray-300 border-transparent hover:!opacity-100" >
                                         <Link color="foreground" href={"/club/" + c.victim?.id}>

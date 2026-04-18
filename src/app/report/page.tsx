@@ -11,8 +11,7 @@ import {
     SelectItem,
     Button,
     Spinner,
-    Divider,
-    Chip,
+    Chip, Autocomplete, AutocompleteItem,
 } from "@heroui/react";
 
 import {
@@ -29,7 +28,6 @@ import {getSeasons} from "@/api/seasons";
 import {getControversyTypes} from "@/api/controversyTypes";
 import {getReferees} from "@/api/referees";
 import {createControversy} from "@/api/controversies";
-import {Link} from "@heroui/link";
 
 
 type FormState = {
@@ -38,6 +36,7 @@ type FormState = {
     referenceLink: string;
     beneficiaryId: string;
     victimId: string;
+    result: string;
     competitionId: string;
     seasonId: string;
     controversyTypeId: string;
@@ -53,6 +52,7 @@ const initialForm: FormState = {
     referenceLink: "",
     beneficiaryId: "",
     victimId: "",
+    result: "",
     competitionId: "",
     seasonId: "",
     controversyTypeId: "",
@@ -133,6 +133,7 @@ export default function CreateControversyReportPage() {
         if (!form.beneficiaryId) return "please select a beneficiary";
         if (!form.victimId) return "please select a victim";
         if (form.beneficiaryId === form.victimId) return "beneficiary and victim cannot be the same club";
+        if (!form.result) return "please set the match result";
         if (!form.competitionId) return "please select a competition";
         if (!form.seasonId) return "please select a season";
         if (!form.controversyTypeId) return "please select a controversy type";
@@ -165,6 +166,7 @@ export default function CreateControversyReportPage() {
                 beneficiaryId: Number(form.beneficiaryId),
                 victimId: Number(form.victimId),
                 competitionId: Number(form.competitionId),
+                result: form.result,
                 seasonId: Number(form.seasonId),
                 controversyTypeId: Number(form.controversyTypeId),
                 mainRefereeId: Number(form.mainRefereeId),
@@ -217,66 +219,109 @@ export default function CreateControversyReportPage() {
                                     variant="bordered"
                                     value={form.date}
                                     onValueChange={(value) => setField("date", value)}
-                                    isRequired
+                                    
                                 />
 
                                 <Input
                                     type="url"
                                     label="Reference Link"
-                                    placeholder="https://..."
+                                    placeholder="https://"
                                     variant="bordered"
                                     value={form.referenceLink}
                                     onValueChange={(value) => setField("referenceLink", value)}
-                                    isRequired
+                                    
                                 />
                             </div>
 
                             <Textarea
                                 label="Description"
-                                placeholder="describe the controversial decision..."
+                                placeholder="describe the controversial decision"
                                 variant="bordered"
-                                minRows={5}
+                                minRows={3}
                                 value={form.description}
                                 onValueChange={(value) => setField("description", value)}
-                                isRequired
+                                
                             />
-
-                            <Divider className="opacity-40" />
 
                             <div>
                                 <h2 className="text-lg font-semibold text-gray-600 mb-3">Clubs</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <Select
+                                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                                    <Autocomplete
+                                        className="col-span-2"
                                         label="Beneficiary"
                                         variant="bordered"
-                                        selectedKeys={form.beneficiaryId ? [form.beneficiaryId] : []}
-                                        onSelectionChange={handleSelectChange("beneficiaryId")}
-                                        isRequired
+                                        selectedKey={form.beneficiaryId || null}
+                                        onSelectionChange={(key) => setField("beneficiaryId", key?.toString() ?? "")}
+                                        defaultItems={clubOptions}
+                                        placeholder="Select beneficiary club"
+                                        aria-label="Club"
+                                        listboxProps={{
+                                            className: "max-h-64 overflow-y-auto p-1"
+                                        }}
+                                        popoverProps={{
+                                            className: "w-full"
+                                        }}
+                                        required
                                     >
-                                        {clubOptions.map((club) => (
-                                            <SelectItem key={club.id.toString()}>
-                                                {club.name}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                        {(club) => (
+                                            <AutocompleteItem key={club.id.toString()} textValue={club.name}>
+                                                <div className="flex items-center gap-3">
+                                                    <img
+                                                        src={club.logo}
+                                                        alt={club.name}
+                                                        className="w-6 h-6 object-contain"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium text-gray-700">{club.name}</span>
+                                                    </div>
+                                                </div>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
 
-                                    <Select
+                                    <Input
+                                        type="text"
+                                        label="Result"
+                                        variant="bordered"
+                                        value={form.result}
+                                        onValueChange={(value) => setField("result", value)}
+                                        placeholder="0-0"
+                                    />
+
+                                    <Autocomplete
+                                        className="col-span-2"
                                         label="Victim"
                                         variant="bordered"
-                                        selectedKeys={form.victimId ? [form.victimId] : []}
-                                        onSelectionChange={handleSelectChange("victimId")}
-                                        isRequired
+                                        selectedKey={form.victimId || null}
+                                        onSelectionChange={(key) => setField("victimId", key?.toString() ?? "")}
+                                        defaultItems={clubOptions}
+                                        placeholder="Select victim club"
+                                        aria-label="Victim"
+                                        listboxProps={{
+                                            className: "max-h-64 overflow-y-auto p-1"
+                                        }}
+                                        popoverProps={{
+                                            className: "w-full"
+                                        }}
+                                        required
                                     >
-                                        {clubOptions.map((club) => (
-                                            <SelectItem key={club.id.toString()}>
-                                                {club.name}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                        {(club) => (
+                                            <AutocompleteItem key={club.id.toString()} textValue={club.name}>
+                                                <div className="flex items-center gap-3">
+                                                    <img
+                                                        src={club.logo}
+                                                        alt={club.name}
+                                                        className="w-6 h-6 object-contain"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium text-gray-700">{club.name}</span>
+                                                    </div>
+                                                </div>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
                                 </div>
                             </div>
-
-                            <Divider className="opacity-40" />
 
                             <div>
                                 <h2 className="text-lg font-semibold text-gray-600 mb-3">Competition Details</h2>
@@ -286,24 +331,50 @@ export default function CreateControversyReportPage() {
                                         variant="bordered"
                                         selectedKeys={form.competitionId ? [form.competitionId] : []}
                                         onSelectionChange={handleSelectChange("competitionId")}
-                                        isRequired
+                                        renderValue={(items) => {
+                                            const item = items[0];
+                                            if (!item) return null;
+
+                                            const comp = competitionOptions.find(
+                                                c => c.id.toString() === item.key
+                                            );
+
+                                            if (!comp) return item.textValue;
+
+                                            return (
+                                                <div className="flex items-center gap-2">
+                                                    <img
+                                                        src={comp.logo}
+                                                        className="w-4 h-4 object-contain"
+                                                    />
+                                                    <span className="text-gray-700 font-medium">{comp.name}</span>
+                                                </div>
+                                            );
+                                        }}
                                     >
                                         {competitionOptions.map((competition) => (
                                             <SelectItem key={competition.id.toString()}>
-
-                                                {competition.name}
-
-                                                
+                                                <div className="flex items-center gap-3">
+                                                    <img
+                                                        src={competition.logo}
+                                                        alt={competition.name}
+                                                        className="w-6 h-6 object-contain"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium text-gray-700">{competition.name}</span>
+                                                    </div>
+                                                </div>
                                             </SelectItem>
                                         ))}
                                     </Select>
+
 
                                     <Select
                                         label="Season"
                                         variant="bordered"
                                         selectedKeys={form.seasonId ? [form.seasonId] : []}
                                         onSelectionChange={handleSelectChange("seasonId")}
-                                        isRequired
+                                        
                                     >
                                         {seasonOptions.map((season) => (
                                             <SelectItem key={season.id.toString()}>
@@ -318,7 +389,7 @@ export default function CreateControversyReportPage() {
                                         className="col-span-2"
                                         selectedKeys={form.controversyTypeId ? [form.controversyTypeId] : []}
                                         onSelectionChange={handleSelectChange("controversyTypeId")}
-                                        isRequired
+                                        
                                     >
                                         {controversyTypeOptions.map((type) => (
                                             <SelectItem key={type.id.toString()}>
@@ -329,64 +400,105 @@ export default function CreateControversyReportPage() {
                                 </div>
                             </div>
 
-                            <Divider className="opacity-40" />
 
                             <div>
                                 <h2 className="text-lg font-semibold text-gray-600 mb-3">Referees</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <Select
+                                    <Autocomplete
                                         label="Main Referee"
                                         variant="bordered"
-                                        selectedKeys={form.mainRefereeId ? [form.mainRefereeId] : []}
-                                        onSelectionChange={handleSelectChange("mainRefereeId")}
-                                        isRequired
+                                        selectedKey={form.mainRefereeId || null}
+                                        onSelectionChange={(key) =>
+                                            setField("mainRefereeId", key?.toString() ?? "")
+                                        }
+                                        defaultItems={refereeOptions}
+                                        placeholder="Search main referee"
+                                        
+                                        listboxProps={{
+                                            className: "max-h-60 overflow-y-auto",
+                                        }}
                                     >
-                                        {refereeOptions.map((referee) => (
-                                            <SelectItem key={referee.id.toString()}>
+                                        {(referee) => (
+                                            <AutocompleteItem
+                                                key={referee.id.toString()}
+                                                textValue={`${referee.name} ${referee.surname}`}
+                                            >
                                                 {referee.name + " " + referee.surname}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
 
-                                    <Select
+                                    <Autocomplete
                                         label="VAR Referee"
                                         variant="bordered"
-                                        selectedKeys={form.varRefereeId ? [form.varRefereeId] : []}
-                                        onSelectionChange={handleSelectChange("varRefereeId")}
-                                        isRequired
+                                        selectedKey={form.varRefereeId || null}
+                                        onSelectionChange={(key) =>
+                                            setField("varRefereeId", key?.toString() ?? "")
+                                        }
+                                        defaultItems={refereeOptions}
+                                        placeholder="Search var referee"
+                                        
+                                        listboxProps={{
+                                            className: "max-h-60 overflow-y-auto",
+                                        }}
                                     >
-                                        {refereeOptions.map((referee) => (
-                                            <SelectItem key={referee.id.toString()}>
+                                        {(referee) => (
+                                            <AutocompleteItem
+                                                key={referee.id.toString()}
+                                                textValue={`${referee.name} ${referee.surname}`}
+                                            >
                                                 {referee.name + " " + referee.surname}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
 
-                                    <Select
+                                    <Autocomplete
                                         label="First Assistant Referee"
                                         variant="bordered"
-                                        selectedKeys={form.firstAssistantRefereeId ? [form.firstAssistantRefereeId] : []}
-                                        onSelectionChange={handleSelectChange("firstAssistantRefereeId")}
+                                        selectedKey={form.firstAssistantRefereeId || null}
+                                        onSelectionChange={(key) =>
+                                            setField("firstAssistantRefereeId", key?.toString() ?? "")
+                                        }
+                                        defaultItems={refereeOptions}
+                                        placeholder="Search first assistant referee"
+                                        listboxProps={{
+                                            className: "max-h-60 overflow-y-auto",
+                                        }}
+                                        required
                                     >
-                                        {refereeOptions.map((referee) => (
-                                            <SelectItem key={referee.id.toString()}>
+                                        {(referee) => (
+                                            <AutocompleteItem
+                                                key={referee.id.toString()}
+                                                textValue={`${referee.name} ${referee.surname}`}
+                                            >
                                                 {referee.name + " " + referee.surname}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
 
-                                    <Select
+                                    <Autocomplete
                                         label="Second Assistant Referee"
                                         variant="bordered"
-                                        selectedKeys={form.secondAssistantRefereeId ? [form.secondAssistantRefereeId] : []}
-                                        onSelectionChange={handleSelectChange("secondAssistantRefereeId")}
+                                        selectedKey={form.secondAssistantRefereeId || null}
+                                        onSelectionChange={(key) =>
+                                            setField("secondAssistantRefereeId", key?.toString() ?? "")
+                                        }
+                                        defaultItems={refereeOptions}
+                                        placeholder="Search second assistant referee"
+                                        listboxProps={{
+                                            className: "max-h-60 overflow-y-auto",
+                                        }}
+                                        required
                                     >
-                                        {refereeOptions.map((referee) => (
-                                            <SelectItem key={referee.id.toString()}>
+                                        {(referee) => (
+                                            <AutocompleteItem
+                                                key={referee.id.toString()}
+                                                textValue={`${referee.name} ${referee.surname}`}
+                                            >
                                                 {referee.name + " " + referee.surname}
-                                            </SelectItem>
-                                        ))}
-                                    </Select>
+                                            </AutocompleteItem>
+                                        )}
+                                    </Autocomplete>
                                 </div>
                             </div>
 
@@ -408,8 +520,9 @@ export default function CreateControversyReportPage() {
                                         setSuccessMsg(null);
                                     }}
                                     isDisabled={saving}
+                                    className="font-medium"
                                 >
-                                    reset
+                                    Reset
                                 </Button>
                                 <Button
                                     radius="full"

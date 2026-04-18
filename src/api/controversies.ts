@@ -12,8 +12,10 @@ export const createControversy = async (controversy: ControversyDto) => {
         description: controversy.description,
         referenceLink: controversy.referenceLink,
 
-        beneficiary: controversy.beneficiaryId,
-        victim: controversy.victimId,
+        beneficiaryClubId: controversy.beneficiaryId,
+        victimClubId: controversy.victimId,
+
+        result: controversy.result,
 
         competitionId: controversy.competitionId,
         seasonId: controversy.seasonId,

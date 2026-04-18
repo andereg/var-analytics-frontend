@@ -36,6 +36,8 @@ export interface Controversy {
     beneficiary: ClubBase;
     victim: ClubBase;
 
+    result: string;
+
     competition: Competition;
     season: Season;
     controversyType: ControversyType;
@@ -53,6 +55,8 @@ export interface ControversyDto {
 
     beneficiaryId: number;
     victimId: number;
+
+    result: string;
 
     competitionId: number;
     seasonId: number;
