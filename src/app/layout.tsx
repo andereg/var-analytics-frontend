@@ -4,6 +4,7 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/navbar";
 import {Link} from "@heroui/link";
 import {Button} from "@heroui/button";
 import {Inter} from "next/font/google";
+import Script from "next/script";
 
 
 const inter = Inter({
@@ -121,6 +122,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-screen">
             {children}
         </main>
+        {/* Umami Analytics — privacy-first, no cookies, no IDs */}
+        <Script
+            src="https://analytics.lucasreitmann.me/script.js"
+            data-website-id="0824d89a-a427-47fd-8a84-cc3f26b4e80c"
+            strategy="afterInteractive"
+        />
         </body>
         </html>
     );
