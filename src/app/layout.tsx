@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
+import Script from "next/script";
 
 
 const inter = Inter({
@@ -22,6 +23,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="min-h-screen">
                 {children}
             </main>
+            {/* Umami Analytics — privacy-first, no cookies, no IDs */}
+            <Script
+                src="https://analytics.lucasreitmann.me/script.js"
+                data-website-id="0824d89a-a427-47fd-8a84-cc3f26b4e80c"
+                strategy="afterInteractive"
+            />
         </body>
         </html>
     );
