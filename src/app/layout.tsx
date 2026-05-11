@@ -49,6 +49,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   });
                 `}
             </Script>
+            {/* Article Engaged — goal signal for CEI / CPI / DTI / STI / SPI / DPI.
+                Fires once per page load when user stayed >=60s AND scrolled to the bottom. */}
+            <Script id="article-engaged" strategy="afterInteractive">
+                {`
+                  (function () {
+                    var reachedBottom = false;
+                    var stayedOneMinute = false;
+                    var eventSent = false;
+
+                    setTimeout(function () {
+                      stayedOneMinute = true;
+                      maybeTrackArticleEngaged();
+                    }, 60000);
+
+                    window.addEventListener("scroll", function () {
+                      var scrollBottom = window.scrollY + window.innerHeight;
+                      var pageHeight = document.documentElement.scrollHeight;
+                      if (scrollBottom >= pageHeight - 10) {
+                        reachedBottom = true;
+                        maybeTrackArticleEngaged();
+                      }
+                    });
+
+                    function maybeTrackArticleEngaged() {
+                      if (eventSent || !reachedBottom || !stayedOneMinute) return;
+                      if (!window.umami) return;
+                      eventSent = true;
+                      umami.track("article_engaged", {
+                        action: "read_full_article",
+                        time_on_page_seconds: 60,
+                        path: location.pathname,
+                      });
+                    }
+                  })();
+                `}
+            </Script>
         </body>
         </html>
     );
