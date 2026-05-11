@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="slop flow">
+    <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="add trackers and events">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/taxform/submission-success/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/taxform/submission-success/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/taxme/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/Article.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/taxme/SubmissionSuccess.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/SubmissionSuccess.tsx" afterDir="false" />
     </list>
@@ -33,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="steuererklärung-alpengrün" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -68,7 +71,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "steuererklärung-alpengrün",
+    "git-widget-placeholder": "steuererklärung-alpengrün-group-fe",
     "javascript.preferred.runtime.type.id": "node",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app/start/communication",
@@ -151,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773933308466</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add trackers and events">
+      <option name="closed" value="true" />
+      <created>1778516881546</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778516881546</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +182,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="dashboard slop 2" />
     <MESSAGE value="slop flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="slop flow" />
+    <MESSAGE value="add trackers and events" />
+    <option name="LAST_COMMIT_MESSAGE" value="add trackers and events" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

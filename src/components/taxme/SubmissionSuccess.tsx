@@ -9,13 +9,14 @@ type SubmissionSuccessProps = {
 };
 
 export default function SubmissionSuccess({ onPrint }: SubmissionSuccessProps) {
-    useEffect(() => {
-        console.log("Trying tracking!")
-        if (typeof window !== 'undefined' && window.umami) {
-            window.umami.track('submission');
-            console.log("Umami tracked!")
+    setTimeout(() => {
+        if (window.umami) {
+            window.umami.track('form_submission', {
+                article_id: data.ref,
+                article_title: data.title,
+            });
         }
-    }, []);
+    }, 2000);
 
 
     const handlePrint = () => {

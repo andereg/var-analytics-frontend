@@ -13,10 +13,15 @@ export const Article: React.FC<ArticleProps> = ({data}) => {
     const posthog = usePostHog()
 
     useEffect(() => {
-        window.umami.track('article_viewed', {
-            article_id: data.ref,
-            article_title: data.title,
-        });
+
+        setTimeout(() => {
+            if (window.umami) {
+                window.umami.track('article_viewed', {
+                    article_id: data.ref,
+                    article_title: data.title,
+                });
+            }
+        }, 2000);
 
         posthog.capture('article_viewed', {
             article_id: data.ref,
@@ -32,11 +37,14 @@ export const Article: React.FC<ArticleProps> = ({data}) => {
                 time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
             })
 
-            window.umami.track('article_viewed', {
-                article_id: data.ref,
-                article_title: data.title,
-                time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
-            });
+            if (window.umami) {
+                window.umami.track('article_viewed', {
+                    article_id: data.ref,
+                    article_title: data.title,
+                    time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
+                });
+            }
+
         }, 30_000) // 30 seconds
 
         return () => clearTimeout(timer) // user left before 30s – cancel
