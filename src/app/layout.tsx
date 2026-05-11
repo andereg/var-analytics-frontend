@@ -25,8 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             {/* Umami Analytics — privacy-first, no cookies, no IDs */}
             <Script
-                src="https://analytics.lucasreitmann.me/script.js"
-                data-website-id="0824d89a-a427-47fd-8a84-cc3f26b4e80c"
+                src="http://10.248.11.106:3000/script.js"
+                data-website-id="196ce4c0-1ff4-442d-bb46-0e558ecef659"
                 strategy="afterInteractive"
             />
         </body>

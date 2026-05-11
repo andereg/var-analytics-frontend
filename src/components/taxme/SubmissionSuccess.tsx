@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import { Card, CardBody, CardHeader, Button } from "@heroui/react";
 import { CheckCircle2, Printer, FileText } from "lucide-react";
 
@@ -9,6 +9,15 @@ type SubmissionSuccessProps = {
 };
 
 export default function SubmissionSuccess({ onPrint }: SubmissionSuccessProps) {
+    useEffect(() => {
+        console.log("Trying tracking!")
+        if (typeof window !== 'undefined' && window.umami) {
+            window.umami.track('submission');
+            console.log("Umami tracked!")
+        }
+    }, []);
+
+
     const handlePrint = () => {
         if (onPrint) {
             onPrint();

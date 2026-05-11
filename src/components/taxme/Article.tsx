@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 import {ArticleData} from "@/components/taxme/ArticleData";
-import { usePostHog } from 'posthog-js/react'
+import {usePostHog} from 'posthog-js/react'
 import Breadcrumb from "@/components/steppers/Breadcrumb";
 
 interface ArticleProps {
@@ -9,15 +9,20 @@ interface ArticleProps {
 }
 
 
-export const Article: React.FC<ArticleProps> = ({ data }) => {
+export const Article: React.FC<ArticleProps> = ({data}) => {
     const posthog = usePostHog()
 
     useEffect(() => {
+        window.umami.track('article_viewed', {
+            article_id: data.ref,
+            article_title: data.title,
+        });
+
         posthog.capture('article_viewed', {
             article_id: data.ref,
             article_title: data.title,
         })
-        
+
         const startTime = Date.now()
 
         const timer = setTimeout(() => {
@@ -26,6 +31,12 @@ export const Article: React.FC<ArticleProps> = ({ data }) => {
                 article_title: data.title,
                 time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
             })
+
+            window.umami.track('article_viewed', {
+                article_id: data.ref,
+                article_title: data.title,
+                time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
+            });
         }, 30_000) // 30 seconds
 
         return () => clearTimeout(timer) // user left before 30s – cancel

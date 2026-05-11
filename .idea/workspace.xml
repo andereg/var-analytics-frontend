@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92f305e3-be9f-41d9-93fa-b0c470fe9db8" name="Changes" comment="slop flow">
-      <change afterPath="$PROJECT_DIR$/src/app/search/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/taxme/alpengrün-header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/actions/analyze-tor.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/actions/chatbot.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/start/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/start/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/taxform/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/taxform/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/taxform/submission-success/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/taxform/submission-success/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/taxme/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/Article.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/taxme/Homepage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/Homepage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/taxme/LandingPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/LandingPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/taxme/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/SearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/taxme/SubmissionSuccess.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/taxme/SubmissionSuccess.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,26 +62,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;steuererklärung-alpengrün&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app/start/communication&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\rapha\\Documents\\GitHub\\var-analytics-frontend2\\src\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "steuererklärung-alpengrün",
+    "javascript.preferred.runtime.type.id": "node",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rapha/Documents/GitHub/var-analytics-frontend2/src/app/start/communication",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/yann/WebstormProjects/var-analytics-frontend/src/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rapha\Documents\GitHub\var-analytics-frontend2\src\app\start\communication" />
