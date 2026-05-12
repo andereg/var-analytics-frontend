@@ -85,6 +85,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   })();
                 `}
             </Script>
+            {/* link_click — fires for every <a> click (internal + external).
+                Anonymous, DSG-compliant. Supports cross-portal journey analysis. */}
+            <Script id="link-click" strategy="afterInteractive">
+                {`
+                  document.addEventListener("click", function (e) {
+                    var link = e.target.closest("a");
+                    if (!link || !link.href) return;
+                    try {
+                      var url = new URL(link.href, location.href);
+                      if (!window.umami) return;
+                      var isInternal = url.hostname === location.hostname;
+                      umami.track("link_click", {
+                        target: link.href,
+                        target_host: url.hostname,
+                        from_path: location.pathname,
+                        type: isInternal ? "internal" : "external",
+                      });
+                    } catch (_) {
+                      /* ignore malformed URLs (mailto:, tel:, etc.) */
+                    }
+                  }, true);
+                `}
+            </Script>
         </body>
         </html>
     );
