@@ -3,6 +3,7 @@ import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 import {ArticleData} from "@/components/taxme/ArticleData";
 import {usePostHog} from 'posthog-js/react'
 import Breadcrumb from "@/components/steppers/Breadcrumb";
+import ContactTrackingModule from "@/components/taxme/ContactTrackingModule";
 
 interface ArticleProps {
     data: ArticleData;
@@ -38,7 +39,7 @@ export const Article: React.FC<ArticleProps> = ({data}) => {
             })
 
             if (window.umami) {
-                window.umami.track('article_viewed', {
+                window.umami.track('article_engaged', {
                     article_id: data.ref,
                     article_title: data.title,
                     time_on_page: Math.round((Date.now() - startTime) / 1000), // seconds
@@ -80,6 +81,7 @@ export const Article: React.FC<ArticleProps> = ({data}) => {
                     <CardBody className="px-6 pb-8 pt-2 md:px-8">
                         <article className="space-y-6 text-default-700 leading-7">
                             {data.content}
+                            <ContactTrackingModule pageName={data.title}/>
                         </article>
                     </CardBody>
                     <CardFooter className="ml-2  text-sm text-default-400">

@@ -3,6 +3,7 @@ import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
 import Script from "next/script";
+import PageExitTracker from "@/components/taxme/PageExitTracker";
 
 
 const inter = Inter({
@@ -10,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Steuererklärung Kanton Alpengrün",
-    description: "Your interactive helper for your thesis"
+    title: "Portal Kanton Alpengrün",
+    description: "Das Alpengrün Hub"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 data-website-id="196ce4c0-1ff4-442d-bb46-0e558ecef659"
                 strategy="afterInteractive"
             />
+            <PageExitTracker />
         </body>
         </html>
     );
