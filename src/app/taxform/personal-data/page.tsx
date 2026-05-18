@@ -6,9 +6,17 @@ import { useRouter } from "next/navigation";
 export default function Page() {
     const router = useRouter();
 
-    return (
-        <PersonalDataForm
-            onContinue={() => router.push("/taxform/wealth")}
-        />
-    );
+    const handleContinue = () => {
+        // Umami-Event: Funnel-Schritt 1 abgeschlossen
+        if (typeof window !== "undefined" && (window as any).umami) {
+            (window as any).umami.track("form_step_completed", {
+                step: "personal-data",
+                step_number: 1,
+                total_steps: 7,
+            });
+        }
+        router.push("/taxform/wealth");
+    };
+
+    return <PersonalDataForm onContinue={handleContinue} />;
 }

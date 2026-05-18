@@ -6,9 +6,17 @@ import DocumentsReviewForm from "@/components/taxme/forms/DocumentsReviewForm";
 export default function Page() {
     const router = useRouter();
 
-    return (
-        <DocumentsReviewForm
-            onContinue={() => router.push("/taxform/final-summary")}
-        />
-    );
+    const handleContinue = () => {
+        // Umami-Event: Funnel-Schritt 5 abgeschlossen
+        if (typeof window !== "undefined" && (window as any).umami) {
+            (window as any).umami.track("form_step_completed", {
+                step: "documents-review",
+                step_number: 5,
+                total_steps: 7,
+            });
+        }
+        router.push("/taxform/final-summary");
+    };
+
+    return <DocumentsReviewForm onContinue={handleContinue} />;
 }

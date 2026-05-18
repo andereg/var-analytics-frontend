@@ -50,10 +50,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 `}
             </Script>
             {/* Article Engaged — goal signal for CEI / CPI / DTI / STI / SPI / DPI.
-                Fires once per page load when user stayed >=60s AND scrolled to the bottom. */}
+                Fires once per page load when user stayed >=60s AND scrolled to the bottom.
+                Restricted to /start/* topic pages to avoid false positives on taxform funnel pages. */}
             <Script id="article-engaged" strategy="afterInteractive">
                 {`
                   (function () {
+                    // Nur auf Themen-Seiten /start/* feuern (Topics, News, etc.),
+                    // NICHT auf Steuerformular-Schritten oder der Startseite.
+                    if (!location.pathname.startsWith("/start/")) return;
+
                     var reachedBottom = false;
                     var stayedOneMinute = false;
                     var eventSent = false;

@@ -7,9 +7,16 @@ import FinalSummaryForm from "@/components/taxme/forms/FinalSummaryForm";
 export default function Page() {
     const router = useRouter();
 
-    return (
-        <FinalSummaryForm
-            onSubmit={() => router.push("/taxform/submission-success")}
-        />
-    );
+    const handleSubmit = () => {
+        // Umami-Event: Steuererklärung erfolgreich abgeschickt (Conversion-Goal)
+        if (typeof window !== "undefined" && (window as any).umami) {
+            (window as any).umami.track("form_submitted", {
+                form: "taxform",
+                path: window.location.pathname,
+            });
+        }
+        router.push("/taxform/submission-success");
+    };
+
+    return <FinalSummaryForm onSubmit={handleSubmit} />;
 }
