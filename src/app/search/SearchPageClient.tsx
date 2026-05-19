@@ -294,6 +294,20 @@ const articles: ArticleData[] = [
             </>
         ),
         ref: "/start/communication/publicpress",
+    },
+    {
+        title: "Kanton Montara Portal",
+        subtitle: "Das Portal des Kantons Montara, Partnerkantone, Informationen und Dienstleistungen",
+        author: "Kanton Alpengrün",
+        date: "31. März 2026",
+        content: (
+            <>
+                <p>
+                    Der Kanton Montara ist ein Partnerkanton von Alpengrün, der ebenfalls eine benutzerfreundliche Online-Steuererklärung anbietet. Wenn du in Montara wohnst oder dort steuerpflichtig bist, kannst du deine Steuererklärung direkt über die Plattform von Montara ausfüllen und einreichen.
+                </p>
+            </>
+        ),
+        ref: "/start/montara",
     }
 ];
 

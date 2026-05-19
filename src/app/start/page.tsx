@@ -96,6 +96,20 @@ const articles: ArticleData[] = [
         ),
         ref: "/start/communication",
     },
+    {
+        title: "Kanton Montara",
+        subtitle: "Aktuelle Informationen und Dienstleistungen",
+        author: "Kanton Alpengrün",
+        date: "18. März 2026",
+        content: (
+            <>
+                <p>
+                    Portal des Kantons Montara, Partnerkantone, Informationen und Dienstleistungen.
+                </p>
+            </>
+        ),
+        ref: "/start/montara",
+    }
 ];
 
 interface ArticleOverviewCardProps {
